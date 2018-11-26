@@ -60,7 +60,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 /*** Backend Dashboard ***/
-$route['admin'] = "backend/Dashboard";
+$route['admin'] = "backend/Dashboard/index";
+$route['admin/dashboard'] = "backend/Dashboard/Dashboard";
 
 
 /***User Profile****/

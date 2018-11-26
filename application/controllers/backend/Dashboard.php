@@ -10,16 +10,18 @@ class Dashboard extends MY_Controller{
     }
 
 
-
     public function index(){
 
         if ($this->is_login()) {
-            $this->control_home();
+            echo "Backend";
         } else {
             redirect('signin');
         }
 
+    }
 
+    public function dashboard(){
+        echo "Dashboard";
     }
 
 

@@ -5,12 +5,13 @@ class MY_Model extends CI_Model
 {
 
     public $db2;
+    public $tbl_users;
 
 
 
     public function __construct()
     {
-//        $db2 = $this->load->database('auth_db', TRUE);
+        $this->tbl_users = "users";
 
 
 
