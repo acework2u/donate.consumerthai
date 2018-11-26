@@ -86,6 +86,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <p><?php echo $this->lang->line('home_menu');?> : <?php echo $this->lang->line('language_key');?></p>
         <p>Multi Lang Example : <?php echo base_url(); ?></p>
+
+
+    <?php $ap=array('english'=>'MY Content','thai'=>'บทความฉันเอง')?>
+
+    <p>This Lang : <?php echo $ap[$this->session->userdata('site_lang')];?></p>
+
     <a href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/english'>English</a>
     <a href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/thai'>Thai</a>
 

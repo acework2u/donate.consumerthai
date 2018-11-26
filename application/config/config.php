@@ -37,6 +37,22 @@ if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
 $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 $config['base_url'] = $root;
 
+if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
+    /***Dev*****/
+    define('HOSTNAME', 'localhost');
+    define('DBUSERNAME', 'root');
+    define('DBPASSWORD', '');
+    define('DBNAME', 'donate_consumer');
+}else{
+    /**Production**/
+    define('HOSTNAME', '');
+    define('DBUSERNAME', '');
+    define('DBPASSWORD', '');
+    define('DBNAME', '');
+}
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -64,6 +80,22 @@ $config['index_page'] = '';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
+define('USER_IP_ADDRESS', $_SERVER['REMOTE_ADDR']);
+define('HTTP_CSS_PATH', $config['base_url'] . 'assets/css/');
+define('HTTP_IMAGES_PATH', $config['base_url'] . 'assets/img/');
+define('HTTP_JS_PATH', $config['base_url'] . 'assets/js/');
+//define('ROOT_UPLOAD_PATH', BASH_PATH . 'assets/uploads/');
+
+
+
+
+
+
+
+
+
+
+
 $config['uri_protocol']	= 'REQUEST_URI';
 
 /*
@@ -76,7 +108,7 @@ $config['uri_protocol']	= 'REQUEST_URI';
 |
 | https://codeigniter.com/user_guide/general/urls.html
 */
-$config['url_suffix'] = '';
+$config['url_suffix'] = '.html';
 
 /*
 |--------------------------------------------------------------------------

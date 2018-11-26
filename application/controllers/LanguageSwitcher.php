@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class LanguageSwitcher extends CI_Controller
+class LanguageSwitcher extends MY_Controller
 
 {
 

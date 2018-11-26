@@ -57,3 +57,25 @@ $route['translate_uri_dashes'] = FALSE;
 
 /****** lang **/
 
+
+
+/*** Backend Dashboard ***/
+$route['admin'] = "backend/Dashboard";
+
+
+/***User Profile****/
+$route['signup'] = 'auth/register';
+$route['signin'] = 'auth/login';
+$route['logout'] = 'auth/logout';
+$route['dologin'] = 'auth/doLogin';
+$route['profile'] = 'auth/index';
+$route['userlist'] = 'auth/userList';
+$route['user-list'] = 'auth/users_list';
+
+/**** User ****/
+$route['api-v01/user/user-list'] = "auth/get_user_list";
+$route['api-v01/user/group-list'] = "auth/get_group_list";
+$route['api-v01/user/ma'] = "auth/actionUser";
+$route['api-v01/user/logon'] = "auth/jsonLogin";
+$route['api-v01/user/register'] = "auth/actionUserCreate";
+
