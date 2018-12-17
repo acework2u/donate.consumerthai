@@ -13,7 +13,7 @@ class Dashboard extends MY_Controller{
     public function index(){
 
         if ($this->is_login()) {
-            echo "Backend";
+            $this->dashboard();
         } else {
             redirect('signin');
         }
@@ -21,7 +21,11 @@ class Dashboard extends MY_Controller{
     }
 
     public function dashboard(){
-        echo "Dashboard";
+
+
+        $this->data['title'] = "donate Consumerthai.org Management";
+
+        $this->load->view('tpl_dashboard',$this->data);
     }
 
 
