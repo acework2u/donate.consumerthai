@@ -6,7 +6,7 @@ class MY_Controller extends CI_Controller
 
 
     public $view_page;
-
+    public $language   ;
 
 
 
@@ -14,7 +14,16 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
 
+
+        $this->language = "thai";
+
+        if(!$this->session->userdata('site_lang')){
+            $this->session->set_userdata('site_lang', $this->language);
+        }
+
         $this->view_page="";
+
+
 
 
     }
