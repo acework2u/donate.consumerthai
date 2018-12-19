@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'RSU';
+    src: url('RSU.woff2') format('woff2'),
+        url('RSU.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('THSarabunNew-Bold.woff2') format('woff2'),
+        url('THSarabunNew-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('THSarabunNew.woff2') format('woff2'),
+        url('THSarabunNew.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RSU';
+    src: url('RSU-Bold.woff2') format('woff2'),
+        url('RSU-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TEPC ChulaNarak';
+    src: url('TEPCChulaNarak.woff2') format('woff2'),
+        url('TEPCChulaNarak.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TEPC ChulaNarak';
+    src: url('TEPCChulaNarak-Bold.woff2') format('woff2'),
+        url('TEPCChulaNarak-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RSU';
+    src: url('RSU-Light.woff2') format('woff2'),
+        url('RSU-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quark';
+    src: url('Quark-Light.woff2') format('woff2'),
+        url('Quark-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quark';
+    src: url('Quark-Bold.woff2') format('woff2'),
+        url('Quark-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+

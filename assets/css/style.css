@@ -1,0 +1,350 @@
+/*Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+
+}
+
+/*@media all and (max-width:724px){*/
+    /*.nav-tabs > li > a > span {display:none;}*/
+    /*.nav-tabs > li > a {padding: 5px 5px;}*/
+/*}*/
+
+@font-face {
+    font-family: 'RSU';
+    src: url('/assets/fonts/RSU.woff2') format('woff2'),
+    url('/assets/fonts/RSU.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('/assets/fonts/THSarabunNew-Bold.woff2') format('woff2'),
+    url('/assets/fonts/THSarabunNew-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TH Sarabun New';
+    src: url('/assets/fonts/THSarabunNew.woff2') format('woff2'),
+    url('/assets/fonts/THSarabunNew.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RSU';
+    src: url('/assets/fonts/RSU-Bold.woff2') format('woff2'),
+    url('/assets/fonts/RSU-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TEPC ChulaNarak';
+    src: url('/assets/fonts/TEPCChulaNarak.woff2') format('woff2'),
+    url('/assets/fonts/TEPCChulaNarak.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TEPC ChulaNarak';
+    src: url('/assets/fonts/TEPCChulaNarak-Bold.woff2') format('woff2'),
+    url('/assets/fonts/TEPCChulaNarak-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RSU';
+    src: url('/assets/fonts/RSU-Light.woff2') format('woff2'),
+    url('/assets/fonts/RSU-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quark';
+    src: url('/assets/fonts/Quark-Light.woff2') format('woff2'),
+    url('/assets/fonts/Quark-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quark';
+    src: url('/assets/fonts/Quark-Bold.woff2') format('woff2'),
+    url('/assets/fonts/Quark-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/*html *{*/
+/*font-family: 'RSU';*/
+/*font-weight: normal;*/
+/*font-style: normal;*/
+/*}*/
+
+body {
+    font-family: 'RSU';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.5em;
+
+    /*background: #0575E6; !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(to right, #021B79, #0575E6); !* Chrome 10-25, Safari 5.1-6 *!*/
+    /*background: linear-gradient(to right, #021B79, #0575E6); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+
+    /*background-image: linear-gradient(to left top, #002f62, #053d74, #0b4c86, #105b98, #146baa, #107cb9, #118dc7, #199fd5, #2fb5e0, #4cccea, #6be1f3, #8bf7fb);*/
+
+
+
+    background: -moz-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(139,247,251,1)), color-stop(75%, rgba(34,97,136,1)), color-stop(100%, rgba(0,47,98,1))); /* safari4+,chrome */
+    background:-webkit-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* opera 11.10+ */
+    background: -ms-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* ie10+ */
+    background:radial-gradient(ellipse at center, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8BF7FB', endColorstr='#002F62',GradientType=1 ); /* ie6-9 */
+
+
+
+
+}
+
+.bg-main-content{
+    background-image: linear-gradient(to top, #002f62, #053d74, #0b4c86, #105b98, #146baa, #107cb9, #118dc7, #199fd5, #2fb5e0, #4cccea, #6be1f3, #8bf7fb);
+}
+
+.bg-main-content2{
+    background: -moz-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(139,247,251,1)), color-stop(75%, rgba(34,97,136,1)), color-stop(100%, rgba(0,47,98,1))); /* safari4+,chrome */
+    background:-webkit-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* opera 11.10+ */
+    background: -ms-radial-gradient(center, ellipse cover, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* ie10+ */
+    background:radial-gradient(ellipse at center, rgba(139,247,251,1) 0%, rgba(34,97,136,1) 75%, rgba(0,47,98,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8BF7FB', endColorstr='#002F62',GradientType=1 ); /* ie6-9 */
+}
+
+
+ul {
+    list-style-type: none;
+}
+
+.header {
+
+}
+
+.header-a-logo {
+    height: 140px;
+}
+
+.bg-header {
+    background: url('/assets/img/background/bg-header.png');
+    -webkit-background-size: cover; /* For WebKit*/
+    -moz-background-size: cover; /* Mozilla*/
+    -o-background-size: cover; /* Opera*/
+    background-size: cover; /* Generic*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    color: white;
+    height: 170px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 56px;
+    background-color: #005AA9;
+    color: white;
+    text-align: center;
+}
+.bg-footer{
+    background-color: #005AA9;
+}
+
+
+.text-banner-center{
+    font-size: 1.5em;
+}
+
+/**** Lang ***/
+.languagepicker {
+    /*background-color: #FFF;*/
+    display: inline-block;
+    padding: 0;
+    height: 40px;
+    overflow: hidden;
+    transition: all .3s ease;
+    margin: 0 50px 10px 0;
+    vertical-align: top;
+    float: left;
+}
+
+.languagepicker:hover {
+    /* don't forget the 1px border */
+    height: 81px;
+}
+
+.languagepicker a {
+    color: #000;
+    text-decoration: none;
+}
+
+.languagepicker li {
+    display: block;
+    padding: 0px 20px;
+    line-height: 40px;
+    border-top: 1px solid #EEE;
+}
+
+.languagepicker li:hover {
+    background-color: #EEE;
+}
+
+.languagepicker a:first-child li {
+    border: none;
+    background: #FFF !important;
+}
+
+.languagepicker li img {
+    margin-right: 5px;
+}
+
+.roundborders {
+    border-radius: 5px;
+}
+
+.large:hover {
+    /*
+    don't forget the 1px border!
+    The first language is 40px heigh,
+    the others are 41px
+    */
+    height: 245px;
+}
+
+.top-banner {
+    font-family: 'RSU';
+    font-weight: bold;
+    font-style: normal;
+    font-size: 1.6em;
+
+}
+
+.news-content {
+    width: 90%;
+    margin-top: 10vh;
+    margin-left: 1vw;
+
+}
+.box-content{
+    border: 1px solid #00FFFF;
+    border-bottom-right-radius: 50px 60px !important;
+    padding: 10px;
+    color: #002F62;
+}
+.bg-green-light{
+    background: #00d6b2;
+}
+.bg-content{
+background: white;
+    padding-left: 4%;
+    padding-top: 4%;
+}
+
+
+/**** Nev Content ****/
+full-width-tabs > ul.nav.nav-tabs {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.full-width-tabs > ul.nav.nav-tabs > li {
+    float: none;
+    display: table-cell;
+}
+.full-width-tabs > ul.nav.nav-tabs > li > a {
+    text-align: center;
+}
+.take-all-space-you-can{
+    width:100%;
+}
+
+
+
+/*
+nav > .nav.nav-tabs{
+
+    border: none;
+    color:#fff;
+    background:#272e38;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+    border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#272e38;
+    border-radius:0;
+}
+
+nav > div a.nav-item.nav-link.active:after
+{
+    content: "";
+    position: relative;
+    bottom: -70px;
+    left: -10%;
+    border: 15px solid transparent;
+    border-top-color: #e74c3c ;
+}
+.tab-content{
+    background: #fdfdfd;
+    line-height: 25px;
+    border: 1px solid #ddd;
+    border-top:5px solid #e74c3c;
+    border-bottom:5px solid #e74c3c;
+    padding:30px 25px;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+    border: none;
+    background: #e74c3c;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
+}
+*/
