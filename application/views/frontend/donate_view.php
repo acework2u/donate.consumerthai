@@ -145,22 +145,76 @@
                     <div class="col-12"><button class="btn bg-yellow-gradient">3. การชำระเงิน</button></div>
                 </div>
                 <div class="row">
-                    <div class="col-12"><input class="rounded-right" type="button" value="100"></div>
-                    <div class="col-12"><input class="rounded-right" type="button" value="300"></div>
-                    <div class="col-12"><input class="rounded-right" type="button" value="500"></div>
-                    <div class="col-12"><input class="rounded-right" type="button" value="1000"></div>
+                    <div class="col-12"><input @click="checkAmount($event)" name="amount[]" class="rounded-right amount-donate" type="button" value="100"></div>
+                    <div class="col-12"><input @click="checkAmount($event)" name="amount[]" class="rounded-right amount-donate" type="button" value="300"></div>
+                    <div class="col-12"><input @click="checkAmount($event)" name="amount[]" class="rounded-right amount-donate" type="button" value="500"></div>
+                    <div class="col-12"><input @click="checkAmount($event)" name="amount[]" class="rounded-right amount-donate" type="button" value="1000"></div>
+                    <div class="col-12"><input @keyup="checkAmount" name="amount[]" class="rounded-right" type="number" value="" min="100" id="custom-amount" ></div>
 
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <span></span>
-                        <input type="number">
+                        <input type="number" value="<?php echo amount2c2p(25);?>">
+                        <input type="number" :value="filterAmount">
                     </div>
                 </div>
 
+                    <div class="row">
+                        <div class="col-12">
+                            <form id="myform" method="post" action="<?php echo $payment_url;?>">
+                                <input type="text" name="version" value="<?php echo $version;?>"/>
+                                <input type="text" name="merchant_id" value="<?php echo $merchant_id;?>"/>
+                                <input type="text" name="currency" value="<?php echo $currency?>"/>
+                                <input type="text" name="result_url_1" value="<?php echo $result_url_1;?>"/>
+                                <input type="text" name="hash_value" :value="filterDataConn"/>
+                                PRODUCT INFO : <input type="text" name="payment_description" value="<?php echo $payment_description;?>"  readonly/><br/>
+                                ORDER NO : <input ref="orderno" type="text" name="order_id" value="<?php echo $order_id;?>"  readonly/><br/>
+                                AMOUNT: <input type="text" name="amount" :value="filterAmount" readonly/><br/>
+<!--                                AMOUNT: <input type="text" name="amount" value="--><?php //echo $amount;?><!--" readonly/><br/>-->
+
+                                <?php
+                                $params = $version.$merchant_id.$payment_description.$order_id.$currency.$amount.$result_url_1;
+                                $hash_value = hash_hmac('sha1',$params, $secret_key,false);	//Compute hash value
+                                ?>
+
+<!--                                <input type="text" name="hash_value" value="--><?php //echo $hash_value?><!--"/>-->
+
+
+                                <input type="submit" name="submit" value="Confirm" />
+                            </form>
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-12">
+                        <div id="men">
+
+                            {{log}}
+                            <form v-on:submit="sub" action="#" method="post" ref="form">
+
+                                <input v-model="login" placeholder="Login">
+                                <input v-model="senha" placeholder="Senha">
+                                <button type="submit">Entrar</button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                    </div>
+
+
+
 
 
                 </div>
+
+
 
 
 
@@ -306,8 +360,21 @@
 <script src="<?php echo base_url('assets/js/popper.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/vue.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/axios.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/donate.js') ?>"></script>
+<script>
+    $(document).ready(function(){
+        $('.amount-donate').on('click',function () {
+            $("#custom-amount").val("");
+        })
 
+
+    });
+</script>
+
+<script type="text/javascript">
+    // document.forms.myform.submit();
+</script>
 
 </body>
 </html>

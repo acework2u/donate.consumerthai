@@ -786,11 +786,23 @@ function getDateForDatabase(string $date): string
 function calBtuRoom($w, $h, $l, $const)
 {
     $btu = 0;
-    if(is_number($w) && is_number($h) && is_number($l) && is_number($const)){
+    if (is_number($w) && is_number($h) && is_number($l) && is_number($const)) {
         $btu = (($w * $h * $l) * $const) / 3;
     }
 
     return $btu;
+}
+
+function amount2c2p($number)
+{
+
+    $amount = 0;
+    if (is_number($number)) {
+        $amount = ($number * 100);
+        $amount = sprintf("%'.012d", $amount);
+    }
+    return $amount;
+
 }
 
 

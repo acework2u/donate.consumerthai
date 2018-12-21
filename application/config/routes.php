@@ -80,3 +80,9 @@ $route['api-v01/user/ma'] = "auth/actionUser";
 $route['api-v01/user/logon'] = "auth/jsonLogin";
 $route['api-v01/user/register'] = "auth/actionUserCreate";
 
+
+/**** Font ***/
+$route['result'] = "frontend/result/index";
+$route['demo-donate'] = "donate/demoDonate";
+$route['api-v01/confirm-data'] = "donate/confirmData2c2p";
+

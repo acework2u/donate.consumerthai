@@ -83,3 +83,13 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+
+/****** 2C2P Payment *****/
+define("C2P_MERCHANT_ID", "JT04");
+define("C2P_SECRET_KEY", "QnmrnH6QE23N");
+define("C2P_CURRENCY", "764");
+define("C2P_VERSION", "7.2");
+define("C2P_PAYMENT_URL", "https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment");
+define("C2P_RESULT_URL", "http://donate-consumer.local/result");
