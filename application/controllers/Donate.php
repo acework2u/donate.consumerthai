@@ -39,7 +39,7 @@ class Donate extends MY_Controller
 
 
 
-        $this->load->view('frontend/donate_view',$this->data);
+        $this->load->view('frontend/donate',$this->data);
     }
 
 

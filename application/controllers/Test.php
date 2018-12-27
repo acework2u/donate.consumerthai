@@ -9,4 +9,12 @@ class Test extends CI_Controller{
     public function index(){
         echo "Joe";
     }
+
+
+    public function testpdf(){
+        $mpdf = new \Mpdf\Mpdf( ['default_font' => 'thsarabunnew']);
+        $html = $this->load->view('html_to_pdf',[],true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output(); // opens in browser
+    }
 }

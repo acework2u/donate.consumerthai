@@ -8,6 +8,11 @@ class MY_Controller extends CI_Controller
     public $view_page;
     public $language   ;
 
+    public $report_model;
+    public $donation_model;
+    public $mail_model;
+
+
 
     /*** 2c2p *****/
     public $_merchant_id;
@@ -37,6 +42,9 @@ class MY_Controller extends CI_Controller
         }
 
         $this->view_page="";
+
+        $this->report_model = "report_model";
+        $this->donation_model = "donation_model";
 
 
         /**** 2C2P ***/

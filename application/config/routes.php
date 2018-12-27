@@ -62,6 +62,11 @@ $route['translate_uri_dashes'] = FALSE;
 /*** Backend Dashboard ***/
 $route['admin'] = "backend/Dashboard/index";
 $route['admin/dashboard'] = "backend/Dashboard/Dashboard";
+$route['admin/reports'] = "backend/Reports/index";
+
+/**** Report **/
+$route['api-01/report/donation-list'] = "backend/Reports/jsonDonationList";
+
 
 
 /***User Profile****/

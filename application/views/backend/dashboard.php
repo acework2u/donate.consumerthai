@@ -1,8 +1,4 @@
-
-
-
-
-    <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -87,7 +83,7 @@
                 <!-- Left col -->
                 <section class="col-lg-7 connectedSortable">
                     <!-- Custom tabs (Charts with tabs)-->
-                    <div class="nav-tabs-custom">
+                    <div class="hidden nav-tabs-custom">
                         <!-- Tabs within a box -->
                         <ul class="nav nav-tabs pull-right">
                             <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
@@ -338,7 +334,7 @@
 
 
                     <!-- TABLE: LATEST ORDERS -->
-                    <div class="box box-info">
+                    <div class="box box-info" id="lastdonate">
                         <div class="box-header with-border">
                             <h3 class="box-title">Latest Donates</h3>
 
@@ -354,71 +350,24 @@
                                 <table class="table no-margin">
                                     <thead>
                                     <tr>
-                                        <th>Donate ID</th>
-                                        <th>Name</th>
+                                        <th>Transection No.</th>
+                                        <th>Donor</th>
                                         <th>Status</th>
                                         <th>Amount</th>
                                         <th>Time</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                        <td>Anon Dechpala</td>
-                                        <td><span class="label label-success">Shipped</span></td>
+                                    <tr v-for="item ,index in filterDonationList">
+                                        <td><a href="pages/examples/invoice.html">{{item.transection_no}}</a></td>
+                                        <td>{{item.first_name}}</td>
+                                        <td><span class="label label-success">{{item.status}}</span></td>
                                         <td>
                                             <div class="sparkbar" data-color="#00a65a" data-height="20">100.00</div>
                                         </td>
-                                        <td></td>
+                                        <td>{{item.created_date}}</td>
                                     </tr>
-                                    <tr>
-                                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                        <td>Samsung Smart TV</td>
-                                        <td><span class="label label-warning">Pending</span></td>
-                                        <td>
-                                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                        <td>iPhone 6 Plus</td>
-                                        <td><span class="label label-danger">Delivered</span></td>
-                                        <td>
-                                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                        <td>Samsung Smart TV</td>
-                                        <td><span class="label label-info">Processing</span></td>
-                                        <td>
-                                            <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                        <td>Samsung Smart TV</td>
-                                        <td><span class="label label-warning">Pending</span></td>
-                                        <td>
-                                            <div class="sparkbar" data-color="#f39c12" data-height="20">250.25</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                        <td>iPhone 6 Plus</td>
-                                        <td><span class="label label-danger">Delivered</span></td>
-                                        <td>
-                                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                        <td>Call of Duty IV</td>
-                                        <td><span class="label label-success">Shipped</span></td>
-                                        <td>
-                                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                        </td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -441,7 +390,7 @@
                 <section class="col-lg-5 connectedSortable">
 
                     <!-- Map box -->
-                    <div class="box box-solid bg-light-blue-gradient">
+                    <div class="hidden box box-solid bg-light-blue-gradient">
                         <div class="box-header">
                             <!-- tools box -->
                             <div class="pull-right box-tools">
@@ -618,7 +567,7 @@
             </div>
             <!-- /.row (main row) -->
 
-            <div class="row">
+            <div class="hidden row">
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -750,8 +699,11 @@
                 <!-- /.col -->
             </div>
 
+
+
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+<script src="<?php echo base_url('assets/js/backend/main.js')?>"></script>
 

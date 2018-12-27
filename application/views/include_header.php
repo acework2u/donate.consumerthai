@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/Ionicons/css/ionicons.min.css')?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/AdminLTE.min.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/vue-datepicker-local.css')?>">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/skins/_all-skins.min.css')?>">
@@ -36,6 +37,18 @@
 
     <script src="<?php echo base_url('assets/js/html5shiv.min.js')?>"></script>
     <script src="<?php echo base_url('assets/js/respond.min.js')?>"></script>
+
+
+    <script src="<?php echo base_url('assets/js/vue.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/vue-select.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/axios.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/vue-datepicker-local.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/moment-with-locales.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/moment.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/vue-moment.js');?>"></script>
+
+
+
     <![endif]-->
 
     <!-- Google Font -->
@@ -46,7 +59,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="admin" class="logo">
+        <a href="<?php echo site_url('admin')?>" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>C</b>ST</span>
             <!-- logo for regular state and mobile devices -->
@@ -91,7 +104,7 @@
                                                 <img src="<?php echo base_url('assets/img/user3-128x128.jpg')?>" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
-                                                AdminLTE Design Team
+                                                Admin Design Team
                                                 <small><i class="fa fa-clock-o"></i> 2 hours</small>
                                             </h4>
                                             <p>Why not buy a new awesome theme?</p>
@@ -262,7 +275,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="<?php echo base_url('assets/img/user2-160x160.jpg')?>" class="user-image" alt="User Image">
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs">Anon Dechpala</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -270,7 +283,7 @@
                                 <img src="<?php echo base_url('assets/img/user2-160x160.jpg')?>" class="img-circle" alt="User Image">
 
                                 <p>
-                                    Alexander Pierce - Web Developer
+                                    Anon Dechpala  - CEO Acework Developer
                                     <small>Member since Nov. 2012</small>
                                 </p>
                             </li>

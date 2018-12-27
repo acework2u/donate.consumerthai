@@ -10,12 +10,8 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css') ?>">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-
-
-
-
-    <title>Consumer Thailand Donate Page</title>
-</head>
+      <title>Consumer Thailand Donate Page</title>
+</ head>
 <body>
 
 <main role="main" class="container-fluid" id="appDonate">
