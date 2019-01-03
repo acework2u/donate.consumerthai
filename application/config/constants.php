@@ -87,9 +87,9 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 /****** 2C2P Payment *****/
-define("C2P_MERCHANT_ID", "JT04");
-define("C2P_SECRET_KEY", "QnmrnH6QE23N");
+define("C2P_MERCHANT_ID", "764764000001745");
+define("C2P_SECRET_KEY", "A92FC2236FCB7D94772BBED0560ABB4747B104EC355A97385095A4FD3390ADFB");
 define("C2P_CURRENCY", "764");
-define("C2P_VERSION", "7.2");
+define("C2P_VERSION", "9.3");
 define("C2P_PAYMENT_URL", "https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment");
 define("C2P_RESULT_URL", "http://donate-consumer.local/result");

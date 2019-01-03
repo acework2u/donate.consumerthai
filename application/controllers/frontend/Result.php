@@ -8,6 +8,11 @@ class Result extends MY_Controller
         parent::__construct();
     }
 
+    public function donateResult(){
+
+    }
+
+
 
     public function index(){
 

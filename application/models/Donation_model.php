@@ -96,7 +96,8 @@ class Donation_model extends MY_Model
             'payment_status' => $this->_status,
             'note' => $this->_note,
             'created_date' => $this->_createDate,
-            'updated_date' => $this->_updatedDate
+            'updated_date' => $this->_updatedDate,
+            'transfer_date'=>$this->_transferDate
         );
 
         $this->db->insert($this->tbl_donation, $data);

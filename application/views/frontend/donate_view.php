@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="utf-8">appDonate
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -11,7 +11,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
       <title>Consumer Thailand Donate Page</title>
-</ head>
+</head>
 <body>
 
 <main role="main" class="container-fluid" id="appDonate">
@@ -371,6 +371,5 @@
 <script type="text/javascript">
     // document.forms.myform.submit();
 </script>
-
 </body>
 </html>

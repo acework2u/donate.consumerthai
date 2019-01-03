@@ -45,10 +45,10 @@ if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
     define('DBNAME', 'donate_consumer');
 }else{
     /**Production**/
-    define('HOSTNAME', '');
-    define('DBUSERNAME', '');
-    define('DBPASSWORD', '');
-    define('DBNAME', '');
+    define('HOSTNAME', 'localhost');
+    define('DBUSERNAME', 'csdonate_dbuser');
+    define('DBPASSWORD', 'a1GuC#Pm&REb');
+    define('DBNAME', 'csdonate_dbx');
 }
 
 

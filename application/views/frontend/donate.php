@@ -27,7 +27,7 @@
         <button type="button" class="lang-button" id="th">TH</button>
     </div>
 </div>
-<div class="container d-flex" ref="body">
+<div class="container d-flex" ref="body"">
     <div class="row mt-5 " id="main">
         <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 pl-0 pr-5 pr-0-lg" id="container-left">
             <div class="d-flex">
@@ -92,6 +92,7 @@
             </div>
         </div>
         <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 pl-5 pl-0-lg pr-0-lg" id="container-right">
+            <form id="2c2p-payment-form" method="post" action="<?php echo base_url('donation/2c2p-payment')?>">
             <div class="payment-container" id="payment-1">
                 <h1 class="mt-3 mb-3 text-center">ร่วมบริจาคเพื่อ สนับสนุนฟ้องคดี<br>ให้แก่ผู้บริโภคที่ได้รับความเสียหาย<br>และสนับสนุนศูนย์ทดสอบฉลาดซื้อ<br>ให้ทดสอบสินค้าและบริการ</h1>
                 <hr width="50%">
@@ -115,18 +116,18 @@
                         <span class="state-1-header">กรุณาเลือกจำนวนเงินบริจาค (บาท)</span>
                     </div>
                     <div class="mt-3 mr-5 text-center">
-                        <button class="money ml-3 mr-3" id="100B" value="100">100</button>
-                        <button class="money ml-3 mr-3" id="300B" value="300">300</button>
+                        <button type="button" class="money ml-3 mr-3" id="100B" value="100">100</button>
+                        <button type="button" class="money ml-3 mr-3" id="300B" value="300">300</button>
                     </div>
                     <div class="mt-3 ml-5 text-center">
-                        <button class="money ml-3 mr-3" id="500B" value="500">500</button>
-                        <button class="money ml-3 mr-3" id="1000B" value="1000">1000</button>
+                        <button type="button" class="money ml-3 mr-3" id="500B" value="500">500</button>
+                        <button type="button" class="money ml-3 mr-3" id="1000B" value="1000">1000</button>
                     </div>
                     <p class="mt-4 pl-5 pl-4-lg mb-2 money-input-header">หรือ ระบุจำนวนเงินบริจาคตามต้องการ (บาท)</p>
-                    <input type="number" name="money-input" id="money-input" class="form-control money-input ml-5 ml-4-lg pl-4" value="0" min="0">
+                    <input type="number" name="money-input" id="money-input" class="form-control money-input ml-5 ml-4-lg pl-4" value="100 min="100">
                     <p class="mt-2 pl-5 pl-4-lg mb-4 money-input-sub">ทุกยอดเงินของการบริจาค นำไปลดหย่อนภาษีได้</p>
                     <div class="d-flex">
-                        <button class="next position-relative mb-4" id="next-payment-1"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
+                        <button type="button" class="next position-relative mb-4" id="next-payment-1"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
                     </div>
                 </div>
             </div>
@@ -232,7 +233,7 @@
                     </div>
                 </div>
                 <div class="d-flex mt-4">
-                    <button class="next position-relative mb-3" id="next-payment-2"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
+                    <button type="button" class="next position-relative mb-3" id="next-payment-2"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
                 </div>
             </div>
             <div class="payment-container d-none" id="payment-3">
@@ -289,7 +290,7 @@
                             <img src="<?php echo base_url('assets/img/bbl-icon.png')?>" class="mt-2 d-none d-lg-inline-block">
                         </div>
                         <div class="d-flex mt-4">
-                            <button class="next position-relative mb-4" id="next-payment-3"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
+                            <button type="button" class="next position-relative mb-4" id="next-payment-3"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
                         </div>
                     </div>
                     <div id="payment-type-1" class="d-none">
@@ -307,22 +308,26 @@
                         <div class="row">
                             <div class="col-7 pr-0 ml-5 mt-4">
                                 <label class="state-2-label mb-1 pl-1">หมายเลขบัตร<span> *</span></label>
-                                <input type="text" name="card-number" class="form-control">
+                                <input type="text" name="card-number" data-encrypt="cardnumber" class="form-control" maxlength="16">
+
                             </div>
                             <div class="col-8 pr-0 ml-5 mt-4">
                                 <label class="state-2-label mb-1 pl-1">วันหมดอายุ เดือน/ปี<span> *</span></label>
                                 <div class="row ml-0">
                                     <div class="col-5 pl-0 mr-3">
-                                        <input type="number" name="month" class="form-control" min="1" max="12">
+                                        <input type="text" name="month" class="form-control" data-encrypt="month" maxlength="2" placeholder="MM">
+
                                     </div>
                                     <div class="col-5 pl-0">
-                                        <input type="number" name="year" class="form-control" min="2018" max="2050">
+                                        <input type="text" data-encrypt="year" maxlength="4" placeholder="YYYY" name="year" class="form-control">
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-4 pr-0 ml-5 mt-4 position-relative">
-                                <label class="state-2-label mb-1 pl-1">หมายเลขบัตร<span> *</span></label>
-                                <input type="text" name="card-number" class="form-control">
+                                <label class="state-2-label mb-1 pl-1">หมายเลข CVC/CVV/CID<span> *</span></label>
+                                <input type="password" data-encrypt="cvv" maxlength="4" autocomplete="off" placeholder="CVV2/CVC2" name="cvc" class="form-control">
+
                                 <img src="<?php echo base_url('assets/img/credit-icon.png')?>" class="position-absolute credit-icon">
                             </div>
                         </div>
@@ -331,7 +336,7 @@
                         <p class="ml-5 mb-0">ที่ถูกพิมพ์อยู่ด้านหน้าหรือหลังบัตรของคุณ </p>
                         <p class="ml-5 mb-0">(ไม่ใช่หมายเลขบัตรตัวนูน) </p>
                         <div class="d-flex">
-                            <button class="next position-relative mb-4 mt-4 done"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
+                            <button type="button" value="Checkout" onclick="Checkout()" class="next position-relative mb-4 mt-4 done"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Confirm</button>
                         </div>
                     </div>
                     <div id="payment-type-2" class="d-none">
@@ -492,8 +497,10 @@
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
+
     <div class="thank-container pt-3 pb-3 mt-4 mb-4 d-none" id="thank">
         <div class="d-flex">
             <img src="<?php echo base_url('assets/img/thank-header.png')?>" class="pb-3">
@@ -529,4 +536,20 @@
 
 <script src="<?php echo base_url('assets/js/jquery-3.3.1.min.js')?>"></script>
 <script src="<?php echo base_url('assets/js/script.js')?>"></script>
+<script src="<?php echo base_url('assets/js/vue.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/axios.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/donate.js') ?>"></script>
+<!--Importing 2c2p JSLibrary-->
+<script type="text/javascript" src="https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/api/my2c2p.1.6.9.min.js"></script>
+<script type="text/javascript">
+    <!--checkout function-->
+    function Checkout() {
+        //your code here
+        //...
+        //if there is no error, submit the form.
+        My2c2p.submitForm("2c2p-payment-form",function(errCode,errDesc){
+            if(errCode!=0){ alert(errDesc+" ("+errCode+")"); }
+        });
+    }
+</script>
 </html>
