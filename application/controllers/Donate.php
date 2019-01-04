@@ -81,64 +81,104 @@ class Donate extends MY_Controller
     public function paymentBy2c2p()
     {
         /*****/
-        $this->load->model($this->donation_model,'donation');
+        $this->load->model($this->donation_model, 'donation');
 
         $amount_to_db = "0";
         $full_name = "";
         $tel = "";
         $tax_id = "";
+        $adress = "";
         $email = "";
         $news_type = "off";
         $news_email = "";
         $payment_type = "";
         $cardholderName = "";
+        $donorId = "";
+        $title_name="";
+        $created_date = date('Y-m-d H:i:s');
+        $updated_date = date('Y-m-d H:i:s');
+        $status=1;
 
-        if(!is_blank($this->input->get_post('money-input'))){
-           $amount_to_db = $this->input->get_post('money-input');
+        if (!is_blank($this->input->get_post('money-input'))) {
+            $amount_to_db = $this->input->get_post('money-input');
         }
-        if(!is_blank($this->input->get_post('name'))){
+        if (!is_blank($this->input->get_post('name'))) {
             $full_name = $this->input->get_post('name');
         }
-        if(!is_blank($this->input->get_post('id'))){
+        if (!is_blank($this->input->get_post('id'))) {
             $tax_id = $this->input->get_post('id');
         }
-        if(!is_blank($this->input->get_post('email'))){
+        if (!is_blank($this->input->get_post('email'))) {
             $email = $this->input->get_post('email');
         }
-        if(!is_blank($this->input->get_post('new-email'))){
+        if (!is_blank($this->input->get_post('new-email'))) {
             $news_email = $this->input->get_post('new-email');
         }
-        if(!is_blank($this->input->get_post('news-type'))){
+        if (!is_blank($this->input->get_post('news-type'))) {
             $news_type = $this->input->get_post('news-type');
         }
-        if(!is_blank($this->input->get_post('payment-type'))){
+        if (!is_blank($this->input->get_post('payment-type'))) {
             $payment_type = $this->input->get_post('payment-type');
         }
-        if(!is_blank($this->input->get_post('payment-type'))){
+        if (!is_blank($this->input->get_post('payment-type'))) {
             $payment_type = $this->input->get_post('payment-type');
         }
-        if(!is_blank($this->input->get_post('cardholderName'))){
+        if (!is_blank($this->input->get_post('cardholderName'))) {
             $cardholderName = $this->input->get_post('cardholderName');
         }
+        if(!is_blank($this->input->get_post('title_name'))){
+            $title_name = $this->input->get_post('title_name');
+        }
+        if(!is_blank($this->input->get_post('tel'))){
+            $tel = $this->input->get_post('tel');
+        }
+        if(!is_blank($this->input->get_post('tax_id'))){
+            $tax_id = $this->input->get_post('tax_id');
+        }
+        if(!is_blank($this->input->get_post('adress1'))){
+            $address = $this->input->get_post('adress1');
+        }
 
 
-
-
-
-
-
-//
         print_r($_POST);
         exit();
 
 
+        #Check Donor
+        $this->load->model($this->donor_model, 'donor');
+        $chk = $this->donor->checkDonor($email);
+        if ($chk) {
+            //Donor
+            $donorId = $this->donor->getDonorId();
+        }else{
+            /** Add New Donor*/
+            $this->donor->setTitleName($title_name);
+            $this->donor->setFirstName($full_name);
+            $this->donor->setEmail($email);
+            $this->donor->setTel($tel);
+            $this->donor->setStatus($status);
+            $this->donor->setCreatedDate($created_date);
+            $this->donor->setUpdatedDate($updated_date);
+
+            if($this->donor->create()){
+                $donorId = $this->donor->getDonorId();
+            }
+
+        }
+
+
+//
+//        print_r($_POST);
+
+        echo "Donor ID: ".$donorId;
+        exit();
+
 
         //Merchant's account information
-       # $merchantID = "764764000001745";        //Get MerchantID when opening account with 2C2P
-       # $secretKey = "A92FC2236FCB7D94772BBED0560ABB4747B104EC355A97385095A4FD3390ADFB";    //Get SecretKey from 2C2P PGW Dashboard
+        # $merchantID = "764764000001745";        //Get MerchantID when opening account with 2C2P
+        # $secretKey = "A92FC2236FCB7D94772BBED0560ABB4747B104EC355A97385095A4FD3390ADFB";    //Get SecretKey from 2C2P PGW Dashboard
         $merchantID = C2P_MERCHANT_ID;        //Get MerchantID when opening account with 2C2P
         $secretKey = C2P_SECRET_KEY;    //Get SecretKey from 2C2P PGW Dashboard
-
 
 
         //Transaction Information
@@ -184,9 +224,8 @@ class Donate extends MY_Controller
 		<currencyCode>$currencyCode</currencyCode>  
 		<panCountry>$panCountry</panCountry> 
 		<cardholderName>$cardholderName</cardholderName>
-		<encCardData>$encCardData</encCardData>
-		<cardholderName></cardholderName>
-	    <cardholderEmail></cardholderEmail>	
+		<encCardData>$encCardData</encCardData>		
+	    <cardholderEmail>$email</cardholderEmail>	
 	    <userDefined1></userDefined1>
 	    <userDefined2></userDefined2>
 	    <userDefined3></userDefined3>	   

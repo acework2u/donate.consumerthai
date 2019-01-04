@@ -191,7 +191,7 @@
                             </div>
                             <div class="col-6-xl col-12-lg pl-0 pl-4-lg mt-4-lg">
                                 <label class="state-2-label mb-1 pl-1">เลขผู้เสียภาษี หรือ เลขบัตรประชาชน<span> *</span></label>
-                                <input type="text" name="id" class="form-control pr-4 bil-input">
+                                <input type="text" name="tax_id" class="form-control pr-4 bil-input">
                             </div>
                         </div>
                         <div class="mt-5">
@@ -204,7 +204,7 @@
                                 </div>
                                 <div class="col-9 pr-0 pl-5 pl-4-lg mr-2 mt-2">
                                     <label class="state-2-label mb-1 pl-1">ที่อยู่ สำหรับออกใบเสร็จ เพื่อใช้ลดหย่อนภาษี<span> *</span></label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea name="adress1" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -214,13 +214,13 @@
                         <span class="state-2-header h-30">ข้อมูลข่าวสารเพิ่มเติม</span>
                         <div class="payment-choose-container position-relative mt-3">
                             <label class="radio-label mb-0"> รับข้อมูลข่าวสารผ่านทาง Email
-                                <input type="radio" name="news-type" id="yes" checked="checked">
+                                <input type="radio" name="news-type" id="yes" checked="checked" value="1">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="payment-choose-container position-relative mt-2">
                             <label class="radio-label mb-0"> ยังไม่สนใจ
-                                <input type="radio" name="news-type">
+                                <input type="radio" name="news-type" value="2">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -228,7 +228,7 @@
                     <div class="row position-relative">
                         <div class="col-8-xl col-9-lg pr-0 pl-5 pl-4-lg mt-2">
                             <label class="state-2-label mb-1 pl-1">อีเมล</label>
-                            <input type="text" name="new-email" id="new-email" class="form-control">
+                            <input type="email" name="new-email" id="new-email" class="form-control" value="">
                         </div>
                     </div>
                 </div>

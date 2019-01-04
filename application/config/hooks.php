@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	https://codeigniter.com/user_guide/general/hooks.html
 |
 */
-$hook['post_controller_constructor'] = array(
+$hook['post_controller_constructor'][] = array(
 
     'class'    => 'LanguageLoader',
 
@@ -22,3 +22,12 @@ $hook['post_controller_constructor'] = array(
     'filepath' => 'hooks'
 
 );
+if($_SERVER["SERVER_NAME"] == "donate.consumerthai.org"){
+    /***Pro*****/
+    $hook['post_controller_constructor'][] = array(
+        'function' => 'force_ssl',
+        'filename' => 'ssl.php',
+        'filepath' => 'hooks'
+    );
+}
+

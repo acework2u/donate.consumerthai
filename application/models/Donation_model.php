@@ -97,7 +97,7 @@ class Donation_model extends MY_Model
             'note' => $this->_note,
             'created_date' => $this->_createDate,
             'updated_date' => $this->_updatedDate,
-            'transfer_date'=>$this->_transferDate
+            'transfer_date' => $this->_transferDate
         );
 
         $this->db->insert($this->tbl_donation, $data);
@@ -129,6 +129,11 @@ class Donation_model extends MY_Model
     public function totalDonate()
     {
 
+    }
+
+    public function lastDonationId()
+    {
+        
     }
 
 

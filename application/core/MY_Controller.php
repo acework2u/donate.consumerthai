@@ -11,6 +11,7 @@ class MY_Controller extends CI_Controller
     public $report_model;
     public $donation_model;
     public $mail_model;
+    public $donor_model;
 
 
 
@@ -45,6 +46,7 @@ class MY_Controller extends CI_Controller
 
         $this->report_model = "report_model";
         $this->donation_model = "donation_model";
+        $this->donor_model = "donor_model";
 
 
         /**** 2C2P ***/
