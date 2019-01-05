@@ -124,7 +124,9 @@ class Donor_model extends MY_Model
 
     public function checkDonor()
     {
-        $query = $this->db->where('email', $this->_email)->get($this->tbl_donor);
+        $this->db->where('email', $this->_email);
+        $this->db->limit(1);
+        $query = $this->db->get($this->tbl_donor);
 
         $result = "";
         if ($query->num_rows() > 0) {
@@ -136,6 +138,7 @@ class Donor_model extends MY_Model
         if (!is_blank($result)) {
             $donerID = get_array_value($result, 'aid', '');
             $this->setDonorId($donerID);
+
             return true;
         } else {
             return false;

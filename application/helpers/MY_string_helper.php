@@ -805,5 +805,15 @@ function amount2c2p($number)
 
 }
 
+function amountToDb($number)
+{
+    $amount = 0;
+    if (!is_blank($number)) {
+        $amount = floatval($number) / 100;
+    }
+
+    return $amount;
+}
+
 
 ?>

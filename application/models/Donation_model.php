@@ -16,6 +16,11 @@ class Donation_model extends MY_Model
     private $_createDate;
     private $_updatedDate;
     private $_transferDate;
+    private $_bankName;
+    private $_pan;
+    private $_tranRef;
+    private $_processBy;
+    private $_issuerCountry;
 
     public function __construct()
     {
@@ -53,9 +58,12 @@ class Donation_model extends MY_Model
         $this->_donationCampaign_id = $donateCampId;
     }
 
-    public function setStatus($status)
+    public function setPaymentStatus($status)
     {
         $this->_status = $status;
+    }
+    public function setPaymentChannel($paymentChanel){
+        $this->_payment_channel = $paymentChanel;
     }
 
     public function setNote($note)
@@ -82,6 +90,22 @@ class Donation_model extends MY_Model
     {
         $this->_transferDate = $transferDate;
     }
+    public function setBankName($bankName){
+        $this->_bankName = $bankName;
+    }
+    public function setPan($cardNumber){
+        $this->_pan = $cardNumber;
+    }
+    public function setTransRef($transRef){
+        $this->_tranRef = $transRef;
+    }
+    public function setProcessBy($processBy){
+        $this->_processBy = $processBy;
+    }
+    public function setIssuerCountry($countryCode){
+        $this->_issuerCountry = $countryCode;
+    }
+
 
 
     public function create()
@@ -90,14 +114,19 @@ class Donation_model extends MY_Model
             'transection_no' => $this->_transection_no,
             'inv_number' => $this->_inv_number,
             'amount' => $this->_amount,
-            'donor_aid' => $this->_donor_id,
+            'doner_aid' => $this->_donor_id,
             'donation_campaign_aid' => $this->_donationCampaign_id,
             'payment_channel' => $this->_payment_channel,
             'payment_status' => $this->_status,
+            'bankName' => $this->_bankName,
+            'pan' => $this->_pan,
+            'tranRef' => $this->_tranRef,
+            'processBy' => $this->_processBy,
+            'issuerCountry' => $this->_issuerCountry,
+            'transfer_date' => $this->_transferDate,
             'note' => $this->_note,
             'created_date' => $this->_createDate,
-            'updated_date' => $this->_updatedDate,
-            'transfer_date' => $this->_transferDate
+            'updated_date' => $this->_updatedDate
         );
 
         $this->db->insert($this->tbl_donation, $data);
@@ -133,7 +162,19 @@ class Donation_model extends MY_Model
 
     public function lastDonationId()
     {
-        
+        $result="";
+        $this->db->select_max('aid');
+        $query  = $this->db->get($this->tbl_donation);
+        $result  = $query->row_array();
+
+        if(is_array($result)){
+            $result = get_array_value($result,'aid');
+        }
+
+        return $result;
+
+
+
     }
 
 

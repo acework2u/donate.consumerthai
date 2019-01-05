@@ -94,10 +94,11 @@ class Donate extends MY_Controller
         $payment_type = "";
         $cardholderName = "";
         $donorId = "";
-        $title_name="";
+        $title_name = "";
         $created_date = date('Y-m-d H:i:s');
         $updated_date = date('Y-m-d H:i:s');
-        $status=1;
+        $status = 1;
+        $paymentChannel = "";
 
         if (!is_blank($this->input->get_post('money-input'))) {
             $amount_to_db = $this->input->get_post('money-input');
@@ -109,7 +110,7 @@ class Donate extends MY_Controller
             $tax_id = $this->input->get_post('id');
         }
         if (!is_blank($this->input->get_post('email'))) {
-            $email = $this->input->get_post('email');
+            $email = trim($this->input->get_post('email'));
         }
         if (!is_blank($this->input->get_post('new-email'))) {
             $news_email = $this->input->get_post('new-email');
@@ -126,31 +127,42 @@ class Donate extends MY_Controller
         if (!is_blank($this->input->get_post('cardholderName'))) {
             $cardholderName = $this->input->get_post('cardholderName');
         }
-        if(!is_blank($this->input->get_post('title_name'))){
+        if (!is_blank($this->input->get_post('title_name'))) {
             $title_name = $this->input->get_post('title_name');
         }
-        if(!is_blank($this->input->get_post('tel'))){
+        if (!is_blank($this->input->get_post('tel'))) {
             $tel = $this->input->get_post('tel');
         }
-        if(!is_blank($this->input->get_post('tax_id'))){
+        if (!is_blank($this->input->get_post('tax_id'))) {
             $tax_id = $this->input->get_post('tax_id');
         }
-        if(!is_blank($this->input->get_post('adress1'))){
+        if (!is_blank($this->input->get_post('adress1'))) {
             $address = $this->input->get_post('adress1');
         }
 
-
-        print_r($_POST);
-        exit();
+        switch ($payment_type) {
+            case "type-1":
+                $paymentChannel = "001";
+                break;
+            case "type-2":
+                $paymentChannel = "003";
+                break;
+            case "type-3":
+                $paymentChannel = "002";
+                break;
+        }
 
 
         #Check Donor
         $this->load->model($this->donor_model, 'donor');
-        $chk = $this->donor->checkDonor($email);
+
+        $this->donor->setEmail($email);
+        $chk = $this->donor->checkDonor();
+
         if ($chk) {
             //Donor
             $donorId = $this->donor->getDonorId();
-        }else{
+        } else {
             /** Add New Donor*/
             $this->donor->setTitleName($title_name);
             $this->donor->setFirstName($full_name);
@@ -160,18 +172,18 @@ class Donate extends MY_Controller
             $this->donor->setCreatedDate($created_date);
             $this->donor->setUpdatedDate($updated_date);
 
-            if($this->donor->create()){
+            if ($this->donor->create()) {
                 $donorId = $this->donor->getDonorId();
             }
 
         }
 
 
-//
-//        print_r($_POST);
+        $userData['donorId'] = $donorId;
+        $userInv = $this->generateInvoice();
 
-        echo "Donor ID: ".$donorId;
-        exit();
+//        echo "Donor ID: ".$donorId;
+//        exit();
 
 
         //Merchant's account information
@@ -210,7 +222,7 @@ class Donate extends MY_Controller
         $version = "9.3";
 
         //Construct signature string
-        $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $encCardData;
+        $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv . $encCardData;
         $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));    //Compute hash value
 
 
@@ -224,11 +236,10 @@ class Donate extends MY_Controller
 		<currencyCode>$currencyCode</currencyCode>  
 		<panCountry>$panCountry</panCountry> 
 		<cardholderName>$cardholderName</cardholderName>
-		<encCardData>$encCardData</encCardData>		
-	    <cardholderEmail>$email</cardholderEmail>	
-	    <userDefined1></userDefined1>
-	    <userDefined2></userDefined2>
-	    <userDefined3></userDefined3>	   
+		<cardholderEmail>$email</cardholderEmail>
+		<userDefined1>$donorId</userDefined1>
+		<userDefined2>$userInv</userDefined2>
+		<encCardData>$encCardData</encCardData>	  	   	         
 		<secureHash>$hash</secureHash>
 		</PaymentRequest>";
         $payload = base64_encode($xml);    //Convert payload to base64
@@ -265,9 +276,60 @@ class Donate extends MY_Controller
 
 //convert into associative array
         $xmlArr = json_decode($json, true);
-        echo "<pre>";
-        print_r($xmlArr);
-        echo "</pre>";
+
+        $resCode = "";
+        $panCard = "";
+        $amt = "";
+        $tranRef = "";
+        $dateTime = "";
+        $donorId = "";
+        $invoiceNo = "";
+        $issuerCountry = "";
+        $bankName = "";
+        $processBy = "";
+        $payment_channel ="001";
+        $donateCampaignId = 1;
+        $created_date = date('Y-m-d H:i:s');
+        $updated_date = date('Y-m-d H:i:s');
+        $failReason = "";
+
+        if (is_array($xmlArr)) {
+            $resCode = get_array_value($xmlArr, 'respCode', '');
+            $panCard = get_array_value($xmlArr, 'pan', '');
+            $amt = get_array_value($xmlArr, 'amt', '');
+            $tranRef = get_array_value($xmlArr, 'tranRef', '');
+            $dateTime = get_array_value($xmlArr, 'dateTime', '');
+            $donorId = get_array_value($xmlArr, 'userDefined1', '');
+            $invoiceNo = get_array_value($xmlArr, 'userDefined2', '');
+            $issuerCountry = get_array_value($xmlArr, 'issuerCountry', '');
+            $bankName = get_array_value($xmlArr, 'bankName', '');
+            $processBy = get_array_value($xmlArr, 'processBy', '');
+            $failReason = get_array_value($xmlArr, 'failReason', '');
+        }
+
+        /**** Create Donation ****/
+        $this->load->model($this->donation_model, 'donation');
+        $this->donation->setTransectionNo($tranRef);
+        $this->donation->setInvNumber($invoiceNo);
+        $this->donation->setAmount(amountToDb($amt));
+        $this->donation->setDonorId($donorId);
+        $this->donation->setDonationCampId($donateCampaignId);
+        $this->donation->setPaymentStatus($resCode);
+        $this->donation->setPaymentChannel($payment_channel);
+        $this->donation->setBankName($bankName);
+        $this->donation->setTransferDate($dateTime);
+        $this->donation->setPan($panCard);
+        $this->donation->setTransRef($tranRef);
+        $this->donation->setProcessBy($processBy);
+        $this->donation->setIssuerCountry($issuerCountry);
+        $this->donation->setNote($failReason);
+
+        $this->donation->create();
+
+
+//        echo "<pre>";
+//        print_r($xmlArr);
+//        echo "</pre>";
 
 //        echo "Response:<br/><textarea style='width:100%;height:80px'>". $result."</textarea>";
 

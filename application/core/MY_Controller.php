@@ -6,13 +6,12 @@ class MY_Controller extends CI_Controller
 
 
     public $view_page;
-    public $language   ;
+    public $language;
 
     public $report_model;
     public $donation_model;
     public $mail_model;
     public $donor_model;
-
 
 
     /*** 2c2p *****/
@@ -29,8 +28,6 @@ class MY_Controller extends CI_Controller
     public $_has_value;
 
 
-
-
     function __construct()
     {
         parent::__construct();
@@ -38,11 +35,11 @@ class MY_Controller extends CI_Controller
 
         $this->language = "thai";
 
-        if(!$this->session->userdata('site_lang')){
+        if (!$this->session->userdata('site_lang')) {
             $this->session->set_userdata('site_lang', $this->language);
         }
 
-        $this->view_page="";
+        $this->view_page = "";
 
         $this->report_model = "report_model";
         $this->donation_model = "donation_model";
@@ -62,47 +59,45 @@ class MY_Controller extends CI_Controller
         $this->_amount = '000000000000';
 
 
-
-
-
     }
 
 
+    public function sendParams()
+    {
 
-    public function sendParams(){
+        $this->_params = $this->_version . $this->_merchant_id . $this->_payment_description . $this->_order_id . $this->_currency . $this->_amount . $this->_result_url;
 
-            $this->_params = $this->_version.$this->_merchant_id.$this->_payment_description.$this->_order_id.$this->_currency.$this->_amount.$this->_result_url;
-
-            return $this->_params;
+        return $this->_params;
     }
 
-    public function setAmount($amount){
+    public function setAmount($amount)
+    {
         $this->_amount = $amount;
     }
 
-    public function setPaymentDescription($description){
+    public function setPaymentDescription($description)
+    {
         $this->_payment_description = $description;
     }
-    public function setOrderId($orderId){
+
+    public function setOrderId($orderId)
+    {
         $this->_order_id = $orderId;
     }
 
-    public function hashValue(){
+    public function hashValue()
+    {
         $hash_value = "";
 //        $hash_val = hash_hmac('sha1',$this->sendParams(),$this->_secret_key,false);
 
 
 //        $params = $version.$merchant_id.$payment_description.$order_id.$currency.$amount.$result_url_1;
-        $params2 = $this->_version.$this->_merchant_id.$this->_payment_description.$this->_order_id.$this->_currency.$this->_amount.$this->_result_url;
-        $hash_value = hash_hmac('sha1',$params2, $this->_secret_key,false);
+        $params2 = $this->_version . $this->_merchant_id . $this->_payment_description . $this->_order_id . $this->_currency . $this->_amount . $this->_result_url;
+        $hash_value = hash_hmac('sha1', $params2, $this->_secret_key, false);
 
 
         return $hash_value;
     }
-
-
-
-
 
 
     //create custom Controller
@@ -145,7 +140,6 @@ class MY_Controller extends CI_Controller
         }
 
     }
-
 
 
     public function resizeImage($filename)
@@ -205,6 +199,19 @@ class MY_Controller extends CI_Controller
         }
 
 
+    }
+
+
+    public function generateInvoice()
+    {
+        $this->load->model($this->donation_model, 'donation');
+        $numId = 0;
+        $numId = $this->donation->lastDonationId();
+        $numId += 1;
+        $inv = str_pad($numId, 6, "0", STR_PAD_LEFT);
+        $inv = "FFC" . date("y") . $inv;
+
+        return $inv;
     }
 
 
