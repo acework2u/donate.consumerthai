@@ -814,6 +814,35 @@ function amountToDb($number)
 
     return $amount;
 }
+function datetime2db($strDatetime){
+
+    $dateTime = date("Y-m-d H:i:s");
+    if(!is_blank($strDatetime)){
+        $timeStamp = $strDatetime;
+        $timeStamp = str_split($timeStamp,2);
+        $d=mktime($timeStamp[3],$timeStamp[4],$timeStamp[5],$timeStamp[1],$timeStamp[0],$timeStamp[2]);
+
+        $dateTime = date("Y-m-d H:i:s", $d);
+    }
+
+    return $dateTime;
+
+}
+
+function datetime2display($strDatetime){
+
+    $dateTime = date("d-m-Y H:i:s");
+    if(!is_blank($strDatetime)){
+        $timeStamp = $strDatetime;
+        $timeStamp = str_split($timeStamp,2);
+        $d=mktime($timeStamp[3],$timeStamp[4],$timeStamp[5],$timeStamp[1],$timeStamp[0],$timeStamp[2]);
+
+        $dateTime = date("d-m-Y H:i:s", $d);
+    }
+
+    return $dateTime;
+
+}
 
 
 ?>

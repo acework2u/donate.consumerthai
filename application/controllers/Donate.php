@@ -333,9 +333,17 @@ class Donate extends MY_Controller
 
 //        echo "Response:<br/><textarea style='width:100%;height:80px'>". $result."</textarea>";
 
+        $this->load->library('SocialMedia');
 
+        $socmed = new SocialMedia();
+        $social_media_name =$socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+        $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
+        $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+
+        $this->data['media_name'] = $social_media_name;
+        $this->data['media_urls'] = $social_media_urls;
         /*** Load View **/
-        $this->load->view('frontend/thankyou');
+        $this->load->view('frontend/thankyou',$this->data);
     }
 
 

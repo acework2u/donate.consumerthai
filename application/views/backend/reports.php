@@ -1,4 +1,47 @@
+<style>
+    .VueTables__limit {
+        display: none;
+    }
+    .VuePagination {
+        text-align: center;
+    }
 
+    .vue-title {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .vue-pagination-ad {
+        text-align: center;
+    }
+
+    .glyphicon.glyphicon-eye-open {
+        width: 16px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    th:nth-child(3) {
+        text-align: center;
+    }
+
+    .VueTables__child-row-toggler {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        display: block;
+        margin: auto;
+        text-align: center;
+    }
+
+    .VueTables__child-row-toggler--closed::before {
+        content: "+";
+    }
+
+    .VueTables__child-row-toggler--open::before {
+        content: "-";
+    }
+</style>
 
 
 
@@ -749,33 +792,74 @@
             </div>
             <!-- /.col -->
         </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-6 col-md-8">
+                <div class="hidden col-xs-3">
+                    <span>Start Date</span><vue-datepicker-local v-model="startTime" format="DD-MM-YYYY" :local="local"></vue-datepicker-local>
+                </div>
+                <div class="hidden col-xs-3">
+                    <span>End Date</span><vue-datepicker-local v-model="endTime" format="DD-MM-YYYY" :local="local"></vue-datepicker-local>
 
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-8">
+                    <vue-datepicker-local v-model="range" range-separator=" to " :local="local" show-buttons format="DD-MM-YYYY"></vue-datepicker-local>
+                    <button class="btn btn-group-sm" @click="confrim">Confirm</button>
+                </div>
+
+                <div>
+                   <p>Start {{startTime}}</p>
+                   <p>End {{endTime}}</p>
+                </div>
+
+
+            </div>
+            <div class="col-xs-6 col-md-4 text-right mx-auto">
+
+                <button class="btn btn-success">Export xls</button>
+
+            </div>
+
+
+
+
+
+        </div>
 
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
+
                     <div class="box-header">
-                        <h3 class="box-title">Responsive Hover Table</h3>
-
-
-
+                        <h3 class="box-title">Donation List</h3>
                         <div class="box-tools">
                             <div>
 <!--                                <vue-datepicker-local v-model="time" :local="local"></vue-datepicker-local>-->
                             </div>
                             <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                <input type="text"  name="table_search" class="hidden form-control pull-right" placeholder="Search">
 
-                                <div class="input-group-btn">
+                                <div class="hidden input-group-btn">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                 </div>
+                                <select class="form-control" @change="$refs.table.setLimit($event.target.value)">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="300">300</option>
+                                    <option value="400">400</option>
+                                    <option value="500">500</option>
+                                </select>
+
+
+
                             </div>
 
                         </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+                        <table class="hidden table table-hover">
                             <tr>
                                 <th>Invoice No.</th>
                                 <th>Campaign</th>
@@ -784,33 +868,65 @@
                                 <th>Status</th>
                                 <th>Donor</th>
                                 <th>Ref No.</th>
-
-                                <th>Note</th>
+                                <th>Payment Channel</th>
+                                <th>Bank Name</th>
+                                <th>Card</th>
+                                <th>By</th>
                                 <th>Action</th>
                             </tr>
+                            <tr>
+                                <td><input type="text" class="form-control"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             <tr v-for="item,index in filterDonationList">
-                                <td>{{item.transection_no}}</td>
+                                <td>{{item.inv_number}}</td>
                                 <td>{{item.campaign_name}}</td>
                                 <td>{{item.amount | formatBaht}}</td>
                                 <td>{{item.created_date}}</td>
-                                <td><span class="label label-success">{{item.status}}</span></td>
+                                <td><span class="label label-success">{{item.note}}</span></td>
                                 <td>{{item.first_name}} {{item.last_name}}</td>
                                 <td>{{item.transection_no}}</td>
-                                <td>{{item.note}}</td>
+                                <td>{{item.paymentchanel}}</td>
+                                <td>{{item.bankName}}</td>
+                                <td>{{item.pan}}</td>
+                                <td>{{item.processBy}}</td>
                                 <td><span><i class="btn fa fa-pencil"></i> <i class="btn fa fa-trash"></i></span></td>
                             </tr>
 
                         </table>
+
+                        <v-client-table  ref="table" :columns="columns" :data="filterDonationList" :options="options">
+<!--                            <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon glyphicon-eye-open">{{props.row.aid}}</a>-->
+                            <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon fa fa-edit"></a>
+                            <span class="float-right" slot="amount" slot-scope="props">{{props.row.amount | formatBaht}}</span>
+                            <a class="" slot="inv_number" slot-scope="props">{{props.row.inv_number}}</a>
+
+                        </v-client-table>
+
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
-                        <ul class="pagination pagination-sm no-margin pull-right">
+                        <ul class="hidden pagination pagination-sm no-margin pull-right">
                             <li><a href="#">&laquo;</a></li>
                             <li><a href="#">1</a></li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li><a href="#">&raquo;</a></li>
                         </ul>
+
+
+
+
                     </div>
                 </div>
                 <!-- /.box -->

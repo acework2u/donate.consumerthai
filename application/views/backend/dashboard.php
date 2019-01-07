@@ -351,6 +351,7 @@
                                     <thead>
                                     <tr>
                                         <th>Transection No.</th>
+                                        <th>Invoice No.</th>
                                         <th>Donor</th>
                                         <th>Status</th>
                                         <th>Amount</th>
@@ -359,11 +360,12 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="item ,index in filterDonationList">
-                                        <td><a href="pages/examples/invoice.html">{{item.transection_no}}</a></td>
+                                        <td><a >{{item.transection_no}}</a></td>
+                                        <td><a >{{item.inv_number}}</a></td>
                                         <td>{{item.first_name}}</td>
-                                        <td><span class="label label-success">{{item.status}}</span></td>
+                                        <td><span class="label label-success">{{item.note}}</span></td>
                                         <td>
-                                            <div class="sparkbar" data-color="#00a65a" data-height="20">100.00</div>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">{{item.amount | numeral('0,0')}}</div>
                                         </td>
                                         <td>{{item.created_date}}</td>
                                     </tr>
@@ -376,7 +378,7 @@
                         <!-- /.box-body -->
                         <div class="box-footer clearfix">
                             <a href="javascript:void(0)" class="hidden btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                            <a href="<?php echo site_url('admin/reports')?>" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
                         </div>
                         <!-- /.box-footer -->
                     </div>

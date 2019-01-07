@@ -1,4 +1,5 @@
 var baseUrl = window.location.origin;
+
 var lastdonate = new Vue({
     el: "#lastdonate",
     data() {

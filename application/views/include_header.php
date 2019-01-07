@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/Ionicons/css/ionicons.min.css')?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/AdminLTE.min.css')?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/vue-datepicker-local.css')?>">
+
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/skins/_all-skins.min.css')?>">
@@ -42,10 +42,18 @@
     <script src="<?php echo base_url('assets/js/vue.js');?>"></script>
     <script src="<?php echo base_url('assets/js/vue-select.js');?>"></script>
     <script src="<?php echo base_url('assets/js/axios.js');?>"></script>
-    <script src="<?php echo base_url('assets/js/vue-datepicker-local.js');?>"></script>
+
     <script src="<?php echo base_url('assets/js/moment-with-locales.min.js');?>"></script>
     <script src="<?php echo base_url('assets/js/moment.js');?>"></script>
     <script src="<?php echo base_url('assets/js/vue-moment.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/numeral.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/vue-numeral-filter.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/vue-tables-2.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/vue-pagination-2.min.js');?>"></script>
+
+    <script src="<?php echo base_url('assets/vue-datepicker-local-master/dist/vue-datepicker-local.js');?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('assets/vue-datepicker-local-master/dist/vue-datepicker-local.css')?>">
+
 
 
 
