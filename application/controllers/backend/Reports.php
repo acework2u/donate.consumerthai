@@ -1,6 +1,8 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Reports extends MY_Controller
 {
@@ -50,6 +52,114 @@ class Reports extends MY_Controller
 
         }
     }
+    public function donationList(){
+        if ($this->is_login()) {
+            $this->load->model($this->report_model, 'report');
+
+            $startDate = date('Y-m-01 00:00:00');
+            $endDate = date('Y-m-t 12:59:59');
+
+            if (!is_blank($this->input->get_post('startDate'))) {
+                $startDate = date('Y-m-d', strtotime($this->input->get_post('startDate')));
+            }
+            if (!is_blank($this->input->get_post('endDate'))) {
+                $endDate = date('Y-m-d', strtotime($this->input->get_post('endDate')));
+            }
+
+
+            $donationList = array();
+            $start_date = array('updated_date >= $startDate');
+            $end_date = array('updated_date <= $endDate');
+
+            $this->report->setStartDate($start_date);
+            $this->report->setEndDate($end_date);
+
+            if ($this->report->donation()) {
+                $donationList = $this->report->donation();
+            }
+
+//            echo json_encode($donationList);
+            $reports_info = array();
+            if (is_array($donationList)) {
+                $i = 1;
+                foreach ($donationList as $row) {
+                    $rows = array(
+                        'indexd' => $i,
+                        'transfer_date' => datetime2display(get_array_value($row, 'transfer_date')),
+                        'invoice_no' => get_array_value($row, 'inv_number', ''),
+                        'first_name' => get_array_value($row, 'first_name', ''),
+                        'amount' => get_array_value($row, 'amount', 0),
+                        'bankName' => get_array_value($row, 'bankName', '')
+
+                    );
+                    $reports_info[] = $rows;
+                    $i++;
+                }
+            }
+
+
+            return $reports_info;
+
+        }
+    }
+
+    public function exportxls($data = '')
+    {
+
+
+        $report_date = "วันที่ " . date('Y-m-d');
+
+        $sp = new Spreadsheet();
+        $sheet = $sp->getActiveSheet();
+        /**** Header ***/
+        $sheet->setCellValue('C1', 'มูลนิธิเพื่อผู้บริโภค');
+        $sheet->setCellValue('C2', 'รายงานรับเงินบริจาค');
+//        $sheet->setCellValue('A3', $report_date);
+
+        /*** Column ***/
+        $sheet->setCellValue('A4', 'ลำดับที่');
+        $sheet->setCellValue('B4', 'วันที่');
+        $sheet->setCellValue('C4', 'ใบเสร็จรับเงิน');
+        $sheet->setCellValue('D4', 'ชื่อ-นามสกุล');
+        $sheet->setCellValue('E4', 'จำนวนเงินที่ได้รับ(บาท)');
+        $sheet->setCellValue('F4', 'ชำระเงิน ธนาคาร');
+        /**Content */
+
+
+        if(is_blank($data)){
+            $data = $this->donationList();
+        }
+
+//        $data = $this->getfiles();
+
+
+        if (is_array($data)) {
+            $sp->getActiveSheet()->fromArray($data, null, 'A5');
+            $last_row = count($data) + 1;
+
+            /***** Style ***/
+            $sp->getActiveSheet()->getStyle('E5:E' . $last_row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $sp->getActiveSheet()->getStyle('A4:F4')->getFont()->setBold(true);
+            $sp->getActiveSheet()->getStyle('C1:C2')->getFont()->setBold(true);
+
+            foreach (range('A','F') as $columnID){
+                $sp->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+
+        }
+
+
+        $writer = new Xlsx($sp);
+        $filename = 'donation-report_' . date('Y-m-d');
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+
+
+    }
+
 
 
     public function genInvoice($donateId = 0)
@@ -154,9 +264,14 @@ class Reports extends MY_Controller
             }
 
             $mpdf->Output();
+            $fileName = $invoice_no.".pdf";
+            $fullfilePath = "downloads/invoice/".$invoice_no.".pdf";
+            ob_clean();
+            $mpdf->Output($fullfilePath,'F');
 
         } // end if
     }
+
 
 
 } // end of class

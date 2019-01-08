@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 require_once APPPATH . "/third_party/2c2p/pkcs7.php";
 
-class res2c2p extends pkcs7
+class Res2c2p extends pkcs7
 {
     private $response ="";
     private $_prk;

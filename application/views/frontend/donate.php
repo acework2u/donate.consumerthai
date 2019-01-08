@@ -502,26 +502,7 @@
         </div>
     </div>
 
-    <div class="thank-container pt-3 pb-3 mt-4 mb-4 d-none" id="thank">
-        <div class="d-flex">
-            <img src="<?php echo base_url('assets/img/thank-header.png')?>" class="pb-3">
-        </div>
-        <div class="d-flex">
-            <img src="<?php echo base_url('assets/img/thank.png')?>" class="w-100">
-        </div>
-        <div class="mt-4 ml-5">
-            <img src="<?php echo base_url('assets/img/fb-icon.png')?>" class="h-30">
-            <img src="<?php echo base_url('assets/img/twitter-icon.png')?>" class="h-30">
-            <img src="<?php echo base_url('assets/img/ig-icon.png')?>" class="h-30">
-            <img src="<?php echo base_url('assets/img/google_plus-icon.png')?>" class="h-30">
-            <img src="<?php echo base_url('assets/img/pinterest-icon.png')?>" class="h-30">
-        </div>
-        <div class="mt-2 ml-5 mb-2 position-relative">
-            <img src="<?php echo base_url('assets/img/share-icon.png')?>" class="ml-5 ml-0-lg h-30">
-            <span>แชร์บอกเพื่อน</span>
-            <img src="<?php echo base_url('assets/img/click-donate.png')?>" class="ml-5 position-absolute click-donate h-60">
-        </div>
-    </div>
+
 </div>
 </body>
 <footer class="footer pl-4 pr-4 pt-2 pb-2 mt-4 d-flex" id="footer-xl">

@@ -255,7 +255,7 @@ class Donate extends MY_Controller
     public function donateSuccess()
     {
 
-        $this->load->library('recive2c2p');
+        $this->load->library('Recive2c2p');
 
         $res = new res2c2p();
         $response = "";
