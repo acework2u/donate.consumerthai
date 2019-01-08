@@ -909,7 +909,7 @@
 <!--                            <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon glyphicon-eye-open">{{props.row.aid}}</a>-->
                             <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon fa fa-edit"></a>
                             <span class="float-right" slot="amount" slot-scope="props">{{props.row.amount | formatBaht}}</span>
-                            <a class="" slot="inv_number" slot-scope="props">{{props.row.inv_number}}</a>
+                            <a :href="invoice(props.row.aid)" class="" slot="inv_number" slot-scope="props">{{props.row.inv_number}}</a>
 
                         </v-client-table>
 

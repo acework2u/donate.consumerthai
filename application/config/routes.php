@@ -66,6 +66,7 @@ $route['admin/reports'] = "backend/Reports/index";
 
 /**** Report **/
 $route['api-01/report/donation-list'] = "backend/Reports/jsonDonationList";
+$route['admin/reports/get-invoice/(:num)'] = "backend/Reports/genInvoice/$1";
 
 
 

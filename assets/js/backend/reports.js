@@ -112,7 +112,11 @@ var appreport = new Vue({
             this.endTime = this.range[1]
 
             // console.log(this.range);
+        },
+        invoice(donationId){
+            return baseUrl+"/admin/reports/get-invoice/"+donationId
         }
+
 
 
 
