@@ -273,7 +273,7 @@ class Donate extends MY_Controller
                 $this->load->model($this->donation_model, 'donation');
                 $this->donation->setTransectionNo($uniqueTransactionCode);
 //        $this->donation->setInvNumber($invoiceNo);
-                $this->donation->setAmount(amountToDb($amount_to_db));
+                $this->donation->setAmount($amount_to_db);
                 $this->donation->setDonorId($donorId);
                 $this->donation->setDonationCampId($donateCampaignId);
                 $this->donation->setPaymentStatus($resCode);
