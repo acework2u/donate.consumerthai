@@ -22,6 +22,7 @@ class Donation_model extends MY_Model
     private $_processBy;
     private $_issuerCountry;
     private $_donationId;
+    private $_invoiceId;
 
     public function __construct()
     {
@@ -36,6 +37,10 @@ class Donation_model extends MY_Model
 
     public function setDonationId($donationId){
         $this->_donationId = $donationId;
+    }
+
+    public function getDonationId(){
+        return $this->_donationId;
     }
 
     public function setTransectionNo($transection_no)
@@ -110,6 +115,9 @@ class Donation_model extends MY_Model
     public function setIssuerCountry($countryCode){
         $this->_issuerCountry = $countryCode;
     }
+    public function setInvoiceId($invoice_id){
+        $this->_invoiceId = $invoice_id;
+    }
 
 
 
@@ -136,7 +144,7 @@ class Donation_model extends MY_Model
 
         $this->db->insert($this->tbl_donation, $data);
         if (!is_blank($this->db->insert_id()) && $this->db->insert_id() > 0) {
-
+            $this->setDonationId($this->db->insert_id());
             return true;
         } else {
             return false;
@@ -145,8 +153,27 @@ class Donation_model extends MY_Model
 
     }
 
-    public function update()
+    public function update($donation_id="")
     {
+        $data = array(
+            'invoice_id'=>$this->_invoiceId,
+            'inv_number'=>$this->_inv_number
+        );
+        if(!is_blank($donation_id)){
+            $this->db->where('aid',$donation_id);
+            $this->db->update($this->tbl_donation,$data);
+
+            if ($this->db->affected_rows()) {
+                return true;
+            } else {
+                return false;
+            }
+
+
+        }else{
+            return false;
+        }
+
 
     }
 
@@ -181,7 +208,6 @@ class Donation_model extends MY_Model
 
 
     }
-
 
     public function donationById(){
         $this->db->select('donation.* ,

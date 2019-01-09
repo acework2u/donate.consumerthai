@@ -99,6 +99,8 @@ class Donate extends MY_Controller
         $updated_date = date('Y-m-d H:i:s');
         $status = 1;
         $paymentChannel = "";
+        $donateType = "";
+        $bank_transfer = "";
 
         if (!is_blank($this->input->get_post('money-input'))) {
             $amount_to_db = $this->input->get_post('money-input');
@@ -140,16 +142,13 @@ class Donate extends MY_Controller
             $address = $this->input->get_post('adress1');
         }
 
-        switch ($payment_type) {
-            case "type-1":
-                $paymentChannel = "001";
-                break;
-            case "type-2":
-                $paymentChannel = "003";
-                break;
-            case "type-3":
-                $paymentChannel = "002";
-                break;
+        if (!is_blank($this->input->get_post('donate-type'))) {
+            $donateType = trim($this->input->get_post('donate-type'));
+        }
+
+        if ($donateType == "type-1") {
+            $email = "donationffc@gmail.com";
+            $$full_name = "ไม่ประสงค์ออกนาม";
         }
 
 
@@ -167,6 +166,8 @@ class Donate extends MY_Controller
             $this->donor->setTitleName($title_name);
             $this->donor->setFirstName($full_name);
             $this->donor->setEmail($email);
+            $this->donor->setAddress($address);
+            $this->donor->setTaxNo($tax_id);
             $this->donor->setTel($tel);
             $this->donor->setStatus($status);
             $this->donor->setCreatedDate($created_date);
@@ -182,52 +183,43 @@ class Donate extends MY_Controller
         $userData['donorId'] = $donorId;
         $userInv = $this->generateInvoice();
 
-//        echo "Donor ID: ".$donorId;
-//        exit();
 
-
-        //Merchant's account information
-        # $merchantID = "764764000001745";        //Get MerchantID when opening account with 2C2P
-        # $secretKey = "A92FC2236FCB7D94772BBED0560ABB4747B104EC355A97385095A4FD3390ADFB";    //Get SecretKey from 2C2P PGW Dashboard
-        $merchantID = C2P_MERCHANT_ID;        //Get MerchantID when opening account with 2C2P
-        $secretKey = C2P_SECRET_KEY;    //Get SecretKey from 2C2P PGW Dashboard
-
-
-        //Transaction Information
-        $desc = "Donate Consumer Thai";
-        $uniqueTransactionCode = time();
-        $currencyCode = "764";
-
-
-        $amt = "000000000010";
-        $amount = trim($this->input->get_post('money-input'));
-        if (!is_blank($amount)) {
-            $amt = amount2c2p($amount);
-        }
-
-        $panCountry = "TH";
-
-        //Customer Information
+        switch ($payment_type) {
+            case "type-1":
+                $paymentChannel = "001";
+                $merchantID = C2P_MERCHANT_ID;        //Get MerchantID when opening account with 2C2P
+                $secretKey = C2P_SECRET_KEY;    //Get SecretKey from 2C2P PGW Dashboard
+                //Transaction Information
+                $desc = "Donate Consumer Thai";
+                $uniqueTransactionCode = time();
+                $currencyCode = "764";
+                $amt = "000000000010";
+                $amount = trim($this->input->get_post('money-input'));
+                if (!is_blank($amount)) {
+                    $amt = amount2c2p($amount);
+                }
+                $panCountry = "TH";
+                //Customer Information
 //        $cardholderName = "John Doe";
 
-        //Encrypted card data
-        $encCardData = $_POST['encryptedCardInfo'];
+                //Encrypted card data
+                $encCardData = $_POST['encryptedCardInfo'];
 
-        //Retrieve card information for merchant use if needed
-        $maskedCardNo = $_POST['maskedCardInfo'];
-        $expMonth = $_POST['expMonthCardInfo'];
-        $expYear = $_POST['expYearCardInfo'];
+                //Retrieve card information for merchant use if needed
+                $maskedCardNo = $_POST['maskedCardInfo'];
+                $expMonth = $_POST['expMonthCardInfo'];
+                $expYear = $_POST['expYearCardInfo'];
 
-        //Request Information
-        $version = "9.3";
+                //Request Information
+                $version = "9.3";
 
-        //Construct signature string
-        $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv . $encCardData;
-        $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));    //Compute hash value
+                //Construct signature string
+                $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv . $encCardData;
+                $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));    //Compute hash value
 
 
-        //Construct payment request message
-        $xml = "<PaymentRequest>
+                //Construct payment request message
+                $xml = "<PaymentRequest>
 		<version>$version</version> 
 		<merchantID>$merchantID</merchantID>
 		<uniqueTransactionCode>$uniqueTransactionCode</uniqueTransactionCode>
@@ -242,11 +234,87 @@ class Donate extends MY_Controller
 		<encCardData>$encCardData</encCardData>	  	   	         
 		<secureHash>$hash</secureHash>
 		</PaymentRequest>";
-        $payload = base64_encode($xml);    //Convert payload to base64
+                $payload = base64_encode($xml);    //Convert payload to base64
 
-        $this->data['payload'] = $payload;
+                $this->data['payload'] = $payload;
 
-        $this->load->view('frontend/payload', $this->data);
+                $this->load->view('frontend/payload', $this->data);
+
+
+                break;
+            case "type-2":
+
+                /** QR Code**/
+                $paymentChannel = "003";
+
+
+
+                $this->load->library('SocialMedia');
+
+                $socmed = new SocialMedia();
+                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
+                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+
+                $this->data['media_name'] = $social_media_name;
+                $this->data['media_urls'] = $social_media_urls;
+                /*** Load View **/
+                $this->load->view('frontend/thankyou', $this->data);
+
+                break;
+            case "type-3":
+                /** BAnk Transfer**/
+                $uniqueTransactionCode = time();
+                $resCode = "001";
+                $payment_channel = "006";
+                $donateCampaignId = "1";
+
+                /**** Create Donation ****/
+                $this->load->model($this->donation_model, 'donation');
+                $this->donation->setTransectionNo($uniqueTransactionCode);
+//        $this->donation->setInvNumber($invoiceNo);
+                $this->donation->setAmount(amountToDb($amount_to_db));
+                $this->donation->setDonorId($donorId);
+                $this->donation->setDonationCampId($donateCampaignId);
+                $this->donation->setPaymentStatus($resCode);
+                $this->donation->setPaymentChannel($payment_channel);
+                $this->donation->setBankName($bank_transfer);
+//                $this->donation->setTransferDate($dateTime);
+//                $this->donation->setPan($panCard);
+//                $this->donation->setTransRef($tranRef);
+//                $this->donation->setProcessBy($processBy);
+//                $this->donation->setIssuerCountry($issuerCountry);
+//                $this->donation->setNote($failReason);
+
+                $this->donation->create();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                $paymentChannel = "002";
+                $this->load->library('SocialMedia');
+                $socmed = new SocialMedia();
+                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
+                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+
+                $this->data['media_name'] = $social_media_name;
+                $this->data['media_urls'] = $social_media_urls;
+                /*** Load View **/
+                $this->load->view('frontend/thankyou', $this->data);
+                break;
+        }
 
 
     }
@@ -287,7 +355,7 @@ class Donate extends MY_Controller
         $issuerCountry = "";
         $bankName = "";
         $processBy = "";
-        $payment_channel ="001";
+        $payment_channel = "001";
         $donateCampaignId = 1;
         $created_date = date('Y-m-d H:i:s');
         $updated_date = date('Y-m-d H:i:s');
@@ -310,7 +378,7 @@ class Donate extends MY_Controller
         /**** Create Donation ****/
         $this->load->model($this->donation_model, 'donation');
         $this->donation->setTransectionNo($tranRef);
-        $this->donation->setInvNumber($invoiceNo);
+//        $this->donation->setInvNumber($invoiceNo);
         $this->donation->setAmount(amountToDb($amt));
         $this->donation->setDonorId($donorId);
         $this->donation->setDonationCampId($donateCampaignId);
@@ -326,6 +394,29 @@ class Donate extends MY_Controller
 
         $this->donation->create();
 
+        if($resCode=="00"){
+            $this->load->model($this->invoice_model,'invoice');
+
+            $invoiceNo = $this->generateInvoice();
+            $donationId = $this->donation->getDonationId();
+            $invoiceStatus = 1;
+            $remark = "2c2p";
+
+
+
+            $this->invoice->setInvoiceNo($invoiceNo);
+            $this->invoice->setDonationId($donationId);
+            $this->invoice->setInvoiceStatus($invoiceStatus);
+            $this->invoice->setRemark($remark);
+
+            if($this->invoice->create()){
+                $invID = $this->invoice->getInvoiceId();
+                $this->donation->setInvoiceId($invID);
+                $this->donation->setInvNumber($invoiceNo);
+                $this->donation->update($donationId);
+            }
+        }
+
 
 //        echo "<pre>";
 //        print_r($xmlArr);
@@ -336,64 +427,14 @@ class Donate extends MY_Controller
         $this->load->library('SocialMedia');
 
         $socmed = new SocialMedia();
-        $social_media_name =$socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+        $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
         $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
         $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
 
         $this->data['media_name'] = $social_media_name;
         $this->data['media_urls'] = $social_media_urls;
         /*** Load View **/
-        $this->load->view('frontend/thankyou',$this->data);
-    }
-
-
-    public function demoDonate()
-    {
-//        $merchant_id = "JT01";			//Get MerchantID when opening account with 2C2P
-        $merchant_id = C2P_MERCHANT_ID;            //Get MerchantID when opening account with 2C2P
-        $secret_key = C2P_SECRET_KEY;    //Get SecretKey from 2C2P PGW Dashboard
-
-        //Transaction information
-        $payment_description = 'Donate for Consomerthai.org';
-        $order_id = time();
-        $currency = "764"; //THB 764
-        // $amount  = '000000002550';
-        $bath = 25.5;
-        $rs = ($bath * 100);
-        $amount = sprintf("%'.012d", $rs);
-        // // $amount  = '000000002550';
-        // $amount = strval($amount);
-
-
-        //Request information
-        $version = C2P_VERSION;
-        $payment_url = C2P_PAYMENT_URL;//"https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment";
-        $result_url_1 = C2P_RESULT_URL;//"http://2c2p-v3.local/result.php";
-
-        //Construct signature string
-        $params = $version . $merchant_id . $payment_description . $order_id . $currency . $amount . $result_url_1;
-        $hash_value = hash_hmac('sha1', $params, $secret_key, false);    //Compute hash value
-
-        echo 'Payment information:';
-        echo '<html> 
-	<body>
-	<form id="myform" method="post" action="' . $payment_url . '">
-		<input type="text" name="version" value="' . $version . '"/>
-		<input type="text" name="merchant_id" value="' . $merchant_id . '"/>
-		<input type="text" name="currency" value="' . $currency . '"/>
-		<input type="text" name="result_url_1" value="' . $result_url_1 . '"/>
-		<input type="text" name="hash_value" value="' . $hash_value . '"/>
-    PRODUCT INFO : <input type="text" name="payment_description" value="' . $payment_description . '"  readonly/><br/>
-		ORDER NO : <input type="text" name="order_id" value="' . $order_id . '"  readonly/><br/>
-		AMOUNT: <input type="text" name="amount" value="' . $amount . '" readonly/><br/>
-		<input type="submit" name="submit" value="Confirm" />
-	</form>  
-	
-	<script type="text/javascript">
-		document.forms.myform.submit();
-	</script>
-	</body>
-	</html>';
+        $this->load->view('frontend/thankyou', $this->data);
     }
 
 

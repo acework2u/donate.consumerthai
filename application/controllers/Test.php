@@ -416,4 +416,28 @@ class Test extends MY_Controller
     }
 
 
+    public function testGenInvoice(){
+        $this->load->model($this->donation_model,'donation');
+
+        $Id = $this->donation->lastInvoiceId();
+
+        echo $this->genInvoiceNo();
+    }
+
+    public function genInvoiceNo(){
+        $this->load->model($this->donation_model, 'donation');
+        $numId = 0;
+        $numId = $this->donation->lastInvoiceId();
+        if(is_blank($numId)){
+            $numId =0;
+        }
+        $numId += 1;
+        $inv = str_pad($numId, 6, "0", STR_PAD_LEFT);
+        $inv = "FFC" . date("y") . $inv;
+
+        return $inv;
+    }
+
+
+
 }

@@ -15,6 +15,7 @@ class Donor_model extends MY_Model
     private $_createdDate;
     private $_updatedDate;
     private $_status;
+    private $_taxId;
 
 
     public function __construct()
@@ -75,6 +76,9 @@ class Donor_model extends MY_Model
     public function setTitleName($title_name){
         $this->_titleName = $title_name;
     }
+    public function setTaxNo($tax){
+        $this->_taxId = $tax;
+    }
 
 
     public function create()
@@ -84,6 +88,8 @@ class Donor_model extends MY_Model
             'first_name' => $this->_firstName,
             'last_name' => $this->_lastName,
             'email' => $this->_email,
+            'address'=>$this->_address,
+            'tax_code'=>$this->_taxId,
             'tel' => $this->_tel,
             'status' => $this->_status,
             'created_date' => $this->_createdDate,

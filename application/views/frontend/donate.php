@@ -176,6 +176,7 @@
                             </label>
                         </div>
                     </div>
+
                     <div id="bill" class="mt-4">
                         <div>
                             <img src="<?php echo base_url('assets/img/bill-icon.png')?>" class="mr-2 ml-2 h-30">
@@ -210,6 +211,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="mt-4">
                         <img src="<?php echo base_url('assets/img/newspaper.png')?>" class="mr-2 ml-2 h-30">
                         <span class="state-2-header h-30">ข้อมูลข่าวสารเพิ่มเติม</span>

@@ -12,6 +12,7 @@ class MY_Controller extends CI_Controller
     public $donation_model;
     public $mail_model;
     public $donor_model;
+    public $invoice_model;
 
 
     /*** 2c2p *****/
@@ -44,6 +45,7 @@ class MY_Controller extends CI_Controller
         $this->report_model = "report_model";
         $this->donation_model = "donation_model";
         $this->donor_model = "donor_model";
+        $this->invoice_model = "invoice_model";
 
 
         /**** 2C2P ***/
@@ -204,15 +206,29 @@ class MY_Controller extends CI_Controller
 
     public function generateInvoice()
     {
+//        $this->load->model($this->donation_model, 'donation');
+//        $numId = 0;
+//        $numId = $this->donation->lastDonationId();
+//        $numId += 1;
+//        $inv = str_pad($numId, 6, "0", STR_PAD_LEFT);
+//        $inv = "FFC" . date("y") . $inv;
+//
+//        return $inv;
+
         $this->load->model($this->donation_model, 'donation');
         $numId = 0;
-        $numId = $this->donation->lastDonationId();
+        $numId = $this->donation->lastInvoiceId();
+        if(is_blank($numId)){
+            $numId =0;
+        }
         $numId += 1;
         $inv = str_pad($numId, 6, "0", STR_PAD_LEFT);
         $inv = "FFC" . date("y") . $inv;
 
         return $inv;
     }
+
+
 
 
 }
