@@ -282,14 +282,9 @@ class Test extends MY_Controller
 
         $jvDate = "2018-12-31T17:00:00.000Z";
 
-
-        echo $jvDate = date('Y-m-d', strtotime($jvDate));
-        exit();
-
-
-        if (!is_blank($this->input->get_post('startDate'))) {
-
-        }
+//
+//        echo $jvDate = date('Y-m-d', strtotime($jvDate));
+//        exit();
 
 
 //        $data_where['updated_date'] = "2017-01-01 00:00:00";
@@ -344,7 +339,7 @@ class Test extends MY_Controller
             $sp->getActiveSheet()->getStyle('A4:F4')->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('C1:C2')->getFont()->setBold(true);
 
-            foreach (range('A','F') as $columnID){
+            foreach (range('A', 'F') as $columnID) {
                 $sp->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
 
@@ -397,11 +392,24 @@ class Test extends MY_Controller
                 foreach ($donationList as $row) {
                     $rows = array(
                         'indexd' => $i,
+                        'aid' => get_array_value($row, 'aid', ''),
+                        'transection_no' => get_array_value($row, 'transection_no', ''),
+                        'mount' => get_array_value($row, 'mount', ''),
+                        'doner_aid' => get_array_value($row, 'doner_aid', ''),
+                        'donation_campaign_aid' => get_array_value($row, 'donation_campaign_aid', ''),
+                        'payment_channel' => get_array_value($row, 'payment_channel', ''),
+                        'payment_status' => get_array_value($row, 'payment_status', ''),
+                        'bankName' => get_array_value($row, 'bankName', ''),
+                        'pan' => get_array_value($row, 'pan', ''),
+                        'note' => get_array_value($row, 'note', ''),
+                        'tranRef' => get_array_value($row, 'tranRef', ''),
+                        'processBy' => get_array_value($row, 'processBy', ''),
+                        'issuerCountry' => get_array_value($row, 'issuerCountry', ''),
                         'transfer_date' => datetime2display(get_array_value($row, 'transfer_date')),
-                        'invoice_no' => get_array_value($row, 'inv_number', ''),
+                        'created_date' => get_array_value($row, 'created_date', ''),
                         'first_name' => get_array_value($row, 'first_name', ''),
-                        'amount' => get_array_value($row, 'amount', 0),
-                        'bankName' => get_array_value($row, 'bankName', '')
+                        'updated_date' => get_array_value($row, 'updated_date', 0),
+                        'invoice_id' => get_array_value($row, 'invoice_id', '')
 
                     );
                     $reports_info[] = $rows;
@@ -410,26 +418,32 @@ class Test extends MY_Controller
             }
 
 
-            return $reports_info;
+            echo "<pre>";
+            print_r($reports_info);
+            echo "</pre>";
+
+//            return $reports_info;
 
         }
     }
 
 
-    public function testGenInvoice(){
-        $this->load->model($this->donation_model,'donation');
+    public function testGenInvoice()
+    {
+        $this->load->model($this->donation_model, 'donation');
 
         $Id = $this->donation->lastInvoiceId();
 
         echo $this->genInvoiceNo();
     }
 
-    public function genInvoiceNo(){
+    public function genInvoiceNo()
+    {
         $this->load->model($this->donation_model, 'donation');
         $numId = 0;
         $numId = $this->donation->lastInvoiceId();
-        if(is_blank($numId)){
-            $numId =0;
+        if (is_blank($numId)) {
+            $numId = 0;
         }
         $numId += 1;
         $inv = str_pad($numId, 6, "0", STR_PAD_LEFT);
@@ -438,6 +452,41 @@ class Test extends MY_Controller
         return $inv;
     }
 
+    public function bankList()
+    {
+        $rs = $this->getBanklist();
+        $pc = $this->getPaymentStatus();
+        echo "<pre>";
+        print_r($rs);
+        print_r($pc);
+        echo "</pre>";
+    }
+
+    public function testformatdatetime()
+    {
+
+        $dateTime = "2019-10-01 18:01:03";
+        $date1 = date('mdyHms',strtotime($dateTime));
+
+        $mydateDb = datetime2db($date1);
+
+        echo "DateTime =".$dateTime." strTotime". strtotime($dateTime)." newFormat=".date('mdyHms',strtotime($dateTime));
+
+
+
+//        $dateTime = date("Y-m-d H:i:s"); // 190110030117
+//        $dateTime2 = datetime2db(date('mdyHms',strtotime($dateTime)));
+//
+//        echo  $dateTime." ".$dateTime2." ".date('mdyHms',strtotime($dateTime)) ;
+//
+////        $mydateDb = datetime2db($mydate);
+////        $updateDate = date('ymdHms',strtotime($mydate));
+//
+//
+////        echo strtotime($mydate)." ".date('ymdHms',strtotime($mydate))." ".datetime2display($updateDate);
+
+
+    }
 
 
 }

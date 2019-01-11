@@ -68,6 +68,7 @@ $route['admin/reports'] = "backend/Reports/index";
 $route['api-01/report/donation-list'] = "backend/Reports/jsonDonationList";
 $route['admin/reports/get-invoice/(:num)'] = "backend/Reports/genInvoice/$1";
 $route['admin/reports/exportxls'] = "backend/Reports/exportxls";
+$route['admin/reports/update-donation'] = "backend/Reports/updateDonationStatus";
 
 
 
@@ -86,6 +87,10 @@ $route['api-v01/user/group-list'] = "auth/get_group_list";
 $route['api-v01/user/ma'] = "auth/actionUser";
 $route['api-v01/user/logon'] = "auth/jsonLogin";
 $route['api-v01/user/register'] = "auth/actionUserCreate";
+
+/**API***/
+$route['api-v01/banklist'] = "api/jsonBankList";
+$route['api-v01/payment-status-code'] = "api/jsonPaymentStatusCode";
 
 
 /**** Font ***/

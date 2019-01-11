@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="position-relative">
-<div class="w-100 position-relative" ref="header">
+<div class="w-100 position-relative" ref="header" id="appDonate">
     <img src="<?php echo base_url('assets/img/bg-header.png');?>" class="w-100 lg-bg-header">
-    <img src="<?php echo base_url('assets/img/logo.png')?>" class="header-logo position-absolute">
+     <a href="https://www.consumerthai.org" target="_blank"><img  src="<?php echo base_url('assets/img/logo.png')?>" class="header-logo position-absolute" style="z-index: 1"></a>
+
     <h1 class="header-text position-absolute text-center">ร่วมบริจาคกับเราวันนี้</h1>
     <h2 class="header-sub-text position-absolute text-cente d-none d-xl-block">คุณได้บุญ เราได้ทำงาน ...คุณได้รอยยิ้ม เราได้กำลังใจ</h2>
     <h2 class="header-sub-text-2 position-absolute text-center d-xl-none">ร่วมบริจาคเพื่อ สนับสนุนฟ้องคดี ให้แก่ผู้บริโภคที่ได้รับความเสียหาย และสนับสนุนศูนย์ทดสอบฉลาดซื้อ ให้ทดสอบสินค้าและบริการ </h2>
-    <img src="<?php echo base_url('assets/img/home-button.png')?>" class="position-absolute home-button">
+    <a href="<?php echo site_url();?>"><img src="<?php echo base_url('assets/img/home-button.png')?>" class="position-absolute home-button"></a>
     <div class="d-flex d-xl-none">
         <button class="button-more position-absolute d-none d-xl-none" id="button-more">อ่านข้อมูลเพิ่มเติม</button>
         <button class="button-more position-absolute d-xl-none" id="button-donate">คลิกเพื่อบริจาค</button>
@@ -39,7 +40,7 @@
             <div class="d-flex">
                 <div class="tab-body mb-5" id="tab-body-1">
                     <div class="video-container w-100 d-flex">
-                        <iframe class="w-100" src="https://www.youtube.com/embed/9jJV1kSAufI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe class="w-100" src="https://www.youtube.com/embed/hegUM5aIyUo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="info-container">
                         <h2 class="text-center mt-1 mb-3">รู้จัก มูลนิธิเพื่อผู้บริโภค (มพบ.)</h2>
@@ -536,4 +537,5 @@
         });
     }
 </script>
+
 </html>

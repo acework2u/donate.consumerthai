@@ -246,6 +246,29 @@ class Donate extends MY_Controller
 
                 /** QR Code**/
                 $paymentChannel = "003";
+                /** BAnk Transfer**/
+                $uniqueTransactionCode = time();
+                $resCode = "001";
+                $payment_channel = "007";
+                $donateCampaignId = "1";
+                /**** Create Donation ****/
+                $this->load->model($this->donation_model, 'donation');
+                $this->donation->setTransectionNo($uniqueTransactionCode);
+//        $this->donation->setInvNumber($invoiceNo);
+                $this->donation->setAmount($amount_to_db);
+                $this->donation->setDonorId($donorId);
+                $this->donation->setDonationCampId($donateCampaignId);
+                $this->donation->setPaymentStatus($resCode);
+                $this->donation->setPaymentChannel($payment_channel);
+                $this->donation->setBankName($bank_transfer);
+//                $this->donation->setTransferDate($dateTime);
+//                $this->donation->setPan($panCard);
+//                $this->donation->setTransRef($tranRef);
+//                $this->donation->setProcessBy($processBy);
+//                $this->donation->setIssuerCountry($issuerCountry);
+//                $this->donation->setNote($failReason);
+
+                $this->donation->create();
 
 
 
@@ -287,19 +310,6 @@ class Donate extends MY_Controller
 //                $this->donation->setNote($failReason);
 
                 $this->donation->create();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 $paymentChannel = "002";

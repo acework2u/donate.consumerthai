@@ -2,6 +2,7 @@
     .VueTables__limit {
         display: none;
     }
+
     .VuePagination {
         text-align: center;
     }
@@ -44,7 +45,6 @@
 </style>
 
 
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" id="appreport">
     <!-- Content Header (Page header) -->
@@ -54,7 +54,7 @@
             <small>Report</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="<?php echo base_url('admin')?>"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="<?php echo base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">{{title}}</li>
         </ol>
     </section>
@@ -74,7 +74,7 @@
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                 </div>
             </div>
             <!-- ./col -->
@@ -82,14 +82,14 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3>{{totalSuccess | formatBaht}}<sup style="font-size: 20px"></sup></h3>
 
                         <p>Success</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                 </div>
             </div>
             <!-- ./col -->
@@ -97,14 +97,15 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3 v-if="totalPending ==0 || totalPending==''">{{totalPending}}</h3>
+                        <h3 v-else>{{totalPending | formatBaht}}</h3>
 
                         <p>Pending</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                 </div>
             </div>
             <!-- ./col -->
@@ -112,14 +113,15 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3 v-if="totalCancle ==0 || totalCancle==''">{{totalCancle}}</h3>
+                        <h3 v-else>{{totalCancle | formatBaht}}</h3>
 
                         <p>Cancel</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                 </div>
             </div>
             <!-- ./col -->
@@ -139,7 +141,8 @@
                     </ul>
                     <div class="tab-content no-padding">
                         <!-- Morris chart - Sales -->
-                        <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                        <div class="chart tab-pane active" id="revenue-chart"
+                             style="position: relative; height: 300px;"></div>
                         <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
                     </div>
                 </div>
@@ -154,16 +157,19 @@
 
                         <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
                             <div class="btn-group" data-toggle="btn-toggle">
-                                <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i>
+                                <button type="button" class="btn btn-default btn-sm active"><i
+                                            class="fa fa-square text-green"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                                <button type="button" class="btn btn-default btn-sm"><i
+                                            class="fa fa-square text-red"></i></button>
                             </div>
                         </div>
                     </div>
                     <div class=" box-body chat" id="chat-box">
                         <!-- chat item -->
                         <div class="item">
-                            <img src="<?php echo base_url('assets/img/user4-128x128.jpg')?>" alt="user image" class="online">
+                            <img src="<?php echo base_url('assets/img/user4-128x128.jpg') ?>" alt="user image"
+                                 class="online">
 
                             <p class="message">
                                 <a href="#" class="name">
@@ -190,7 +196,8 @@
                         <!-- /.item -->
                         <!-- chat item -->
                         <div class="item">
-                            <img src="<?php echo base_url('assets/img/user3-128x128.jpg')?>" alt="user image" class="offline">
+                            <img src="<?php echo base_url('assets/img/user3-128x128.jpg') ?>" alt="user image"
+                                 class="offline">
 
                             <p class="message">
                                 <a href="#" class="name">
@@ -205,7 +212,8 @@
                         <!-- /.item -->
                         <!-- chat item -->
                         <div class="item">
-                            <img src="<?php echo base_url('assets/img/user2-160x160.jpg')?>" alt="user image" class="offline">
+                            <img src="<?php echo base_url('assets/img/user2-160x160.jpg') ?>" alt="user image"
+                                 class="offline">
 
                             <p class="message">
                                 <a href="#" class="name">
@@ -340,7 +348,8 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix no-border">
-                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item
+                        </button>
                     </div>
                 </div>
                 <!-- /.box -->
@@ -386,9 +395,11 @@
                         <h3 class="box-title">Latest Donates</h3>
 
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -419,7 +430,9 @@
                                     <td>Samsung Smart TV</td>
                                     <td><span class="label label-warning">Pending</span></td>
                                     <td>
-                                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                                        <div class="sparkbar" data-color="#f39c12" data-height="20">
+                                            90,80,-90,70,61,-83,68
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -427,7 +440,9 @@
                                     <td>iPhone 6 Plus</td>
                                     <td><span class="label label-danger">Delivered</span></td>
                                     <td>
-                                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                        <div class="sparkbar" data-color="#f56954" data-height="20">
+                                            90,-80,90,70,-61,83,63
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -435,7 +450,9 @@
                                     <td>Samsung Smart TV</td>
                                     <td><span class="label label-info">Processing</span></td>
                                     <td>
-                                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
+                                        <div class="sparkbar" data-color="#00c0ef" data-height="20">
+                                            90,80,-90,70,-61,83,63
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -451,7 +468,9 @@
                                     <td>iPhone 6 Plus</td>
                                     <td><span class="label label-danger">Delivered</span></td>
                                     <td>
-                                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                        <div class="sparkbar" data-color="#f56954" data-height="20">
+                                            90,-80,90,70,-61,83,63
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -459,7 +478,9 @@
                                     <td>Call of Duty IV</td>
                                     <td><span class="label label-success">Shipped</span></td>
                                     <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                                        <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                            90,80,90,-70,61,-83,63
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -469,13 +490,14 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
-                        <a href="javascript:void(0)" class="hidden btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                        <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                        <a href="javascript:void(0)" class="hidden btn btn-sm btn-info btn-flat pull-left">Place New
+                            Order</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All
+                            Orders</a>
                     </div>
                     <!-- /.box-footer -->
                 </div>
                 <!-- /.box -->
-
 
 
             </section>
@@ -488,7 +510,8 @@
                     <div class="box-header">
                         <!-- tools box -->
                         <div class="pull-right box-tools">
-                            <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
+                            <button type="button" class="btn btn-primary btn-sm daterange pull-right"
+                                    data-toggle="tooltip"
                                     title="Date range">
                                 <i class="fa fa-calendar"></i></button>
                             <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
@@ -538,9 +561,11 @@
                         <h3 class="box-title">Sales Graph</h3>
 
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i
+                                        class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>
@@ -551,21 +576,24 @@
                     <div class="box-footer no-border">
                         <div class="row">
                             <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                                <input type="text" class="knob" data-readonly="true" value="20" data-width="60"
+                                       data-height="60"
                                        data-fgColor="#39CCCC">
 
                                 <div class="knob-label">Mail-Orders</div>
                             </div>
                             <!-- ./col -->
                             <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
+                                <input type="text" class="knob" data-readonly="true" value="50" data-width="60"
+                                       data-height="60"
                                        data-fgColor="#39CCCC">
 
                                 <div class="knob-label">Online</div>
                             </div>
                             <!-- ./col -->
                             <div class="col-xs-4 text-center">
-                                <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                                <input type="text" class="knob" data-readonly="true" value="30" data-width="60"
+                                       data-height="60"
                                        data-fgColor="#39CCCC">
 
                                 <div class="knob-label">In-Store</div>
@@ -588,7 +616,8 @@
                         <div class="pull-right box-tools">
                             <!-- button with a dropdown -->
                             <div class="btn-group">
-                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle"
+                                        data-toggle="dropdown">
                                     <i class="fa fa-bars"></i></button>
                                 <ul class="dropdown-menu pull-right" role="menu">
                                     <li><a href="#">Add new event</a></li>
@@ -597,9 +626,11 @@
                                     <li><a href="#">View calendar</a></li>
                                 </ul>
                             </div>
-                            <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                            <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                            <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i
+                                        class="fa fa-times"></i>
                             </button>
                         </div>
                         <!-- /. tools -->
@@ -668,7 +699,8 @@
                         <h3 class="box-title">Monthly Recap Report</h3>
 
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
                             </button>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
@@ -681,7 +713,8 @@
                                     <li><a href="#">Separated link</a></li>
                                 </ul>
                             </div>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -750,7 +783,8 @@
                         <div class="row">
                             <div class="col-sm-3 col-xs-6">
                                 <div class="description-block border-right">
-                                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+                                    <span class="description-percentage text-green"><i
+                                                class="fa fa-caret-up"></i> 17%</span>
                                     <h5 class="description-header">$35,210.43</h5>
                                     <span class="description-text">TOTAL REVENUE</span>
                                 </div>
@@ -768,7 +802,8 @@
                             <!-- /.col -->
                             <div class="col-sm-3 col-xs-6">
                                 <div class="description-block border-right">
-                                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+                                    <span class="description-percentage text-green"><i
+                                                class="fa fa-caret-up"></i> 20%</span>
                                     <h5 class="description-header">$24,813.53</h5>
                                     <span class="description-text">TOTAL PROFIT</span>
                                 </div>
@@ -777,7 +812,8 @@
                             <!-- /.col -->
                             <div class="col-sm-3 col-xs-6">
                                 <div class="description-block">
-                                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                                    <span class="description-percentage text-red"><i
+                                                class="fa fa-caret-down"></i> 18%</span>
                                     <h5 class="description-header">1200</h5>
                                     <span class="description-text">GOAL COMPLETIONS</span>
                                 </div>
@@ -795,33 +831,33 @@
         <div class="row">
             <div class="form-group col-xs-12 col-sm-6 col-md-8">
                 <div class="hidden col-xs-3">
-                    <span>Start Date</span><vue-datepicker-local v-model="startTime" format="DD-MM-YYYY" :local="local"></vue-datepicker-local>
+                    <span>Start Date</span>
+                    <vue-datepicker-local v-model="startTime" format="DD-MM-YYYY" :local="local"></vue-datepicker-local>
                 </div>
                 <div class="hidden col-xs-3">
-                    <span>End Date</span><vue-datepicker-local v-model="endTime" format="DD-MM-YYYY" :local="local"></vue-datepicker-local>
+                    <span>End Date</span>
+                    <vue-datepicker-local v-model="endTime" format="DD-MM-YYYY" :local="local"></vue-datepicker-local>
 
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-8">
-                    <vue-datepicker-local v-model="range" range-separator=" to " :local="local" show-buttons format="DD-MM-YYYY"></vue-datepicker-local>
+                    <vue-datepicker-local v-model="range" range-separator=" to " :local="local" show-buttons
+                                          format="DD-MM-YYYY"></vue-datepicker-local>
                     <button class="btn btn-group-sm" @click="confrim">Confirm</button>
                 </div>
 
                 <div>
-<!--                   <p>Start {{startTime}}</p>-->
-<!--                   <p>End {{endTime}}</p>-->
+                    <!--                   <p>Start {{startTime}}</p>-->
+                    <!--                   <p>End {{endTime}}</p>-->
                 </div>
 
 
             </div>
             <div class="col-xs-6 col-md-4 text-right mx-auto">
 
-<!--                <button class="btn btn-success">Export xls</button>-->
-                <a lass="btn btn-success" href="<?php echo base_url('admin/reports/exportxls');?>">Export .xls</a>
+                <!--                <button class="btn btn-success">Export xls</button>-->
+                <a lass="btn btn-success" href="<?php echo base_url('admin/reports/exportxls'); ?>">Export .xls</a>
 
             </div>
-
-
-
 
 
         </div>
@@ -834,10 +870,11 @@
                         <h3 class="box-title">Donation List</h3>
                         <div class="box-tools">
                             <div>
-<!--                                <vue-datepicker-local v-model="time" :local="local"></vue-datepicker-local>-->
+
                             </div>
                             <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text"  name="table_search" class="hidden form-control pull-right" placeholder="Search">
+                                <input type="text" name="table_search" class="hidden form-control pull-right"
+                                       placeholder="Search">
 
                                 <div class="hidden input-group-btn">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -851,7 +888,6 @@
                                     <option value="400">400</option>
                                     <option value="500">500</option>
                                 </select>
-
 
 
                             </div>
@@ -893,7 +929,7 @@
                                 <td>{{item.inv_number}}</td>
                                 <td>{{item.campaign_name}}</td>
                                 <td>{{item.amount | formatBaht}}</td>
-                                <td>{{item.created_date}}</td>
+                                <td>{{item.transfer_date}}</td>
                                 <td><span class="label label-success">{{item.note}}</span></td>
                                 <td>{{item.first_name}} {{item.last_name}}</td>
                                 <td>{{item.transection_no}}</td>
@@ -906,11 +942,15 @@
 
                         </table>
 
-                        <v-client-table  ref="table" :columns="columns" :data="filterDonationList" :options="options">
-<!--                            <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon glyphicon-eye-open">{{props.row.aid}}</a>-->
-                            <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon fa fa-edit"></a>
-                            <span class="float-right" slot="amount" slot-scope="props">{{props.row.amount | formatBaht}}</span>
-                            <a :href="invoice(props.row.aid)" target="_blank" class="" slot="inv_number" slot-scope="props">{{props.row.inv_number}}</a>
+                        <v-client-table ref="table" :columns="columns" :data="filterDonationList" :options="options">
+                            <!--                            <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon glyphicon-eye-open">{{props.row.aid}}</a>-->
+                            <a data-toggle="modal" @click="donationEdit(props.row)" data-target="#myModal" slot="action"
+                               slot-scope="props" target="_blank" :href="props.row.action"
+                               class="glyphicon fa fa-edit"></a>
+                            <span class="float-right" slot="amount"
+                                  slot-scope="props">{{props.row.amount | formatBaht}}</span>
+                            <a :href="invoice(props.row.aid)" target="_blank" class="" slot="inv_number"
+                               slot-scope="props">{{props.row.inv_number}}</a>
 
                         </v-client-table>
 
@@ -926,17 +966,113 @@
                         </ul>
 
 
-
-
                     </div>
                 </div>
-                <!-- /.box -->
+
+
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Donation Update</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal">
+                                        <div class="box-body">
+
+                                            <div class="form-group">
+                                                <label for="donorName" class="col-sm-2 control-label">Donor</label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="text" readonly class="form-control" id="donorName"
+                                                           :value="userClicked.first_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="trnsferRef" class="col-sm-2 control-label">Transfer
+                                                    Ref.no</label>
+
+                                                <div class="col-xs-4">
+                                                    <input type="text" class="form-control" id="transferRef" v-model="userClicked.tranRef">
+                                                </div>
+                                                <div v-if="userClicked.payment_channel !=001" class="col-xs-4">
+                                                    <vue-datepicker-local v-model="emptyTime" clearable format="YYYY-MM-DD HH:mm:ss" :local="local" show-buttons @confirm="covertDatetime"></vue-datepicker-local>
+                                                    <p>This : {{date(emptyTime)}}</p>
+                                                    <p>This : {{moment(emptyTime).format('YYYY.MM.DD H:mm:ss')}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="inv-number" class="col-sm-2 control-label">Invoice No</label>
+                                                <div class="col-xs-4 ">
+                                                    <input type="text" readonly class="form-control" id="inv-number"
+                                                           :value="userClicked.inv_number">
+                                                </div>
+
+                                            </div>
+
+                                            <div v-if="userClicked.payment_channel !=001" class="form-group">
+                                                <label for="bank-name" class="col-sm-2 control-label">Bank</label>
+                                                <div class="col-sm-6">
+                                                    <select id="bank-name" class="form-control" v-model="userClicked.bankName">
+                                                        <option v-for="item,index in bankList" :value="item.agent_code">{{item.description_thai}} {{item.booking_no}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div v-if="userClicked.payment_channel !=001" class="form-group">
+                                                <label for="donate-amount" class="col-sm-2 control-label">Amount</label>
+                                                <div class="col-sm-6">
+                                                    <input id="donate-amount" type="number" class="form-control" v-model="userClicked.amount">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="donorName" class="col-sm-2 control-label">Payment
+                                                    Status</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control" v-model="userClicked.payment_status">
+                                                        <option v-for="item,index in filterPyamentStatus"
+                                                                :value="item.code">{{item.title}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </form>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" @click="donationUpdate()">Save changes</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- /.box -->
+                </div>
             </div>
-        </div>
 
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<script src="<?php echo base_url('assets/js/backend/reports.js')?>"></script>
+<script src="<?php echo base_url('assets/js/backend/reports.js') ?>"></script>
+<script>
+
+</script>
 

@@ -13,21 +13,22 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" id="lastdonate">
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                            <h3>150</h3>
+                            <h3 v-if="filDonateTotal !==0">{{filDonateTotal | formatBaht}}</h3>
+                            <h3 v-else>{{filDonateTotal}}</h3>
 
                             <p>New Donates</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
                 <!-- ./col -->
@@ -35,14 +36,15 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <h3 v-if="totalSuccess !==0">{{totalSuccess | formatBaht}}</h3>
+                            <h3 v-else>{{totalSuccess}}</h3>
 
                             <p>Success</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
                 <!-- ./col -->
@@ -50,14 +52,15 @@
                     <!-- small box -->
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3 v-if="totalPending !==0">{{totalPending | formatBaht}}</h3>
+                            <h3 v-else>{{totalPending}}</h3>
 
                             <p>Pending</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
                 <!-- ./col -->
@@ -65,14 +68,15 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3 v-if="totalCancle !==0">{{totalCancle | formatBaht}}</h3>
+                            <h3 v-else>{{totalCancle}}</h3>
 
                             <p>Cancel</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+<!--                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
                 <!-- ./col -->
@@ -334,7 +338,7 @@
 
 
                     <!-- TABLE: LATEST ORDERS -->
-                    <div class="box box-info" id="lastdonate">
+                    <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">Latest Donates</h3>
 
@@ -363,7 +367,7 @@
                                         <td><a >{{item.transection_no}}</a></td>
                                         <td><a >{{item.inv_number}}</a></td>
                                         <td>{{item.first_name}}</td>
-                                        <td><span class="label label-success">{{item.note}}</span></td>
+                                        <td><span class="label label-success">{{item.status}}</span></td>
                                         <td>
                                             <div class="sparkbar" data-color="#00a65a" data-height="20">{{item.amount | numeral('0,0')}}</div>
                                         </td>

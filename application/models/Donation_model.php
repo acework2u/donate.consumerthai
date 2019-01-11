@@ -177,6 +177,65 @@ class Donation_model extends MY_Model
 
     }
 
+    public function updateDonation($donation_id=""){
+        /*
+        $data = array(
+            'inv_number'=>$this->_inv_number,
+            'amount'=>$this->_amount,
+            'payment_status'=>$this->_status,
+            'bankName'=>$this->_bankName,
+            'transfer_date'=>$this->_transferDate,
+            'invoice_id'=>$this->_invoiceId,
+            'updated_date'=>$this->_updatedDate,
+            'note'=>$this->_note,
+            'tranRef'=>$this->_tranRef
+        );
+        */
+        $data = array();
+        if(!is_blank($this->_inv_number)){
+            $data['inv_number'] = $this->_inv_number;
+        }
+        if(!is_blank($this->_amount)){
+            $data['amount'] = $this->_amount;
+        }
+        if(!is_blank($this->_status)){
+            $data['payment_status'] = $this->_status;
+        }
+        if(!is_blank($this->_bankName)){
+            $data['bankName'] = $this->_bankName;
+        }
+        if(!is_blank($this->_transferDate)){
+            $data['transfer_date'] = $this->_transferDate;
+        }
+        if(!is_blank($this->_invoiceId)){
+            $data['invoice_id'] = $this->_invoiceId;
+        }
+        if(!is_blank($this->_tranRef)){
+            $data['tranRef'] = $this->_tranRef;
+        }
+        if(!is_blank($this->_note)){
+            $data['updated_date'] = $this->_updatedDate;
+        }
+        if(!is_blank($this->_note)){
+            $data['note'] = $this->_note;
+        }
+
+
+
+
+
+        if(!is_blank($donation_id) && !is_blank($data)){
+            $this->db->where('aid',$donation_id);
+            $this->db->update($this->tbl_donation,$data);
+            if ($this->db->affected_rows()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+
     public function delete()
     {
 

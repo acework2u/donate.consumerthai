@@ -14,6 +14,8 @@ class MY_Model extends CI_Model
     public $tbl_user_role;
     public $tbl_payment_channel;
     public $tbl_donation_invoice;
+    public $tbl_apm_agent_code;
+
 
 
 
@@ -29,6 +31,7 @@ class MY_Model extends CI_Model
         $this->tbl_payment_code = "payment_code";
         $this->tbl_payment_channel = "payment_channel";
         $this->tbl_donation_invoice = "donation_invoice";
+        $this->tbl_apm_agent_code = "apm_agent_code";
 
     }
 
@@ -43,6 +46,49 @@ class MY_Model extends CI_Model
         }
 
         return $result;
+    }
+
+    public function bank_list(){
+        $result = array();
+        $query = $this->db->where('status','1')->get($this->tbl_apm_agent_code);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result_array() as $row) {
+                $result[] = $row;
+            }
+
+        }
+        return $result;
+
+    }
+
+    public function payment_status(){
+        $result = array();
+        $query = $this->db->get($this->tbl_payment_code);
+        if($query->num_rows() > 0){
+            foreach ($query->result_array() as $row){
+                $result[] = $row;
+            }
+        }
+
+        return $result;
+    }
+
+    public function check_duplicate_invoice($donation_id=""){
+
+        if(!is_blank($donation_id)){
+            $query =  $this->db->where('donation_id',$donation_id)->get($this->tbl_donation_invoice);
+             if ($query->num_rows() > 0) {
+                 return true;
+             }else{
+                 return false;
+             }
+
+        }else{
+            return false;
+        }
+
+
+
     }
 
 

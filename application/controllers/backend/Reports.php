@@ -1,6 +1,7 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -48,11 +49,22 @@ class Reports extends MY_Controller
                 $donationList = $this->report->donation();
             }
 
+
+
+
+
+
+
+
+
+
             echo json_encode($donationList);
 
         }
     }
-    public function donationList(){
+
+    public function donationList()
+    {
         if ($this->is_login()) {
             $this->load->model($this->report_model, 'report');
 
@@ -126,7 +138,7 @@ class Reports extends MY_Controller
         /**Content */
 
 
-        if(is_blank($data)){
+        if (is_blank($data)) {
             $data = $this->donationList();
         }
 
@@ -142,7 +154,7 @@ class Reports extends MY_Controller
             $sp->getActiveSheet()->getStyle('A4:F4')->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('C1:C2')->getFont()->setBold(true);
 
-            foreach (range('A','F') as $columnID){
+            foreach (range('A', 'F') as $columnID) {
                 $sp->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
 
@@ -159,8 +171,6 @@ class Reports extends MY_Controller
 
 
     }
-
-
 
     public function genInvoice($donateId = 0)
     {
@@ -191,12 +201,24 @@ class Reports extends MY_Controller
 
             }
             $full_name = $title_name . " " . $first_name . " " . $last_name;
-            $transferDateTime = datetime2display($transfer_date);
-            $transferDate = DateThai($transferDateTime);
+            $transferDate = '';
+
+            if(!is_blank($transfer_date)){
+                $transferDateTime = datetime2display($transfer_date);
+                $transferDate = DateThai($transferDateTime);
+            }
+
 
 
             // Create Pdf
-            $mpdf = new \Mpdf\Mpdf(['default_font' => 'thsarabunnew', 'default_font_size' => 15]);
+            $options = array(
+                'default_font' => 'thsarabunnew',
+                'default_font_size' => 15,
+                'debug' => true
+            );
+
+            $mpdf = new \Mpdf\Mpdf($options);
+
 
             $mpdf->SetImportUse();
             $pagecount = $mpdf->SetSourceFile('uploads/invoicetemplate.pdf');
@@ -236,7 +258,7 @@ class Reports extends MY_Controller
                     $bankName = $bank_name;
                     $mpdf->WriteFixedPosHTML($bankName, 160, 86, 50, 90, 'auto');
                     break;
-                case "002":
+                case "006":
                     // Bank Transfer
                     //Bank Transfer
                     $mpdf->Image('uploads/icons8-checkmark-26.png', 35, 99, 6, 6, 'png', '', true, false);
@@ -255,7 +277,7 @@ class Reports extends MY_Controller
                     $cardId = $panCard;
                     $mpdf->WriteFixedPosHTML($cardId, 110, 86, 50, 90, 'auto');
                     break;
-                case "004":
+                case "007":
                     //QR COde
                     $mpdf->Image('uploads/icons8-checkmark-26.png', 35, 92, 6, 6, 'png', '', true, false);
                     break;
@@ -264,14 +286,170 @@ class Reports extends MY_Controller
             }
 
             $mpdf->Output();
-            $fileName = $invoice_no.".pdf";
-            $fullfilePath = "downloads/invoice/".$invoice_no.".pdf";
+            $fileName = $invoice_no . ".pdf";
+            $fullfilePath = "downloads/invoice/" . $invoice_no . ".pdf";
             ob_clean();
-            $mpdf->Output($fullfilePath,'F');
+            $mpdf->Output($fullfilePath, 'F');
 
         } // end if
     }
 
+    public function updateDonationStatus()
+    {
+        if ($this->is_login()) {
+
+            $donationId = "";
+            $transection_no = "";
+            $inv_number = "";
+            $amount = "";
+            $transfer_datetime = "";
+            $donorId = "";
+            $bank_name = "";
+            $payment_channel = "";
+            $payment_status = "";
+            $updated_date = date('Y-m-d H:i:s');
+            $donor_email = "";
+
+            if (!is_blank($this->input->get_post('aid'))) {
+                $donationId = $this->input->get_post('aid');
+            }
+            if (!is_blank($this->input->get_post('transfer_date'))) {
+                $transfer_datetime = $this->input->get_post('transfer_date');
+            }
+            if(!is_blank($this->input->get_post('doner_aid'))){
+                $donorId = $this->input->get_post('doner_aid');
+            }
+            if(!is_blank($this->input->get_post('amount'))){
+                $amount = $this->input->get_post('amount');
+            }
+            if(!is_blank($this->input->get_post('bankName'))){
+                $bank_name = $this->input->get_post('bankName');
+            }
+            if(!is_blank($this->input->get_post('email'))){
+                $donor_email = $this->input->get_post('email');
+            }
+            if(!is_blank($this->input->get_post('payment_status'))){
+                $payment_status = trim($this->input->get_post('payment_status'));
+            }
+            if(!is_blank($this->input->get_post('payment_channel'))){
+                $payment_channel = $this->input->get_post('payment_channel');
+            }
+            if(!is_blank($this->input->get_post('tranRef'))){
+                $transection_no = trim($this->input->get_post('tranRef'));
+            }
+
+            $checkDuplicateInvoice = $this->checkInvoiceDuplicate($donationId);
+            $this->load->model($this->donation_model, 'donation');
+
+
+           if(!is_blank($transfer_datetime)){
+               $date1 = date('mdyHms',strtotime($transfer_datetime));
+                $transfer_datetime = $date1;
+           }
+
+
+
+
+
+            $data = array();
+
+            if($payment_status=="00" || $payment_status=="000"){
+                // Payment Success
+                if(!$checkDuplicateInvoice){
+                    $this->load->model($this->invoice_model,'invoice');
+                    $invoiceNo = $this->generateInvoice();
+                    $invoiceStatus = 1;
+                    $remark = "";
+
+                    $this->invoice->setInvoiceNo($invoiceNo);
+                    $this->invoice->setDonationId($donationId);
+                    $this->invoice->setInvoiceStatus($invoiceStatus);
+                    $this->invoice->setRemark($remark);
+
+                    if($this->invoice->create()){
+                        $invID = $this->invoice->getInvoiceId();
+                        $this->donation->setInvoiceId($invID);
+                        $this->donation->setInvNumber($invoiceNo);
+                        $this->donation->setPaymentStatus($payment_status);
+                        $this->donation->setTransferDate($transfer_datetime);
+                        $this->donation->setTransRef($transection_no);
+                        $this->donation->setBankName($bank_name);
+                        $this->donation->setUpdatedDate($updated_date);
+                        $this->donation->setNote($remark);
+                        $this->donation->setAmount($amount);
+                        if($this->donation->updateDonation($donationId)){
+                            $data['message'] = "Update Success";
+                        }else{
+                            $data['error'] = true;
+                            $data['message'] = "Cloud no update";
+                        }
+
+                    }
+
+
+
+                }else{
+                   // Have Invoice
+                    $this->donation->setTransferDate($transfer_datetime);
+                    $this->donation->setTransRef($transection_no);
+                    $this->donation->setBankName($bank_name);
+                    $this->donation->setUpdatedDate($updated_date);
+                    $this->donation->setPaymentStatus($payment_status);
+                    $this->donation->setAmount($amount);
+                    if($this->donation->updateDonation($donationId)){
+
+
+
+                        $data['message'] = "Update Donation info  Success";
+                    }else{
+                        $data['error'] = true;
+                        $data['message'] = "Cloud no update Duplicate Invoice";
+                    }
+
+//                    $data['message'] = "Duplicate Invoice";
+                }
+
+
+            }else{
+
+                $this->donation->setTransferDate($transfer_datetime);
+                $this->donation->setTransRef($transection_no);
+                $this->donation->setBankName($bank_name);
+                $this->donation->setUpdatedDate($updated_date);
+                $this->donation->setPaymentStatus($payment_status);
+                $this->donation->setAmount($amount);
+                if($this->donation->updateDonation($donationId)){
+                    $data['message'] = "Update Donation info  Success";
+                }else{
+                    $data['error'] = true;
+                    $data['message'] = "Cloud no update Duplicate Invoice";
+                }
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+            echo json_encode($data);
+
+
+
+
+
+
+
+
+        }// end if login
+
+    }
 
 
 } // end of class

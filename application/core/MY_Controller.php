@@ -13,6 +13,8 @@ class MY_Controller extends CI_Controller
     public $mail_model;
     public $donor_model;
     public $invoice_model;
+    public $bank_model;
+    public $payment_model;
 
 
     /*** 2c2p *****/
@@ -46,6 +48,8 @@ class MY_Controller extends CI_Controller
         $this->donation_model = "donation_model";
         $this->donor_model = "donor_model";
         $this->invoice_model = "invoice_model";
+        $this->bank_model = "bank_model";
+        $this->payment_model = "payment_model";
 
 
         /**** 2C2P ***/
@@ -218,8 +222,8 @@ class MY_Controller extends CI_Controller
         $this->load->model($this->donation_model, 'donation');
         $numId = 0;
         $numId = $this->donation->lastInvoiceId();
-        if(is_blank($numId)){
-            $numId =0;
+        if (is_blank($numId)) {
+            $numId = 0;
         }
         $numId += 1;
         $inv = str_pad($numId, 6, "0", STR_PAD_LEFT);
@@ -228,7 +232,42 @@ class MY_Controller extends CI_Controller
         return $inv;
     }
 
+    public function getBanklist()
+    {
+        $this->load->model($this->bank_model, 'bank');
+        $rs = array();
+        $rs = $this->bank->bank_list();
 
+        return $rs;
+
+    }
+
+    public function getPaymentStatus()
+    {
+        $this->load->model($this->payment_model, 'payment');
+        $rs = array();
+        $rs = $this->payment->payment_status();
+        return $rs;
+    }
+
+    public function checkInvoiceDuplicate($donoation_id="")
+    {
+        if(!is_blank($donoation_id)){
+            $this->load->model($this->invoice_model, 'invoice');
+           $invoce =  $this->invoice->check_duplicate_invoice($donoation_id);
+
+            if($invoce){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+
+
+
+
+    }
 
 
 }
