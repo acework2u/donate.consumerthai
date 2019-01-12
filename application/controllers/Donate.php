@@ -214,7 +214,7 @@ class Donate extends MY_Controller
                 $version = "9.3";
 
                 //Construct signature string
-                $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv . $encCardData;
+                $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv .$email . $encCardData;
                 $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));    //Compute hash value
 
 
@@ -231,6 +231,7 @@ class Donate extends MY_Controller
 		<cardholderEmail>$email</cardholderEmail>
 		<userDefined1>$donorId</userDefined1>
 		<userDefined2>$userInv</userDefined2>
+		<userDefined3>$email</userDefined3>
 		<encCardData>$encCardData</encCardData>	  	   	         
 		<secureHash>$hash</secureHash>
 		</PaymentRequest>";
@@ -367,6 +368,7 @@ class Donate extends MY_Controller
         $processBy = "";
         $payment_channel = "001";
         $donateCampaignId = 1;
+        $email="";
         $created_date = date('Y-m-d H:i:s');
         $updated_date = date('Y-m-d H:i:s');
         $failReason = "";
@@ -379,6 +381,7 @@ class Donate extends MY_Controller
             $dateTime = get_array_value($xmlArr, 'dateTime', '');
             $donorId = get_array_value($xmlArr, 'userDefined1', '');
             $invoiceNo = get_array_value($xmlArr, 'userDefined2', '');
+            $email = get_array_value($xmlArr, 'userDefined3', '');
             $issuerCountry = get_array_value($xmlArr, 'issuerCountry', '');
             $bankName = get_array_value($xmlArr, 'bankName', '');
             $processBy = get_array_value($xmlArr, 'processBy', '');
@@ -424,15 +427,29 @@ class Donate extends MY_Controller
                 $this->donation->setInvoiceId($invID);
                 $this->donation->setInvNumber($invoiceNo);
                 $this->donation->update($donationId);
+
+                /// Send Mail to Donor
+                $this->load->library('mailer');
+                $pdfFile = $this->generate_invoice($donationId);
+                $templateData = array(
+                    'name' => 'Consumer Thai'
+                );
+                $fileName = "$invoiceNo.pdf";
+                if(!is_blank($email)){
+                    $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
+                }
+
+
+
+
+
+
+
             }
+
+
         }
 
-
-//        echo "<pre>";
-//        print_r($xmlArr);
-//        echo "</pre>";
-
-//        echo "Response:<br/><textarea style='width:100%;height:80px'>". $result."</textarea>";
 
         $this->load->library('SocialMedia');
 

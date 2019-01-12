@@ -466,27 +466,57 @@ class Test extends MY_Controller
     {
 
         $dateTime = "2019-10-01 18:01:03";
-        $date1 = date('mdyHms',strtotime($dateTime));
+        $date1 = date('mdyHms', strtotime($dateTime));
 
         $mydateDb = datetime2db($date1);
 
-        echo "DateTime =".$dateTime." strTotime". strtotime($dateTime)." newFormat=".date('mdyHms',strtotime($dateTime));
-
-
-
-//        $dateTime = date("Y-m-d H:i:s"); // 190110030117
-//        $dateTime2 = datetime2db(date('mdyHms',strtotime($dateTime)));
-//
-//        echo  $dateTime." ".$dateTime2." ".date('mdyHms',strtotime($dateTime)) ;
-//
-////        $mydateDb = datetime2db($mydate);
-////        $updateDate = date('ymdHms',strtotime($mydate));
-//
-//
-////        echo strtotime($mydate)." ".date('ymdHms',strtotime($mydate))." ".datetime2display($updateDate);
+        echo "DateTime =" . $dateTime . " strTotime" . strtotime($dateTime) . " newFormat=" . date('mdyHms', strtotime($dateTime));
 
 
     }
 
 
-}
+    public function testSendMail()
+    {
+        $this->load->library('mailer');
+        $viewsMail = VIEWPATH;
+//        echo $viewsMail;
+
+        $email = 'acework2u@gmail.com';
+
+//        $pdfFile = chunk_split(base64_encode(file_get_contents("downloads/invoice/FFC19000001.pdf")));
+//        $pdfFile = file_get_contents("downloads/invoice/FFC19000001.pdf");
+        $doantionId = 15;
+        $pdfFile = $this->generate_invoice($doantionId);
+
+        $fileName = "FFC19000001.pdf";
+//        $pdfFile = $strContent1 = chunk_split(base64_encode(file_get_contents("downloads/invoice/FFC19000001.pdf")));
+
+//        echo $pdfFile;
+//        exit();
+// Use user or any information to load in email template
+
+        $templateData = array(
+            'name' => 'Anon Dechpala'
+        );
+
+
+        $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
+
+
+        if ($result) {
+            echo "Email sent successfully $result";
+        } else {
+            echo "Email failed to send $result";
+
+        }
+    }
+
+
+    public function testInvoice(){
+        $Invoice = $this->generate_invoice(6);
+
+    }
+
+
+} //end of Class
