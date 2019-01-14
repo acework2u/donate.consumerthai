@@ -128,6 +128,11 @@ textarea {
 	background: #1B1464;
 	color: #FFFFFF;
 }
+.lang-active{
+	outline: none;
+	background: #1B1464;
+	color: #FFFFFF;
+}
 
 .tab-header {
 	background: #B4D7DC;
@@ -905,6 +910,10 @@ textarea {
 
 	.h-30 {
 		height: 30px;
+	}
+	.center{
+		margin: auto;
+		padding: 10px;
 	}
 
 	.money, .next {

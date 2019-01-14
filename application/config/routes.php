@@ -98,6 +98,7 @@ $route['result'] = "frontend/result/index";
 $route['demo-donate'] = "donate/demoDonate";
 $route['donation/2c2p-payment'] = "donate/paymentBy2c2p";
 $route['thank-you-for-your-donation'] = "donate/donateSuccess";
+$route['thankyou'] = "frontend/thankyou/index";
 
 $route['api-v01/confirm-data'] = "donate/confirmData2c2p";
 

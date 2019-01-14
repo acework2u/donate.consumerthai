@@ -105,9 +105,17 @@ class Donor_model extends MY_Model
 
     }
 
-    public function update($data)
+    public function update($data="")
     {
         if (is_array($data)) {
+            $this->db->where('aid',$this->_donorId);
+            $this->db->update($this->tbl_donor,$data);
+            if ($this->db->affected_rows()) {
+                return true;
+            } else {
+                return false;
+            }
+
 
         }
 

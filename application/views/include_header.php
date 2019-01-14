@@ -55,8 +55,6 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/vue-datepicker-local-master/dist/vue-datepicker-local.css')?>">
 
 
-
-
     <![endif]-->
 
     <!-- Google Font -->

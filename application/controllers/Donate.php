@@ -161,6 +161,9 @@ class Donate extends MY_Controller
         if ($chk) {
             //Donor
             $donorId = $this->donor->getDonorId();
+            $data = array();
+
+
         } else {
             /** Add New Donor*/
             $this->donor->setTitleName($title_name);
@@ -214,7 +217,7 @@ class Donate extends MY_Controller
                 $version = "9.3";
 
                 //Construct signature string
-                $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv .$email . $encCardData;
+                $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv . $email . $encCardData;
                 $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));    //Compute hash value
 
 
@@ -244,7 +247,6 @@ class Donate extends MY_Controller
 
                 break;
             case "type-2":
-
                 /** QR Code**/
                 $paymentChannel = "003";
                 /** BAnk Transfer**/
@@ -262,28 +264,23 @@ class Donate extends MY_Controller
                 $this->donation->setPaymentStatus($resCode);
                 $this->donation->setPaymentChannel($payment_channel);
                 $this->donation->setBankName($bank_transfer);
-//                $this->donation->setTransferDate($dateTime);
-//                $this->donation->setPan($panCard);
-//                $this->donation->setTransRef($tranRef);
-//                $this->donation->setProcessBy($processBy);
-//                $this->donation->setIssuerCountry($issuerCountry);
-//                $this->donation->setNote($failReason);
 
                 $this->donation->create();
 
 
+//                $this->load->library('SocialMedia');
+//
+//                $socmed = new SocialMedia();
+//                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+//                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
+//                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+//
+//                $this->data['media_name'] = $social_media_name;
+//                $this->data['media_urls'] = $social_media_urls;
+//                /*** Load View **/
+//                $this->load->view('frontend/thankyou', $this->data);
 
-                $this->load->library('SocialMedia');
-
-                $socmed = new SocialMedia();
-                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
-                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
-                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
-
-                $this->data['media_name'] = $social_media_name;
-                $this->data['media_urls'] = $social_media_urls;
-                /*** Load View **/
-                $this->load->view('frontend/thankyou', $this->data);
+                redirect('thankyou');
 
                 break;
             case "type-3":
@@ -303,27 +300,38 @@ class Donate extends MY_Controller
                 $this->donation->setPaymentStatus($resCode);
                 $this->donation->setPaymentChannel($payment_channel);
                 $this->donation->setBankName($bank_transfer);
-//                $this->donation->setTransferDate($dateTime);
-//                $this->donation->setPan($panCard);
-//                $this->donation->setTransRef($tranRef);
-//                $this->donation->setProcessBy($processBy);
-//                $this->donation->setIssuerCountry($issuerCountry);
-//                $this->donation->setNote($failReason);
+
 
                 $this->donation->create();
 
+                /// Send Mail to Donor
+                $this->load->library('mailer');
 
-                $paymentChannel = "002";
-                $this->load->library('SocialMedia');
-                $socmed = new SocialMedia();
-                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
-                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
-                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+                $templateData = array(
+                    'name' => 'Consumer Thai'
+                );
 
-                $this->data['media_name'] = $social_media_name;
-                $this->data['media_urls'] = $social_media_urls;
+                if (!is_blank($email)) {
+                    $result = $this->mailer->to($email)->subject("Thank you for Donate")->send("thank_you.php", compact('templateData'));
+                }
+
+
+//                $paymentChannel = "002";
+//                $this->load->library('SocialMedia');
+//                $socmed = new SocialMedia();
+//                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+//                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
+//                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+//
+//                $this->data['media_name'] = $social_media_name;
+//                $this->data['media_urls'] = $social_media_urls;
                 /*** Load View **/
-                $this->load->view('frontend/thankyou', $this->data);
+//                $this->load->view('frontend/thankyou', $this->data);
+//                $this->load->view('tpl_thankyou', $this->data);
+
+                redirect('thankyou');
+
+
                 break;
         }
 
@@ -368,7 +376,7 @@ class Donate extends MY_Controller
         $processBy = "";
         $payment_channel = "001";
         $donateCampaignId = 1;
-        $email="";
+        $email = "";
         $created_date = date('Y-m-d H:i:s');
         $updated_date = date('Y-m-d H:i:s');
         $failReason = "";
@@ -407,8 +415,8 @@ class Donate extends MY_Controller
 
         $this->donation->create();
 
-        if($resCode=="00"){
-            $this->load->model($this->invoice_model,'invoice');
+        if ($resCode == "00") {
+            $this->load->model($this->invoice_model, 'invoice');
 
             $invoiceNo = $this->generateInvoice();
             $donationId = $this->donation->getDonationId();
@@ -416,13 +424,12 @@ class Donate extends MY_Controller
             $remark = "2c2p";
 
 
-
             $this->invoice->setInvoiceNo($invoiceNo);
             $this->invoice->setDonationId($donationId);
             $this->invoice->setInvoiceStatus($invoiceStatus);
             $this->invoice->setRemark($remark);
 
-            if($this->invoice->create()){
+            if ($this->invoice->create()) {
                 $invID = $this->invoice->getInvoiceId();
                 $this->donation->setInvoiceId($invID);
                 $this->donation->setInvNumber($invoiceNo);
@@ -435,15 +442,9 @@ class Donate extends MY_Controller
                     'name' => 'Consumer Thai'
                 );
                 $fileName = "$invoiceNo.pdf";
-                if(!is_blank($email)){
+                if (!is_blank($email)) {
                     $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
                 }
-
-
-
-
-
-
 
             }
 

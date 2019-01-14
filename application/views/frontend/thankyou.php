@@ -30,9 +30,8 @@
         <button type="button" class="lang-button" id="th">TH</button>
     </div>
 </div>
+
 <div class="container d-flex" ref="body"">
-
-
 <div class="thank-container pt-3 pb-3 mt-4 mb-4 " id="thank">
     <div class="d-flex">
         <img src="<?php echo base_url('assets/img/thank-header.png')?>" class="pb-3">
@@ -53,19 +52,8 @@
         <img src="<?php echo base_url('assets/img/click-donate.png')?>" class="ml-5 position-absolute click-donate h-60">
     </div>
 </div>
-
-
-<?php
-//echo "<pre>";
-//print_r($media_name);
-//print_r($media_urls);
-//
-//echo get_array_value($media_urls,'facebook');
-//echo "</pre>";
-//?>
-
-
 </div>
+
 </body>
 <footer class="footer pl-4 pr-4 pt-2 pb-2 mt-4 d-flex" id="footer-xl">
     <div class="d-none d-xl-block">

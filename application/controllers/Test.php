@@ -519,4 +519,27 @@ class Test extends MY_Controller
     }
 
 
+    public function testSocial(){
+        $this->load->library('SocialMedia');
+        $socmed = new SocialMedia();
+        $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+        $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
+        $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+
+        $this->data['media_name'] = $social_media_name;
+        $this->data['media_urls'] = $social_media_urls;
+
+        echo "<pre>";
+        print_r($social_media_name);
+        echo "</pre>";
+
+
+        echo "<pre>";
+        print_r($social_media_urls);
+        echo "</pre>";
+
+
+    }
+
+
 } //end of Class

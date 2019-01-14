@@ -7,12 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:image" content="<?php echo base_url('assets/img/thank.png')?>"/>
 
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@FoundationforConsumers">
+    <meta name="twitter:creator" content="@FoundationforConsumers">
+    <meta name="twitter:title" content="Foundation for Consumers">
+    <meta name="twitter:description" content="เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้ครองสิทธิอันพึงมีได้ ">
+    <meta name="twitter:image" content="<?php echo base_url('assets/img/thank.png')?>">
+
+
+    <meta property="og:title" content="Foundation for Consumers" />
+    <meta property="og:image" content="<?php echo base_url('assets/img/thank.png')?>" />
+    <meta property="og:description" content="เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้ครองสิทธิอันพึงมีได้ " />
+
     <link href="<?php echo base_url('assets/css/bootstrap.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/main.css');?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 </head>
 <body class="position-relative">
-<div class="w-100 position-relative" ref="header" id="appDonate">
+<div class="w-100 position-relative" ref="header">
     <img src="<?php echo base_url('assets/img/bg-header.png');?>" class="w-100 lg-bg-header">
      <a href="https://www.consumerthai.org" target="_blank"><img  src="<?php echo base_url('assets/img/logo.png')?>" class="header-logo position-absolute" style="z-index: 1"></a>
 
@@ -22,13 +35,20 @@
     <a href="<?php echo site_url();?>"><img src="<?php echo base_url('assets/img/home-button.png')?>" class="position-absolute home-button"></a>
     <div class="d-flex d-xl-none">
         <button class="button-more position-absolute d-none d-xl-none" id="button-more">อ่านข้อมูลเพิ่มเติม</button>
-        <button class="button-more position-absolute d-xl-none" id="button-donate">คลิกเพื่อบริจาค</button>
+        <button class="button-more position-absolute d-xl-none" style="z-index: 1" id="button-donate">คลิกเพื่อบริจาค</button>
     </div>
-    <div class="lang-button-contaier d-flex position-absolute">
-        <button type="button" class="lang-button" id="eng">ENG</button>
-        <button type="button" class="lang-button" id="th">TH</button>
+    <div class="lang-button-contaier d-flex position-absolute" id="appDonate">
+        <!--
+        <button @click="switchlang" type="button" class="hidden lang-button" id="eng">ENG</button>
+        <button @click="switchlang" type="button" class="hidden lang-button" id="th">TH</button>
+        -->
+        <a @click="switchlang('en')" :class="classEng" class="lang-button btn" id="eng" href="<?php echo base_url(); ?>LanguageSwitcher/switchLang/english">ENG</a>
+        <a @click="switchlang('th')" :class="classThai" class="lang-button btn" id="th" href="<?php echo base_url(); ?>LanguageSwitcher/switchLang/thai">TH</a>
+
+        <input  ref="inputlang"  name="switchlang" type="hidden" value="<?php echo $_SESSION['site_lang'] ?>">
     </div>
 </div>
+
 <div class="container d-flex" ref="body"">
     <div class="row mt-5 " id="main">
         <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 pl-0 pr-5 pr-0-lg" id="container-left">
@@ -44,7 +64,7 @@
                     </div>
                     <div class="info-container">
                         <h2 class="text-center mt-1 mb-3">รู้จัก มูลนิธิเพื่อผู้บริโภค (มพบ.)</h2>
-                        <p>เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้ครองสิทธิอันพึงมีได้ การเผยแพร่ข้อมูลเพื่อเลือกสินค้า สนับสนุนและส่งเสริมให้องค์กรต่างๆมีส่วนร่วมในการคุ้มครองผู้บริโภค และเสนอนโยบายมาตราการต่างๆ เพือยกระดับการคุ้มครองผู้บริโภค</p>
+                        <p>เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้ครองสิทธิอันพึงมีได้ การเผยแพร่ข้อมูลเพื่อเลือกสินค้า สนับสนุนและส่งเสริมให้องค์กรต่างๆมีส่วนร่วมในการคุ้มครองผู้บริโภค และเสนอนโยบายมาตราการต่างๆ เพื่อยกระดับการคุ้มครองผู้บริโภค</p>
                         <h2 class="text-center quote-text mt-5 mb-5">
                             มูลนิธิเพื่อผู้บริโภค มีจุดยืนที่ชัดเจน<br>
                             สนับสนุนความเข้มแข็งของผู้บริโภค<br>
@@ -126,7 +146,7 @@
                         <button type="button" class="money ml-3 mr-3" id="1000B" value="1000">1000</button>
                     </div>
                     <p class="mt-4 pl-5 pl-4-lg mb-2 money-input-header">หรือ ระบุจำนวนเงินบริจาคตามต้องการ (บาท)</p>
-                    <input type="number" name="money-input" id="money-input" class="form-control money-input ml-5 ml-4-lg pl-4" value="100 min="100">
+                    <input type="number" name="money-input" id="money-input" class="form-control money-input ml-5 ml-4-lg pl-4" value="100" min="100">
                     <p class="mt-2 pl-5 pl-4-lg mb-4 money-input-sub">ทุกยอดเงินของการบริจาค นำไปลดหย่อนภาษีได้</p>
                     <div class="d-flex">
                         <button type="button" class="next position-relative mb-4" id="next-payment-1"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Next</button>
@@ -207,7 +227,7 @@
                                 </div>
                                 <div class="col-9 pr-0 pl-5 pl-4-lg mr-2 mt-2">
                                     <label class="state-2-label mb-1 pl-1">ที่อยู่ สำหรับออกใบเสร็จ เพื่อใช้ลดหย่อนภาษี<span> *</span></label>
-                                    <textarea name="adress1" class="form-control"></textarea>
+                                    <textarea id="donor-address" name="adress1" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -315,6 +335,10 @@
                                 <input type="text" name="card-number" data-encrypt="cardnumber" class="form-control" maxlength="16">
 
                             </div>
+                            <div class="col-7 pr-0 ml-5 mt-4">
+                                <label class="state-2-label mb-1 pl-1">ชื่อบนบัตร (ภาษาอังกฤษเท่านั้น)*<span> *</span></label>
+                                <input type="text" name="cardholderName"  class="form-control">
+                            </div>
                             <div class="col-8 pr-0 ml-5 mt-4">
                                 <label class="state-2-label mb-1 pl-1">วันหมดอายุ เดือน/ปี<span> *</span></label>
                                 <div class="row ml-0">
@@ -340,7 +364,7 @@
                         <p class="ml-5 mb-0">ที่ถูกพิมพ์อยู่ด้านหน้าหรือหลังบัตรของคุณ </p>
                         <p class="ml-5 mb-0">(ไม่ใช่หมายเลขบัตรตัวนูน) </p>
                         <div class="d-flex">
-                            <button type="button" value="Checkout" onclick="Checkout()" class="next position-relative mb-4 mt-4 done"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span>Confirm</button>
+                            <button type="button" value="Checkout" onclick="Checkout()" style="width: 120px;padding-left: 20px;" class="confirm-btn next position-relative mb-4 mt-4 done"><span class="position-absolute"><i class="fa fa-angle-double-right"></i></span> Confirm</button>
                         </div>
                     </div>
                     <div id="payment-type-2" class="d-none">
@@ -504,13 +528,13 @@
             </form>
         </div>
     </div>
-
-
 </div>
+
+
 </body>
 <footer class="footer pl-4 pr-4 pt-2 pb-2 mt-4 d-flex" id="footer-xl">
     <div class="d-none d-xl-block">
-        <img src="<?php echo base_url('assets/img/lock-icon.png')?>"><span class="footer-text ml-2">consumerthai.org มีความปลอดภัย ข้อมูลส่วนตัวของคุณจะถูกเก็บรักษาเป็นอย่างดี ตามนโยบายความเป็นส่วนตัว</span><span class="footer-text ml-4">สอบถามข้อมูลเพิ่มเติม</span><img src="<?php echo base_url('assets/img/tel-icon.png')?>" class="ml-4"><span class="footer-text ml-4">089 761 9150, 089 765 9151</span>
+        <img src="<?php echo base_url('assets/img/lock-icon.png')?>"><span class="footer-text ml-2">consumerthai.org มีความปลอดภัย ข้อมูลส่วนตัวของคุณจะถูกเก็บรักษาเป็นอย่างดี ตามนโยบายความเป็นส่วนตัว</span><span class="footer-text ml-4">สอบถามข้อมูลเพิ่มเติม</span><img src="<?php echo base_url('assets/img/tel-icon.png')?>" class="ml-4"><span class="footer-text ml-2">089 761 9150, 089 765 9151</span>
     </div>
 </footer>
 <footer class="footer pl-4 pr-4 pt-2 pb-2 mt-4 d-flex" id="footer-lg">
@@ -530,11 +554,14 @@
     <!--checkout function-->
     function Checkout() {
         //your code here
-        //...
         //if there is no error, submit the form.
         My2c2p.submitForm("2c2p-payment-form",function(errCode,errDesc){
             if(errCode!=0){ alert(errDesc+" ("+errCode+")"); }
         });
+
+
+
+
     }
 </script>
 
