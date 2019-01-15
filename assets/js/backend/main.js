@@ -68,7 +68,7 @@ var lastdonate = new Vue({
             let baseApi = baseUrl + "/api-01/report/donation-list";
 
             axios.get(baseApi).then((res) => {
-                this.donationInfo = res.data
+                this.donationInfo = res.data.donationlist
             }).catch((err) => {
             })
         }

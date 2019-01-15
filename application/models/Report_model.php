@@ -39,10 +39,10 @@ class Report_model extends MY_Model
         $this->db->join($this->tbl_payment_code, 'donation.payment_status = payment_code.code', 'left');
         $this->db->join($this->tbl_payment_channel, 'donation.payment_channel = payment_channel.aid', 'left');
         if(!is_blank($this->_startDate)){
-            $this->db->where($this->_startDate);
+            $this->db->where('donation.updated_date >=',$this->_startDate);
         }
         if(!is_blank($this->_endDate)){
-            $this->db->where($this->_endDate);
+            $this->db->where('donation.updated_date <=',$this->_endDate);
         }
         $this->db->order_by('donation.aid', 'DESC');
         $query = $this->db->get($this->tbl_donation);
@@ -61,8 +61,26 @@ class Report_model extends MY_Model
     }
 
 
-    public function donor()
+    public function donorsList()
     {
+        $where = "donation.payment_status ='00' || donation.payment_status='000'";
+        $this->db->select('donor.first_name,
+	donor.email,
+	donor.tel,
+	sum(amount) as donateTotal');
+        $this->db->join($this->tbl_donor,'donation.doner_aid = donor.aid','left');
+        $this->db->where($where);
+        $this->db->group_by('donor.aid');
+        $this->db->order_by('donateTotal','desc');
+        $query = $this->db->get($this->tbl_donation);
+
+        $result = array();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result_array() as $row) {
+                $result[] = $row;
+            }
+        }
+        return $result;
 
     }
 

@@ -57,6 +57,8 @@ var appreport = new Vue({
             startTime: firstDay,
             endTime: lastDay,
             range: [firstDay, lastDay],
+            startDated:"",
+            endDated:"",
             emptyTime: '',
             tranferDateTime: '',
             emptyRange: [],
@@ -125,9 +127,16 @@ var appreport = new Vue({
                 return total
             }, 0)
         },
-        fillterDateTime() {
-            this.startTime = this.range[0]
-            this.endTime = this.range[1]
+        fillterStartDated() {
+            this.startDated = moment(this.range[0]).format('YYYY-MM-DD H:mm:ss')
+           return moment(this.range[0]).format('YYYY-MM-DD H:mm:ss')
+            // this.endTime = this.range[1]
+        },
+        fillterEndDated() {
+
+            this.endDated = moment(this.range[1]).format('YYYY-MM-DD H:mm:ss')
+            return moment(this.range[1]).format('YYYY-MM-DD H:mm:ss')
+            // this.endTime = this.range[1]
         },
         filterPyamentStatus() {
             return this.paymentCode.filter((paycode) => {
@@ -155,17 +164,40 @@ var appreport = new Vue({
             }
 
         },
+        exportExcel(){
+            let start_date = this.range[0]
+            let end_date = this.range[1]
+
+            start_date = moment(start_date).format('YYYY-MM-DD H:mm:ss')
+            end_date = moment(end_date).format('YYYY-MM-DD H:mm:ss')
+
+            let apiUrls = baseUrl+"/admin/reports/exportxls?startDate="+start_date+"&endDate="+end_date
+
+            return apiUrls
+        }
 
     },
     methods: {
         getDonationlist() {
             let baseApi = baseUrl + "/api-01/report/donation-list";
-            let stDate = this.startTime
-            let endDate = this.endTime
-            axios.get(baseApi).then((res) => {
-                this.donationInfo = res.data
+            let stDate = moment(this.range[0]).format('YYYY-MM-DD H:mm:ss')
+            let endDate = moment(this.range[1]).format('YYYY-MM-DD H:mm:ss')
+
+            let baseApi2 = baseApi+"?startDate="+stDate+"&endDate="+endDate
+
+            axios.get(baseApi+"?startDate="+stDate+"&endDate="+endDate).then((res) => {
+                this.donationInfo = res.data.donationlist
+                // console.log(res.data.last_query)
             }).catch((err) => {
+                // console.log(err)
             })
+
+            // console.log(this.donationInfo)
+            // console.log(baseApi2)
+
+
+
+
         },
         getBankList() {
             let baseApi = baseUrl + "/api-v01/banklist";
@@ -181,14 +213,21 @@ var appreport = new Vue({
             }).catch((err) => {
             })
         },
-        confrim: function () {
+        confirmDate: function () {
             // console.log(this.startTime);
             // console.log(this.endTime);
 
-            this.startTime = this.range[0]
-            this.endTime = this.range[1]
 
-            // console.log(this.range);
+            let start_date = this.range[0]
+            let end_date = this.range[1]
+
+            start_date = moment(start_date).format('YYYY-MM-DD H:mm:ss')
+            end_date = moment(end_date).format('YYYY-MM-DD H:mm:ss')
+
+            this.startTime = start_date
+            this.endTime = start_date
+
+
         },
         invoice(donationId) {
             return baseUrl + "/admin/reports/get-invoice/" + donationId
@@ -203,7 +242,7 @@ var appreport = new Vue({
             var fromData = this.toFormData(dataInfo)
 
             axios.post(baseApi, fromData).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
 
                 this.getDonationlist()
 
@@ -216,7 +255,7 @@ var appreport = new Vue({
         },
         donationEdit(itemClick) {
             this.userClicked = itemClick
-            console.log(this.userClicked)
+            // console.log(this.userClicked)
         },
         toFormData: function (obj) {
             var form_data = new FormData();

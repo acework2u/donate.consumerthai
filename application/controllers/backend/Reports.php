@@ -42,23 +42,18 @@ class Reports extends MY_Controller
             $start_date = array('updated_date >= $startDate');
             $end_date = array('updated_date <= $endDate');
 
-            $this->report->setStartDate($start_date);
-            $this->report->setEndDate($end_date);
+            $this->report->setStartDate($startDate);
+            $this->report->setEndDate($endDate);
 
             if ($this->report->donation()) {
                 $donationList = $this->report->donation();
             }
+            $data = array();
+            $data['donationlist'] =  $donationList;
+            $data['last_query'] = $this->db->last_query();
 
-
-
-
-
-
-
-
-
-
-            echo json_encode($donationList);
+//            echo json_encode($donationList);
+            echo json_encode($data);
 
         }
     }
@@ -83,8 +78,8 @@ class Reports extends MY_Controller
             $start_date = array('updated_date >= $startDate');
             $end_date = array('updated_date <= $endDate');
 
-            $this->report->setStartDate($start_date);
-            $this->report->setEndDate($end_date);
+            $this->report->setStartDate($startDate);
+            $this->report->setEndDate($endDate);
 
             if ($this->report->donation()) {
                 $donationList = $this->report->donation();

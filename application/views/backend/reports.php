@@ -842,12 +842,12 @@
                 <div class="col-xs-12 col-sm-6 col-md-8">
                     <vue-datepicker-local v-model="range" range-separator=" to " :local="local" show-buttons
                                           format="DD-MM-YYYY"></vue-datepicker-local>
-                    <button class="btn btn-group-sm" @click="confrim">Confirm</button>
+                    <button class="btn btn-group-sm" @click="getDonationlist">Confirm</button>
                 </div>
 
                 <div>
-                    <!--                   <p>Start {{startTime}}</p>-->
-                    <!--                   <p>End {{endTime}}</p>-->
+<!--                                       <p>Start {{fillterStartDated}}</p>-->
+<!--                                       <p>End {{fillterEndDated}}</p>-->
                 </div>
 
 
@@ -855,7 +855,8 @@
             <div class="col-xs-6 col-md-4 text-right mx-auto">
 
                 <!--                <button class="btn btn-success">Export xls</button>-->
-                <a lass="btn btn-success" href="<?php echo base_url('admin/reports/exportxls'); ?>">Export .xls</a>
+<!--                <a class="btn btn-success" href="--><?php //echo base_url('admin/reports/exportxls'); ?><!--">Export .xls</a>-->
+                <a class="btn btn-success" :href="exportExcel">Export .xls</a>
 
             </div>
 

@@ -443,7 +443,7 @@
                     <!-- /.box -->
 
                     <!-- solid sales graph -->
-                    <div class="box box-solid bg-teal-gradient">
+                    <div class="hidden box box-solid bg-teal-gradient">
                         <div class="box-header">
                             <i class="fa fa-th"></i>
 
