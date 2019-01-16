@@ -131,8 +131,20 @@ class Donor_model extends MY_Model
 
     }
 
-    public function getDonor()
+    public function getDonorFirstName()
     {
+        $this->db->select('first_name');
+        $this->db->where('aid',$this->_donorId);
+        $this->db->limit(1);
+        $query = $this->db->get($this->tbl_donor);
+        $full_name ="";
+        if($query->num_rows() > 0){
+            foreach ($query->result_array() as $row) {
+                $full_name = get_array_value($row,'first_name','');
+            }
+        }
+
+        return $full_name;
 
     }
 

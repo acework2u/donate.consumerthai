@@ -542,4 +542,29 @@ class Test extends MY_Controller
     }
 
 
+    public function donorname(){
+        $this->load->model($this->donor_model,'donor');
+                    $this->donor->setDonorId(1);
+        $fullName = $this->donor->getDonorFirstName();
+
+        if(is_array($fullName)){
+            print_r( $fullName);
+        }else{
+            echo "Name =".$fullName;echo "</br>";
+//            echo $this->db->last_query();
+        }
+
+        $number = "000001010025";
+
+
+
+        echo amountToDb($number);
+        echo "</br>";
+        echo number_format( amountToDb($number), 2 );
+
+//        print_r($fullName) ;
+
+    }
+
+
 } //end of Class

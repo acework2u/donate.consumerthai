@@ -267,18 +267,22 @@ class Donate extends MY_Controller
 
                 $this->donation->create();
 
+                /// Send Mail to Donor
+                $this->load->library('mailer');
 
-//                $this->load->library('SocialMedia');
-//
-//                $socmed = new SocialMedia();
-//                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
-//                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
-//                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
-//
-//                $this->data['media_name'] = $social_media_name;
-//                $this->data['media_urls'] = $social_media_urls;
-//                /*** Load View **/
-//                $this->load->view('frontend/thankyou', $this->data);
+                $fullName = "";
+                $amountDonate ="";
+
+                $amountDonate = number_format($amount_to_db, 2 );
+
+                $templateData = array(
+                    'name' => $full_name,
+                    'amount'=>$amountDonate
+                );
+
+                if (!is_blank($email)) {
+                    $result = $this->mailer->to($email)->subject("Thank you for Donate")->send("transfer_thankyou.php", compact('templateData'));
+                }
 
                 redirect('thankyou');
 
@@ -307,12 +311,18 @@ class Donate extends MY_Controller
                 /// Send Mail to Donor
                 $this->load->library('mailer');
 
+                $fullName = "";
+                $amountDonate ="";
+
+                $amountDonate = number_format($amount_to_db, 2 );
+
                 $templateData = array(
-                    'name' => 'Consumer Thai'
+                    'name' => $full_name,
+                    'amount'=>$amountDonate
                 );
 
                 if (!is_blank($email)) {
-                    $result = $this->mailer->to($email)->subject("Thank you for Donate")->send("thank_you.php", compact('templateData'));
+                    $result = $this->mailer->to($email)->subject("Thank you for Donate")->send("transfer_thankyou.php", compact('templateData'));
                 }
 
 
@@ -438,8 +448,21 @@ class Donate extends MY_Controller
                 /// Send Mail to Donor
                 $this->load->library('mailer');
                 $pdfFile = $this->generate_invoice($donationId);
+
+
+                $fullName = "";
+                $amountDonate ="";
+
+                $this->load->model($this->donor_model,'donor');
+                $this->donor->setDonorId($donorId);
+
+                $fullName = $this->donor->getDonorFirstName();
+                $amountDonate = number_format(amountToDb($amt), 2 );
+
+
                 $templateData = array(
-                    'name' => 'Consumer Thai'
+                    'name' => $fullName,
+                    'amount'=>$amountDonate
                 );
                 $fileName = "$invoiceNo.pdf";
                 if (!is_blank($email)) {
@@ -452,17 +475,20 @@ class Donate extends MY_Controller
         }
 
 
-        $this->load->library('SocialMedia');
+//        $this->load->library('SocialMedia');
+//
+//        $socmed = new SocialMedia();
+//        $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
+//        $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
+//        $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
+//
+//        $this->data['media_name'] = $social_media_name;
+//        $this->data['media_urls'] = $social_media_urls;
+//        /*** Load View **/
+//        $this->load->view('frontend/thankyou', $this->data);
 
-        $socmed = new SocialMedia();
-        $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
-        $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
-        $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
 
-        $this->data['media_name'] = $social_media_name;
-        $this->data['media_urls'] = $social_media_urls;
-        /*** Load View **/
-        $this->load->view('frontend/thankyou', $this->data);
+        redirect('thankyou');
     }
 
 
