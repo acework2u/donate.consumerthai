@@ -35,11 +35,13 @@ class Donation_model extends MY_Model
 
     }
 
-    public function setDonationId($donationId){
+    public function setDonationId($donationId)
+    {
         $this->_donationId = $donationId;
     }
 
-    public function getDonationId(){
+    public function getDonationId()
+    {
         return $this->_donationId;
     }
 
@@ -72,7 +74,9 @@ class Donation_model extends MY_Model
     {
         $this->_status = $status;
     }
-    public function setPaymentChannel($paymentChanel){
+
+    public function setPaymentChannel($paymentChanel)
+    {
         $this->_payment_channel = $paymentChanel;
     }
 
@@ -100,25 +104,36 @@ class Donation_model extends MY_Model
     {
         $this->_transferDate = $transferDate;
     }
-    public function setBankName($bankName){
+
+    public function setBankName($bankName)
+    {
         $this->_bankName = $bankName;
     }
-    public function setPan($cardNumber){
+
+    public function setPan($cardNumber)
+    {
         $this->_pan = $cardNumber;
     }
-    public function setTransRef($transRef){
+
+    public function setTransRef($transRef)
+    {
         $this->_tranRef = $transRef;
     }
-    public function setProcessBy($processBy){
+
+    public function setProcessBy($processBy)
+    {
         $this->_processBy = $processBy;
     }
-    public function setIssuerCountry($countryCode){
+
+    public function setIssuerCountry($countryCode)
+    {
         $this->_issuerCountry = $countryCode;
     }
-    public function setInvoiceId($invoice_id){
+
+    public function setInvoiceId($invoice_id)
+    {
         $this->_invoiceId = $invoice_id;
     }
-
 
 
     public function create()
@@ -153,15 +168,15 @@ class Donation_model extends MY_Model
 
     }
 
-    public function update($donation_id="")
+    public function update($donation_id = "")
     {
         $data = array(
-            'invoice_id'=>$this->_invoiceId,
-            'inv_number'=>$this->_inv_number
+            'invoice_id' => $this->_invoiceId,
+            'inv_number' => $this->_inv_number
         );
-        if(!is_blank($donation_id)){
-            $this->db->where('aid',$donation_id);
-            $this->db->update($this->tbl_donation,$data);
+        if (!is_blank($donation_id)) {
+            $this->db->where('aid', $donation_id);
+            $this->db->update($this->tbl_donation, $data);
 
             if ($this->db->affected_rows()) {
                 return true;
@@ -170,14 +185,15 @@ class Donation_model extends MY_Model
             }
 
 
-        }else{
+        } else {
             return false;
         }
 
 
     }
 
-    public function updateDonation($donation_id=""){
+    public function updateDonation($donation_id = "")
+    {
         /*
         $data = array(
             'inv_number'=>$this->_inv_number,
@@ -192,41 +208,38 @@ class Donation_model extends MY_Model
         );
         */
         $data = array();
-        if(!is_blank($this->_inv_number)){
+        if (!is_blank($this->_inv_number)) {
             $data['inv_number'] = $this->_inv_number;
         }
-        if(!is_blank($this->_amount)){
+        if (!is_blank($this->_amount)) {
             $data['amount'] = $this->_amount;
         }
-        if(!is_blank($this->_status)){
+        if (!is_blank($this->_status)) {
             $data['payment_status'] = $this->_status;
         }
-        if(!is_blank($this->_bankName)){
+        if (!is_blank($this->_bankName)) {
             $data['bankName'] = $this->_bankName;
         }
-        if(!is_blank($this->_transferDate)){
+        if (!is_blank($this->_transferDate)) {
             $data['transfer_date'] = $this->_transferDate;
         }
-        if(!is_blank($this->_invoiceId)){
+        if (!is_blank($this->_invoiceId)) {
             $data['invoice_id'] = $this->_invoiceId;
         }
-        if(!is_blank($this->_tranRef)){
+        if (!is_blank($this->_tranRef)) {
             $data['tranRef'] = $this->_tranRef;
         }
-        if(!is_blank($this->_note)){
+        if (!is_blank($this->_note)) {
             $data['updated_date'] = $this->_updatedDate;
         }
-        if(!is_blank($this->_note)){
+        if (!is_blank($this->_note)) {
             $data['note'] = $this->_note;
         }
 
 
-
-
-
-        if(!is_blank($donation_id) && !is_blank($data)){
-            $this->db->where('aid',$donation_id);
-            $this->db->update($this->tbl_donation,$data);
+        if (!is_blank($donation_id) && !is_blank($data)) {
+            $this->db->where('aid', $donation_id);
+            $this->db->update($this->tbl_donation, $data);
             if ($this->db->affected_rows()) {
                 return true;
             } else {
@@ -253,34 +266,35 @@ class Donation_model extends MY_Model
 
     public function lastDonationId()
     {
-        $result="";
+        $result = "";
         $this->db->select_max('aid');
-        $query  = $this->db->get($this->tbl_donation);
-        $result  = $query->row_array();
+        $query = $this->db->get($this->tbl_donation);
+        $result = $query->row_array();
 
-        if(is_array($result)){
-            $result = get_array_value($result,'aid');
+        if (is_array($result)) {
+            $result = get_array_value($result, 'aid');
         }
 
         return $result;
 
 
-
     }
 
-    public function donationById(){
+    public function donationById()
+    {
         $this->db->select('donation.* ,
 	donor.title_name,
 	donor.first_name,
 	donor.last_name,
 	donor.tax_code,
 	donor.address,
+	donor.email,
 	donation_campaign.title AS campaign_name');
-    $this->db->join($this->tbl_donor,'donation.doner_aid = donor.aid','left');
-    $this->db->join($this->tbl_payment_channel,'donation.payment_channel = payment_channel.`code`','left');
-    $this->db->join($this->tbl_donation_campaign,'donation.donation_campaign_aid = donation_campaign.aid ','left');
-    $this->db->where('donation.aid',$this->_donationId);
-    $query = $this->db->get($this->tbl_donation);
+        $this->db->join($this->tbl_donor, 'donation.doner_aid = donor.aid', 'left');
+        $this->db->join($this->tbl_payment_channel, 'donation.payment_channel = payment_channel.`code`', 'left');
+        $this->db->join($this->tbl_donation_campaign, 'donation.donation_campaign_aid = donation_campaign.aid ', 'left');
+        $this->db->where('donation.aid', $this->_donationId);
+        $query = $this->db->get($this->tbl_donation);
         $result = array();
         if ($query->num_rows() > 0) {
             foreach ($query->result_array() as $row) {
@@ -289,6 +303,23 @@ class Donation_model extends MY_Model
         }
         return $result;
 
+
+    }
+    public function topDonor(){
+        $this->db->select('*,SUM(amount) as TotalAmount');
+        $this->db->join($this->tbl_donation,'donation ON donor.aid = donation.doner_aid','left');
+        $this->db->where("donation.payment_status='00' OR donation.payment_status='000'");
+        $this->db->group_by('donor.aid');
+        $this->db->order_by('TotalAmount DESC');
+        $this->db->limit(10);
+        $query = $this->db->get($this->tbl_donor);
+        $result = array();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result_array() as $row) {
+                $result[] = $row;
+            }
+        }
+        return $result;
 
     }
 

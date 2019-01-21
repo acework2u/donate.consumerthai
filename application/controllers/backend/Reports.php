@@ -29,12 +29,16 @@ class Reports extends MY_Controller
 
             $startDate = date('Y-m-01 00:00:00');
             $endDate = date('Y-m-t 12:59:59');
+            $limit = "";
 
             if (!is_blank($this->input->get_post('startDate'))) {
                 $startDate = date('Y-m-d', strtotime($this->input->get_post('startDate')));
             }
             if (!is_blank($this->input->get_post('endDate'))) {
                 $endDate = date('Y-m-d', strtotime($this->input->get_post('endDate')));
+            }
+            if(!is_blank($this->input->get_post('limit'))){
+                $limit = $this->input->get_post('limit');
             }
 
 
@@ -44,6 +48,10 @@ class Reports extends MY_Controller
 
             $this->report->setStartDate($startDate);
             $this->report->setEndDate($endDate);
+
+            if(!is_blank($limit)){
+                $this->report->setLimit($limit);
+            }
 
             if ($this->report->donation()) {
                 $donationList = $this->report->donation();
@@ -443,6 +451,76 @@ class Reports extends MY_Controller
 
 
         }// end if login
+
+    }
+
+    public function sendEmailInvoiceToDonor($donationId=""){
+
+        if($this->is_login()){
+
+            $data = array();
+
+            if(!is_blank($this->input->get_post('donation_id'))){
+                $donationId = $this->input->get_post('donation_id');
+            }
+            if(!is_blank($donationId)){
+                /// Send Mail to Donor
+                $this->load->model($this->donation_model, 'donation');
+                $this->donation->setDonationId($donationId);
+                $donateInfo = $this->donation->donationById();
+
+                /// Send Mail to Donor
+                $this->load->library('mailer');
+                $pdfFile = $this->generate_invoice($donationId);
+
+
+                $fullName = "";
+                $amountDonate = "";
+                $email = "";
+                $invoiceNo = "";
+                if (is_array($donateInfo)) {
+                    foreach ($donateInfo as $row) {
+                        $fullName = get_array_value($row, 'first_name', '');
+                        $amountDonate = get_array_value($row, 'amount', '');
+                        $email = get_array_value($row, 'email', '');
+                        $invoiceNo = get_array_value($row, 'inv_number', 'Invoice');
+                    }
+                }
+
+                if (!is_blank($amountDonate)) {
+                    $donateAmount = number_format($amountDonate, 2);
+                }
+
+                $templateData = array(
+                    'name' => $fullName,
+                    'amount' => $amountDonate
+                );
+
+                $fileName = "$invoiceNo.pdf";
+                if (!is_blank($email)) {
+                    $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
+                }
+
+
+                if ($result) {
+
+                    $data['message'] = "Send Email Success";
+                } else {
+
+                    $data['message'] = "Send Email to Donor Success";
+                }
+
+
+
+            }
+
+            echo json_encode($data);
+
+
+
+        }
+
+
 
     }
 

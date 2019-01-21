@@ -280,6 +280,9 @@ class MY_Controller extends CI_Controller
         $this->donation->setDonationId($id);
         $result = array();
         $result = $this->donation->donationById();
+        $title_name="";
+        $first_name="";
+        $last_name="";
 
         if (is_array($result)) {
             foreach ($result as $row) {

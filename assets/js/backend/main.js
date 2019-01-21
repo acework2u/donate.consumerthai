@@ -14,19 +14,25 @@ var lastdonate = new Vue({
         return {
             title: "Last Donate",
             donationInfo: [],
+            donorTopInfo:[]
         }
     },
     created() {
         this.getDonationlist()
+        this.getTopDonate()
     },
     mounted() {
         this.$nextTick(() => {
             this.getDonationlist()
+            this.getTopDonate()
         })
     },
     computed: {
         filterDonationList() {
             return this.donationInfo
+        },
+        filterDonorTop(){
+            return this.donorTopInfo
         },
         filDonateTotal() {
             let total = 0
@@ -67,12 +73,19 @@ var lastdonate = new Vue({
         getDonationlist() {
             let baseApi = baseUrl + "/api-01/report/donation-list";
 
-            axios.get(baseApi).then((res) => {
+            axios.get(baseApi+"?limit=10").then((res) => {
                 this.donationInfo = res.data.donationlist
             }).catch((err) => {
             })
+        },
+        getTopDonate(){
+            let baseApi = baseUrl + "/api-v01/donate-top10";
+            axios.get(baseApi+"?limit=10").then((res) => {
+                this.donorTopInfo = res.data
+            }).catch((err) => {
+            })
+
         }
     }
-
 
 });

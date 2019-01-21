@@ -7,6 +7,7 @@ class Report_model extends MY_Model
 
     private $_startDate;
     private $_endDate;
+    private $_limit;
 
     public function __construct()
     {
@@ -22,6 +23,10 @@ class Report_model extends MY_Model
     public function setEndDate($endDate)
     {
         $this->_endDate = $endDate;
+    }
+
+    public function setLimit($limit){
+        $this->_limit = $limit;
     }
 
 
@@ -43,6 +48,10 @@ class Report_model extends MY_Model
         }
         if(!is_blank($this->_endDate)){
             $this->db->where('donation.updated_date <=',$this->_endDate);
+        }
+
+        if(!is_blank($this->_limit)){
+            $this->db->limit($this->_limit);
         }
         $this->db->order_by('donation.aid', 'DESC');
         $query = $this->db->get($this->tbl_donation);

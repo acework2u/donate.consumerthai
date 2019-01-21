@@ -17,6 +17,30 @@ function getUserAid()
     return $user_id;
 
 }
+function getUserFullName(){
+
+    return getUserFirstName()." ".getUserLastName();
+}
+
+function getUserFirstName(){
+    $first_name = "";
+
+    $userSession = getUsersSession();
+    if (is_array($userSession)) {
+        $first_name = get_array_value($userSession, 'firstname', '');
+    }
+
+    return $first_name;
+
+}
+function getUserLastName(){
+    $lastname = "";
+    $userSession = getUsersSession();
+    if (is_array($userSession)) {
+        $lastname = get_array_value($userSession, 'lastname', '');
+    }
+    return $lastname;
+}
 
 function getUserGroupId()
 {

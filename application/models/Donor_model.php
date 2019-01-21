@@ -73,10 +73,14 @@ class Donor_model extends MY_Model
     {
         $this->_lastName = $last_name;
     }
-    public function setTitleName($title_name){
+
+    public function setTitleName($title_name)
+    {
         $this->_titleName = $title_name;
     }
-    public function setTaxNo($tax){
+
+    public function setTaxNo($tax)
+    {
         $this->_taxId = $tax;
     }
 
@@ -88,8 +92,8 @@ class Donor_model extends MY_Model
             'first_name' => $this->_firstName,
             'last_name' => $this->_lastName,
             'email' => $this->_email,
-            'address'=>$this->_address,
-            'tax_code'=>$this->_taxId,
+            'address' => $this->_address,
+            'tax_code' => $this->_taxId,
             'tel' => $this->_tel,
             'status' => $this->_status,
             'created_date' => $this->_createdDate,
@@ -105,11 +109,11 @@ class Donor_model extends MY_Model
 
     }
 
-    public function update($data="")
+    public function update($data = "")
     {
         if (is_array($data)) {
-            $this->db->where('aid',$this->_donorId);
-            $this->db->update($this->tbl_donor,$data);
+            $this->db->where('aid', $this->_donorId);
+            $this->db->update($this->tbl_donor, $data);
             if ($this->db->affected_rows()) {
                 return true;
             } else {
@@ -134,13 +138,13 @@ class Donor_model extends MY_Model
     public function getDonorFirstName()
     {
         $this->db->select('first_name');
-        $this->db->where('aid',$this->_donorId);
+        $this->db->where('aid', $this->_donorId);
         $this->db->limit(1);
         $query = $this->db->get($this->tbl_donor);
-        $full_name ="";
-        if($query->num_rows() > 0){
+        $full_name = "";
+        if ($query->num_rows() > 0) {
             foreach ($query->result_array() as $row) {
-                $full_name = get_array_value($row,'first_name','');
+                $full_name = get_array_value($row, 'first_name', '');
             }
         }
 

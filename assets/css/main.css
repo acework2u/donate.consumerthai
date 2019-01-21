@@ -223,8 +223,8 @@ textarea {
 }
 
 .subject-1 p, .subject-2 p {
-	font-family: TEPC ChulaNara;
-	font-size: 12pt;
+	font-family: Quark-Light;
+	font-size: 16pt;
 }
 
 .subject-2 li {
@@ -237,6 +237,7 @@ textarea {
 	padding: 20px;
 	padding-bottom: 0;
 	color: #42210B;
+
 }
 
 #tab-body-3 h2 {
@@ -376,13 +377,13 @@ textarea {
 }
 
 .input-sub {
-	font-family: TEPC ChulaNara;
+	font-family: Quark-Light;
 	font-size: 8pt;
 	top: 75px;
 }
 
 .input-sub-2 {
-	font-family: TEPC ChulaNara;
+	font-family: Quark-Light;
 	font-size: 8pt;
 	top: 185px;
 }
@@ -476,7 +477,7 @@ textarea {
 }
 
 .qr-text {
-	font-family: TEPC ChulaNara !important;
+	font-family: Quark-Light !important;
 	font-size: 13px !important;
 }
 
@@ -485,7 +486,7 @@ textarea {
 	border: 1px solid #CCCCCC;
 	border-radius: 10px;
 	width: 300px;
-	font-family: TEPC ChulaNara !important;
+	font-family: Quark-Light !important;
 	font-size: 14px !important;
 	background: #FFFFFF;
 }
@@ -554,7 +555,7 @@ textarea {
 }
 
 .payment-type-3-text {
-	font-family: TEPC ChulaNara;
+	font-family: Quark-Light;
 	font-size: 10.5pt;
 	line-height: 1.1;
 }

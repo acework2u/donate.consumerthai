@@ -28,6 +28,30 @@ class Dashboard extends MY_Controller{
         $this->load->view('tpl_dashboard',$this->data);
     }
 
+    public function topdaonate(){
+        if($this->is_login()){
+            $this->load->model($this->donation_model,'donation');
+            $result = array();
+            $result = $this->donation->topDonor();
+
+            $rows = array();
+            if(is_array($result) && !is_blank($result)){
+                foreach ($result as $row){
+                    $rows[] = array(
+                        'aid'=>get_array_value($row,'aid',''),
+                        'full_name'=>get_array_value($row,'first_name',''),
+                        'email'=>get_array_value($row,'email',''),
+                        'total_amount'=>get_array_value($row,'TotalAmount','0')
+                    );
+                }
+            }
+
+            echo json_encode($rows);
+
+
+        }
+    }
+
 
 
 

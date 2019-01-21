@@ -467,6 +467,11 @@ class Donate extends MY_Controller
                 $fileName = "$invoiceNo.pdf";
                 if (!is_blank($email)) {
                     $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
+
+                    if(!$result){
+                        redirect('thankyou');
+                    }
+
                 }
 
             }

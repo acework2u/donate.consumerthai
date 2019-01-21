@@ -22,11 +22,14 @@ var appreport = new Vue({
     data() {
         return {
             donationInfo: [],
+            successMsg:"",
+            statusWait:false,
+            errorStatus:false,
             bankList: [],
             paymentCode: [],
             userClicked: {},
             title: "Donation Report",
-            columns: ['inv_number', 'campaign_name', 'amount', 'transfer_date', 'status', 'first_name', 'tranRef', 'paymentchanel', 'pan', 'bankName','updated_date', 'action'],
+            columns: ['inv_number', 'campaign_name', 'amount', 'transfer_date', 'status', 'first_name', 'tranRef', 'paymentchanel', 'pan', 'bankName', 'updated_date', 'action', 'action_email'],
             options: {
                 headings: {
                     inv_number: 'Invoice No.',
@@ -39,9 +42,9 @@ var appreport = new Vue({
                     paymentchanel: 'Channel',
                     pan: 'Card',
                     bankName: 'Bank',
-                    updated_date:"Updated",
-
+                    updated_date: "Updated",
                     action: "",
+                    action_email: "",
 
                 },
                 pagination: {chunk: 10},
@@ -57,8 +60,8 @@ var appreport = new Vue({
             startTime: firstDay,
             endTime: lastDay,
             range: [firstDay, lastDay],
-            startDated:"",
-            endDated:"",
+            startDated: "",
+            endDated: "",
             emptyTime: '',
             tranferDateTime: '',
             emptyRange: [],
@@ -129,7 +132,7 @@ var appreport = new Vue({
         },
         fillterStartDated() {
             this.startDated = moment(this.range[0]).format('YYYY-MM-DD H:mm:ss')
-           return moment(this.range[0]).format('YYYY-MM-DD H:mm:ss')
+            return moment(this.range[0]).format('YYYY-MM-DD H:mm:ss')
             // this.endTime = this.range[1]
         },
         fillterEndDated() {
@@ -164,14 +167,14 @@ var appreport = new Vue({
             }
 
         },
-        exportExcel(){
+        exportExcel() {
             let start_date = this.range[0]
             let end_date = this.range[1]
 
             start_date = moment(start_date).format('YYYY-MM-DD H:mm:ss')
             end_date = moment(end_date).format('YYYY-MM-DD H:mm:ss')
 
-            let apiUrls = baseUrl+"/admin/reports/exportxls?startDate="+start_date+"&endDate="+end_date
+            let apiUrls = baseUrl + "/admin/reports/exportxls?startDate=" + start_date + "&endDate=" + end_date
 
             return apiUrls
         }
@@ -183,9 +186,9 @@ var appreport = new Vue({
             let stDate = moment(this.range[0]).format('YYYY-MM-DD H:mm:ss')
             let endDate = moment(this.range[1]).format('YYYY-MM-DD H:mm:ss')
 
-            let baseApi2 = baseApi+"?startDate="+stDate+"&endDate="+endDate
+            let baseApi2 = baseApi + "?startDate=" + stDate + "&endDate=" + endDate
 
-            axios.get(baseApi+"?startDate="+stDate+"&endDate="+endDate).then((res) => {
+            axios.get(baseApi + "?startDate=" + stDate + "&endDate=" + endDate).then((res) => {
                 this.donationInfo = res.data.donationlist
                 // console.log(res.data.last_query)
             }).catch((err) => {
@@ -194,8 +197,6 @@ var appreport = new Vue({
 
             // console.log(this.donationInfo)
             // console.log(baseApi2)
-
-
 
 
         },
@@ -232,6 +233,23 @@ var appreport = new Vue({
         invoice(donationId) {
             return baseUrl + "/admin/reports/get-invoice/" + donationId
         },
+        sendInvoiceEmail(donationId){
+            let baseApi = baseUrl + "/admin/reports/send-invoice";
+
+            this.statusWait = true
+            axios.post(baseApi+"?donation_id="+donationId).then((res)=>{
+                console.log(res)
+                this.statusWait = false
+                this.successMsg = res.data.message
+
+            }).catch((err)=>{
+                console.log(err)
+            })
+
+        },
+        nameInv(item){
+            return "email_inv_"+item
+        },
         donationUpdate() {
             let baseApi = baseUrl + "/admin/reports/update-donation";
             if (this.emptyTime) {
@@ -244,12 +262,24 @@ var appreport = new Vue({
             axios.post(baseApi, fromData).then((res) => {
                 // console.log(res.data);
 
+                if(res.data.error){
+                    this.errorStatus =true
+                }else{
+                    this.errorStatus = false
+                }
+                this.successMsg = res.data.message;
+
                 this.getDonationlist()
 
             }).catch((err) => {
 
             })
             appreport.getDonationlist()
+
+            setTimeout(()=>{
+                this.errorStatus = false;
+                this.successMsg=""
+            },1000);
 
 
         },
@@ -281,6 +311,13 @@ var appreport = new Vue({
             // }
 
             // console.log(this.emptyTime)
+        },
+        checkStatusInvoice(itemStatus) {
+            if (itemStatus === "00" || itemStatus==="000" || itemStatus==="Successful") {
+                return true
+            }else{
+                return false
+            }
         }
 
 

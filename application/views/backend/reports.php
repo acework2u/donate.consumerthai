@@ -67,7 +67,8 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>{{filDonateTotal | formatBaht}}</h3>
+                        <h3 v-if="filDonateTotal !=0">{{filDonateTotal | formatBaht}}</h3>
+                        <h3 v-else>{{filDonateTotal}}</h3>
 
                         <p>New Donates</p>
                     </div>
@@ -82,7 +83,8 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>{{totalSuccess | formatBaht}}<sup style="font-size: 20px"></sup></h3>
+                        <h3 v-if="totalSuccess!=0">{{totalSuccess | formatBaht}}<sup style="font-size: 20px"></sup></h3>
+                        <h3 v-else>{{totalSuccess}}<sup style="font-size: 20px"></sup></h3>
 
                         <p>Success</p>
                     </div>
@@ -897,52 +899,6 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <table class="hidden table table-hover">
-                            <tr>
-                                <th>Invoice No.</th>
-                                <th>Campaign</th>
-                                <th>Amount(Baht)</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Donor</th>
-                                <th>Ref No.</th>
-                                <th>Payment Channel</th>
-                                <th>Bank Name</th>
-                                <th>Card</th>
-                                <th>By</th>
-                                <th>Action</th>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="form-control"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><input type="text" class="form-control"></td>
-                                <td><input type="text" class="form-control"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr v-for="item,index in filterDonationList">
-                                <td>{{item.inv_number}}</td>
-                                <td>{{item.campaign_name}}</td>
-                                <td>{{item.amount | formatBaht}}</td>
-                                <td>{{item.transfer_date}}</td>
-                                <td><span class="label label-success">{{item.note}}</span></td>
-                                <td>{{item.first_name}} {{item.last_name}}</td>
-                                <td>{{item.transection_no}}</td>
-                                <td>{{item.paymentchanel}}</td>
-                                <td>{{item.bankName}}</td>
-                                <td>{{item.pan}}</td>
-                                <td>{{item.processBy}}</td>
-                                <td><span><i class="btn fa fa-pencil"></i> <i class="btn fa fa-trash"></i></span></td>
-                            </tr>
-
-                        </table>
-
                         <v-client-table ref="table" :columns="columns" :data="filterDonationList" :options="options">
                             <!--                            <a slot="action" slot-scope="props" target="_blank" :href="props.row.action" class="glyphicon glyphicon-eye-open">{{props.row.aid}}</a>-->
                             <a data-toggle="modal" @click="donationEdit(props.row)" data-target="#myModal" slot="action"
@@ -952,6 +908,7 @@
                                   slot-scope="props">{{props.row.amount | formatBaht}}</span>
                             <a :href="invoice(props.row.aid)" target="_blank" class="" slot="inv_number"
                                slot-scope="props">{{props.row.inv_number}}</a>
+                            <button data-toggle="modal" data-target="#send-invoice" v-if="checkStatusInvoice(props.row.status)" :ref="'email_inv_'+props.row.aid" @click="sendInvoiceEmail(props.row.aid)" class="btn" slot-scope="props" slot="action_email"> Send <i class="fa fa-envelope"> </i></button>
 
                         </v-client-table>
 
@@ -980,6 +937,8 @@
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Donation Update</h4>
+                                    <span v-if="!errorStatus" class="alert-success">{{successMsg}}</span>
+                                   <span v-if="errorStatus" class="alert-warning">{{successMsg}}</span>
                                 </div>
                                 <div class="modal-body">
                                     <form class="form-horizontal">
@@ -1003,8 +962,7 @@
                                                 </div>
                                                 <div v-if="userClicked.payment_channel !=001" class="col-xs-4">
                                                     <vue-datepicker-local v-model="emptyTime" clearable format="YYYY-MM-DD HH:mm:ss" :local="local" show-buttons @confirm="covertDatetime"></vue-datepicker-local>
-                                                    <p>This : {{date(emptyTime)}}</p>
-                                                    <p>This : {{moment(emptyTime).format('YYYY.MM.DD H:mm:ss')}}</p>
+
                                                 </div>
                                             </div>
 
@@ -1066,6 +1024,24 @@
 
                     <!-- /.box -->
                 </div>
+                <div id="send-invoice" class="modal fade" role="dialog">
+                    <div class="modal-dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-content">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <span v-if="statusWait"><i class="fa fa-spin fa-refresh"></i> Sending Invoice email to Donor...</span>
+                                    <span v-if="!statusWait" class="alert-success">{{successMsg}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
     </section>

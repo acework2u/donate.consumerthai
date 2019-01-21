@@ -69,6 +69,8 @@ $route['api-01/report/donation-list'] = "backend/Reports/jsonDonationList";
 $route['admin/reports/get-invoice/(:num)'] = "backend/Reports/genInvoice/$1";
 $route['admin/reports/exportxls'] = "backend/Reports/exportxls";
 $route['admin/reports/update-donation'] = "backend/Reports/updateDonationStatus";
+$route['admin/reports/send-invoice'] = "backend/Reports/sendEmailInvoiceToDonor";
+
 
 
 
@@ -101,4 +103,5 @@ $route['thank-you-for-your-donation'] = "donate/donateSuccess";
 $route['thankyou'] = "frontend/thankyou/index";
 
 $route['api-v01/confirm-data'] = "donate/confirmData2c2p";
+$route['api-v01/donate-top10'] = "backend/dashboard/topdaonate";
 

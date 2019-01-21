@@ -513,13 +513,15 @@ class Test extends MY_Controller
     }
 
 
-    public function testInvoice(){
+    public function testInvoice()
+    {
         $Invoice = $this->generate_invoice(6);
 
     }
 
 
-    public function testSocial(){
+    public function testSocial()
+    {
         $this->load->library('SocialMedia');
         $socmed = new SocialMedia();
         $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
@@ -542,27 +544,125 @@ class Test extends MY_Controller
     }
 
 
-    public function donorname(){
-        $this->load->model($this->donor_model,'donor');
-                    $this->donor->setDonorId(1);
+    public function donorname()
+    {
+        $this->load->model($this->donor_model, 'donor');
+        $this->donor->setDonorId(1);
         $fullName = $this->donor->getDonorFirstName();
 
-        if(is_array($fullName)){
-            print_r( $fullName);
-        }else{
-            echo "Name =".$fullName;echo "</br>";
+        if (is_array($fullName)) {
+            print_r($fullName);
+        } else {
+            echo "Name =" . $fullName;
+            echo "</br>";
 //            echo $this->db->last_query();
         }
 
         $number = "000001010025";
 
 
-
         echo amountToDb($number);
         echo "</br>";
-        echo number_format( amountToDb($number), 2 );
+        echo number_format(amountToDb($number), 2);
 
 //        print_r($fullName) ;
+
+    }
+
+    public function testDonationById()
+    {
+
+
+        $this->load->model($this->donation_model, 'donation');
+        $donationId = 16;
+        $this->donation->setDonationId($donationId);
+        $donateInfo = $this->donation->donationById();
+
+        /// Send Mail to Donor
+        $this->load->library('mailer');
+        $pdfFile = $this->generate_invoice($donationId);
+
+
+        $fullName = "";
+        $amountDonate = "";
+        $email = "";
+        $invoiceNo = "";
+        if (is_array($donateInfo)) {
+            foreach ($donateInfo as $row) {
+                $fullName = get_array_value($row, 'first_name', '');
+                $amountDonate = get_array_value($row, 'amount', '');
+                $email = get_array_value($row, 'email', '');
+                $invoiceNo = get_array_value($row, 'inv_number', 'Invoice');
+            }
+        }
+
+        if (!is_blank($amountDonate)) {
+            $donateAmount = number_format($amountDonate, 2);
+        }
+
+        $templateData = array(
+            'name' => $fullName,
+            'amount' => $amountDonate
+        );
+
+        $fileName = "$invoiceNo.pdf";
+        if (!is_blank($email)) {
+            $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
+        }
+
+        $data = array();
+        if ($result) {
+
+            $data['message'] = "Send Email Success";
+        } else {
+
+            $data['message'] = "Send Email to Donor Success";
+        }
+
+        echo json_encode($data);
+
+
+    }
+
+
+    public function userInfo(){
+        echo "<pre>";
+        print_r($_SESSION);
+        echo "</pre>";
+
+
+//        print_r($this->session->userdata('userSession'));
+
+        $userSession = getUsersSession();
+        print_r( $userSession);
+
+        echo  getUserFirstName();
+        echo  getUserLastName();
+    }
+
+
+    public function toptendonor(){
+
+        $this->load->model($this->donation_model,'donation');
+        $result = array();
+        $result = $this->donation->topDonor();
+
+        $rows = array();
+       if(is_array($result) && !is_blank($result)){
+           foreach ($result as $row){
+//               $rows[] = array(
+//                   'aid'=>get_array_value($row,'aid',''),
+//                   'full_name'=>get_array_value($row,'first_name',''),
+//                   'email'=>get_array_value($row,'email',''),
+//                   'total_amount'=>get_array_value($row,'TotalAmount','0')
+//               );
+
+               $rows[] = $row;
+           }
+       }
+
+       echo json_encode($rows);
+
 
     }
 
