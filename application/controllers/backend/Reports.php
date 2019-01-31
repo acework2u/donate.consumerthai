@@ -37,7 +37,7 @@ class Reports extends MY_Controller
             if (!is_blank($this->input->get_post('endDate'))) {
                 $endDate = date('Y-m-d', strtotime($this->input->get_post('endDate')));
             }
-            if(!is_blank($this->input->get_post('limit'))){
+            if (!is_blank($this->input->get_post('limit'))) {
                 $limit = $this->input->get_post('limit');
             }
 
@@ -49,7 +49,7 @@ class Reports extends MY_Controller
             $this->report->setStartDate($startDate);
             $this->report->setEndDate($endDate);
 
-            if(!is_blank($limit)){
+            if (!is_blank($limit)) {
                 $this->report->setLimit($limit);
             }
 
@@ -57,7 +57,7 @@ class Reports extends MY_Controller
                 $donationList = $this->report->donation();
             }
             $data = array();
-            $data['donationlist'] =  $donationList;
+            $data['donationlist'] = $donationList;
             $data['last_query'] = $this->db->last_query();
 
 //            echo json_encode($donationList);
@@ -151,15 +151,31 @@ class Reports extends MY_Controller
         if (is_array($data)) {
             $sp->getActiveSheet()->fromArray($data, null, 'A5');
             $last_row = count($data) + 1;
+            $last_total = $last_row + 2;
 
             /***** Style ***/
-            $sp->getActiveSheet()->getStyle('E5:E' . $last_row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+
             $sp->getActiveSheet()->getStyle('A4:F4')->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('C1:C2')->getFont()->setBold(true);
-
+            $i =1;
             foreach (range('A', 'F') as $columnID) {
                 $sp->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                $i++;
             }
+            $row_total = 5+$i;
+
+            $sheet->setCellValue('D'.$row_total, 'รวมทั้งหมด');
+            $sheet->setCellValue('E12','=SUM(E5:E'.$row_total.')');
+            $sp->getActiveSheet()->getStyle('D'.$row_total.':E'.$row_total)->getFont()->setBold(true);
+            $sp->getActiveSheet()->getStyle('E5:E' . $row_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+
+
+//            $sheet->setCellValue('E13','E'.$last_row);
+//            $sheet->setCellValue('E14','E'.$last_total);
+//            $sheet->setCellValue('E15','E'.$i);
+
+
+
 
         }
 
@@ -175,7 +191,7 @@ class Reports extends MY_Controller
 
     }
 
-    public function genInvoice($donateId = 0)
+    public function genInvoice($donateId = 0, $attFile = false)
     {
         $this->load->model($this->donation_model, 'donation');
 
@@ -206,11 +222,10 @@ class Reports extends MY_Controller
             $full_name = $title_name . " " . $first_name . " " . $last_name;
             $transferDate = '';
 
-            if(!is_blank($transfer_date)){
+            if (!is_blank($transfer_date)) {
                 $transferDateTime = datetime2display($transfer_date);
                 $transferDate = DateThai($transferDateTime);
             }
-
 
 
             // Create Pdf
@@ -234,10 +249,10 @@ class Reports extends MY_Controller
             $mpdf->WriteFixedPosHTML($transferDate, 162, 46, 50, 90, 'auto');
             //$Full Name Donor
 
-            $mpdf->WriteFixedPosHTML($full_name, 40, 54, 100, 90, 'auto');
+            $mpdf->WriteFixedPosHTML($full_name, 40, 54, 150, 90, 'auto');
 //        Address
 
-            $mpdf->WriteFixedPosHTML($address, 35, 60, 100, 90, 'auto');
+            $mpdf->WriteFixedPosHTML($address, 35, 60, 150, 90, 'auto');
             // Campaign
 
             $mpdf->WriteFixedPosHTML($campaign_name, 40, 66, 100, 90, 'auto');
@@ -288,11 +303,16 @@ class Reports extends MY_Controller
 
             }
 
-            $mpdf->Output();
-            $fileName = $invoice_no . ".pdf";
-            $fullfilePath = "downloads/invoice/" . $invoice_no . ".pdf";
-            ob_clean();
-            $mpdf->Output($fullfilePath, 'F');
+            if ($attFile) {
+                return $mpdf->Output('', 'S');
+            } else {
+                $mpdf->Output();
+                $fileName = $invoice_no . ".pdf";
+                $fullfilePath = "downloads/invoice/" . $invoice_no . ".pdf";
+                ob_clean();
+                $mpdf->Output($fullfilePath, 'F');
+            }
+
 
         } // end if
     }
@@ -319,25 +339,25 @@ class Reports extends MY_Controller
             if (!is_blank($this->input->get_post('transfer_date'))) {
                 $transfer_datetime = $this->input->get_post('transfer_date');
             }
-            if(!is_blank($this->input->get_post('doner_aid'))){
+            if (!is_blank($this->input->get_post('doner_aid'))) {
                 $donorId = $this->input->get_post('doner_aid');
             }
-            if(!is_blank($this->input->get_post('amount'))){
+            if (!is_blank($this->input->get_post('amount'))) {
                 $amount = $this->input->get_post('amount');
             }
-            if(!is_blank($this->input->get_post('bankName'))){
+            if (!is_blank($this->input->get_post('bankName'))) {
                 $bank_name = $this->input->get_post('bankName');
             }
-            if(!is_blank($this->input->get_post('email'))){
+            if (!is_blank($this->input->get_post('email'))) {
                 $donor_email = $this->input->get_post('email');
             }
-            if(!is_blank($this->input->get_post('payment_status'))){
+            if (!is_blank($this->input->get_post('payment_status'))) {
                 $payment_status = trim($this->input->get_post('payment_status'));
             }
-            if(!is_blank($this->input->get_post('payment_channel'))){
+            if (!is_blank($this->input->get_post('payment_channel'))) {
                 $payment_channel = $this->input->get_post('payment_channel');
             }
-            if(!is_blank($this->input->get_post('tranRef'))){
+            if (!is_blank($this->input->get_post('tranRef'))) {
                 $transection_no = trim($this->input->get_post('tranRef'));
             }
 
@@ -345,21 +365,18 @@ class Reports extends MY_Controller
             $this->load->model($this->donation_model, 'donation');
 
 
-           if(!is_blank($transfer_datetime)){
-               $date1 = date('mdyHms',strtotime($transfer_datetime));
+            if (!is_blank($transfer_datetime)) {
+                $date1 = date('mdyHms', strtotime($transfer_datetime));
                 $transfer_datetime = $date1;
-           }
-
-
-
+            }
 
 
             $data = array();
 
-            if($payment_status=="00" || $payment_status=="000"){
+            if ($payment_status == "00" || $payment_status == "000") {
                 // Payment Success
-                if(!$checkDuplicateInvoice){
-                    $this->load->model($this->invoice_model,'invoice');
+                if (!$checkDuplicateInvoice) {
+                    $this->load->model($this->invoice_model, 'invoice');
                     $invoiceNo = $this->generateInvoice();
                     $invoiceStatus = 1;
                     $remark = "";
@@ -369,7 +386,7 @@ class Reports extends MY_Controller
                     $this->invoice->setInvoiceStatus($invoiceStatus);
                     $this->invoice->setRemark($remark);
 
-                    if($this->invoice->create()){
+                    if ($this->invoice->create()) {
                         $invID = $this->invoice->getInvoiceId();
                         $this->donation->setInvoiceId($invID);
                         $this->donation->setInvNumber($invoiceNo);
@@ -380,9 +397,9 @@ class Reports extends MY_Controller
                         $this->donation->setUpdatedDate($updated_date);
                         $this->donation->setNote($remark);
                         $this->donation->setAmount($amount);
-                        if($this->donation->updateDonation($donationId)){
+                        if ($this->donation->updateDonation($donationId)) {
                             $data['message'] = "Update Success";
-                        }else{
+                        } else {
                             $data['error'] = true;
                             $data['message'] = "Cloud no update";
                         }
@@ -390,21 +407,19 @@ class Reports extends MY_Controller
                     }
 
 
-
-                }else{
-                   // Have Invoice
+                } else {
+                    // Have Invoice
                     $this->donation->setTransferDate($transfer_datetime);
                     $this->donation->setTransRef($transection_no);
                     $this->donation->setBankName($bank_name);
                     $this->donation->setUpdatedDate($updated_date);
                     $this->donation->setPaymentStatus($payment_status);
                     $this->donation->setAmount($amount);
-                    if($this->donation->updateDonation($donationId)){
-
+                    if ($this->donation->updateDonation($donationId)) {
 
 
                         $data['message'] = "Update Donation info  Success";
-                    }else{
+                    } else {
                         $data['error'] = true;
                         $data['message'] = "Cloud no update Duplicate Invoice";
                     }
@@ -413,7 +428,7 @@ class Reports extends MY_Controller
                 }
 
 
-            }else{
+            } else {
 
                 $this->donation->setTransferDate($transfer_datetime);
                 $this->donation->setTransRef($transection_no);
@@ -421,49 +436,35 @@ class Reports extends MY_Controller
                 $this->donation->setUpdatedDate($updated_date);
                 $this->donation->setPaymentStatus($payment_status);
                 $this->donation->setAmount($amount);
-                if($this->donation->updateDonation($donationId)){
+                if ($this->donation->updateDonation($donationId)) {
                     $data['message'] = "Update Donation info  Success";
-                }else{
+                } else {
                     $data['error'] = true;
                     $data['message'] = "Cloud no update Duplicate Invoice";
                 }
 
 
-
-
-
             }
 
 
-
-
-
-
-
-
             echo json_encode($data);
-
-
-
-
-
-
 
 
         }// end if login
 
     }
 
-    public function sendEmailInvoiceToDonor($donationId=""){
+    public function sendEmailInvoiceToDonor($donationId = "")
+    {
 
-        if($this->is_login()){
+        if ($this->is_login()) {
 
             $data = array();
 
-            if(!is_blank($this->input->get_post('donation_id'))){
+            if (!is_blank($this->input->get_post('donation_id'))) {
                 $donationId = $this->input->get_post('donation_id');
             }
-            if(!is_blank($donationId)){
+            if (!is_blank($donationId)) {
                 /// Send Mail to Donor
                 $this->load->model($this->donation_model, 'donation');
                 $this->donation->setDonationId($donationId);
@@ -471,7 +472,9 @@ class Reports extends MY_Controller
 
                 /// Send Mail to Donor
                 $this->load->library('mailer');
-                $pdfFile = $this->generate_invoice($donationId);
+                $attFile = true;
+//                $pdfFile = $this->generate_invoice($donationId);
+                $pdfFile = $this->genInvoice($donationId, $attFile);
 
 
                 $fullName = "";
@@ -511,21 +514,15 @@ class Reports extends MY_Controller
                 }
 
 
-
             }
 
             echo json_encode($data);
 
 
-
         }
 
 
-
     }
-
-
-
 
 
 } // end of class

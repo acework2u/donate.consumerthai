@@ -334,7 +334,7 @@ class MY_Controller extends CI_Controller
             $mpdf->WriteFixedPosHTML($transferDate, 162, 46, 50, 90, 'auto');
             //$Full Name Donor
 
-            $mpdf->WriteFixedPosHTML($full_name, 40, 54, 100, 90, 'auto');
+            $mpdf->WriteFixedPosHTML($full_name, 40, 54, 150, 90, 'auto');
 //        Address
 
             $mpdf->WriteFixedPosHTML($address, 35, 60, 100, 90, 'auto');
