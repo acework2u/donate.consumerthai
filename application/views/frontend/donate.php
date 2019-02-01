@@ -549,7 +549,9 @@
 <script src="<?php echo base_url('assets/js/axios.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/donate.js') ?>"></script>
 <!--Importing 2c2p JSLibrary-->
-<script type="text/javascript" src="https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/api/my2c2p.1.6.9.min.js"></script>
+<!--Demo-->
+<!--<script type="text/javascript" src="https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/api/my2c2p.1.6.9.min.js"></script>-->
+<script type="text/javascript" src="https://t.2c2p.com/securepayment/api/my2c2p.1.6.9.min.js"></script>
 <script type="text/javascript">
     <!--checkout function-->
     function Checkout() {

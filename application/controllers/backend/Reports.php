@@ -151,7 +151,7 @@ class Reports extends MY_Controller
         if (is_array($data)) {
             $sp->getActiveSheet()->fromArray($data, null, 'A5');
             $last_row = count($data) + 1;
-            $last_total = $last_row + 2;
+            $last_total = $last_row + 4;
 
             /***** Style ***/
 
@@ -164,15 +164,16 @@ class Reports extends MY_Controller
             }
             $row_total = 5+$i;
 
-            $sheet->setCellValue('D'.$row_total, 'รวมทั้งหมด');
-            $sheet->setCellValue('E12','=SUM(E5:E'.$row_total.')');
-            $sp->getActiveSheet()->getStyle('D'.$row_total.':E'.$row_total)->getFont()->setBold(true);
-            $sp->getActiveSheet()->getStyle('E5:E' . $row_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $sheet->setCellValue('D'.$last_total, 'รวมทั้งหมด');
+            $sheet->setCellValue('E'.$last_total,'=SUM(E5:E'.$last_row.')');
+            $sp->getActiveSheet()->getStyle('D'.$last_total.':E'.$last_total)->getFont()->setBold(true);
+            $sp->getActiveSheet()->getStyle('E5:E' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
 
-//            $sheet->setCellValue('E13','E'.$last_row);
-//            $sheet->setCellValue('E14','E'.$last_total);
-//            $sheet->setCellValue('E15','E'.$i);
+//            $sheet->setCellValue('E23','E'.$last_row);
+//            $sheet->setCellValue('E24','E'.$last_total);
+//            $sheet->setCellValue('E25','E'.$i);
+//            $sheet->setCellValue('E26','E'.$row_total);
 
 
 

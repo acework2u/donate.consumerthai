@@ -242,6 +242,7 @@ class Donate extends MY_Controller
 
                 $this->data['payload'] = $payload;
 
+
                 $this->load->view('frontend/payload', $this->data);
 
 
@@ -325,19 +326,6 @@ class Donate extends MY_Controller
                     $result = $this->mailer->to($email)->subject("Thank you for Donate")->send("transfer_thankyou.php", compact('templateData'));
                 }
 
-
-//                $paymentChannel = "002";
-//                $this->load->library('SocialMedia');
-//                $socmed = new SocialMedia();
-//                $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
-//                $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
-//                $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
-//
-//                $this->data['media_name'] = $social_media_name;
-//                $this->data['media_urls'] = $social_media_urls;
-                /*** Load View **/
-//                $this->load->view('frontend/thankyou', $this->data);
-//                $this->load->view('tpl_thankyou', $this->data);
 
                 redirect('thankyou');
 
