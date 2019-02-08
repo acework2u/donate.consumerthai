@@ -70,6 +70,7 @@ $route['admin/reports/get-invoice/(:num)'] = "backend/Reports/genInvoice/$1";
 $route['admin/reports/exportxls'] = "backend/Reports/exportxls";
 $route['admin/reports/update-donation'] = "backend/Reports/updateDonationStatus";
 $route['admin/reports/send-invoice'] = "backend/Reports/sendEmailInvoiceToDonor";
+$route['admin/reports/donor-info'] = "backend/Reports/donorInfo";
 
 
 

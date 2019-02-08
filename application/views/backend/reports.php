@@ -904,6 +904,8 @@
                             <a data-toggle="modal" @click="donationEdit(props.row)" data-target="#myModal" slot="action"
                                slot-scope="props" target="_blank" :href="props.row.action"
                                class="glyphicon fa fa-edit"></a>
+
+                            <a class="btn" @click="donorClicked(props.row)" data-toggle="modal" data-target="#myDonor" slot="first_name" slot-scope="props">{{props.row.first_name}}</a>
                             <span class="float-right" slot="amount"
                                   slot-scope="props">{{props.row.amount | formatBaht}}</span>
                             <a :href="invoice(props.row.aid)" target="_blank" class="" slot="inv_number"
@@ -1024,6 +1026,84 @@
 
                     <!-- /.box -->
                 </div>
+
+                <div id="myDonor" class="modal fade" role="dialog">
+                    <div class="modal-dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Donor Information</h4>
+                                    <span v-if="!errorStatus" class="alert-success">{{successMsg}}</span>
+                                    <span v-if="errorStatus" class="alert-warning">{{successMsg}}</span>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal">
+                                        <div class="box-body">
+
+                                            <div class="form-group">
+                                                <label for="donorName" class="col-sm-2 control-label">Full Name</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" readonly class="form-control" id="donorName"
+                                                           :value="donorInfo.first_name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="donor_tax" class="col-sm-2 control-label">TaxID.</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" readonly class="form-control" id="donor_tax"
+                                                           :value="donorInfo.tax_code">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="donor_email" class="col-sm-2 control-label">Email</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" readonly class="form-control" id="donor_email"
+                                                           :value="donorInfo.email">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="donor_tel" class="col-sm-2 control-label">Tel.</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" readonly class="form-control" id="donor_tel"
+                                                           :value="donorInfo.tel">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="donor_tel" class="col-sm-2 control-label">Address.</label>
+                                                <div class="col-sm-10">
+                                                    <textarea v-text="donorInfo.address" class="form-control" style="width: 452px;height: 77px" readonly></textarea>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </form>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- /.box -->
+                </div>
+
+
+
+
+
+
                 <div id="send-invoice" class="modal fade" role="dialog">
                     <div class="modal-dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-content">

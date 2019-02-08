@@ -14,7 +14,8 @@ var lastdonate = new Vue({
         return {
             title: "Last Donate",
             donationInfo: [],
-            donorTopInfo:[]
+            donorTopInfo:[],
+            donorInfo:{}
         }
     },
     created() {
@@ -84,6 +85,20 @@ var lastdonate = new Vue({
                 this.donorTopInfo = res.data
             }).catch((err) => {
             })
+
+        },
+        donorClicked(item){
+            let baseApi = baseUrl + "/admin/reports/donor-info";
+            let donor_aid = item.donor_id
+
+            // console.log(item)
+
+            axios.get(baseApi+"?donor_aid="+donor_aid).then((res)=>{
+                this.donorInfo = res.data
+
+                // console.log(this.donorInfo)
+            }).catch()
+
 
         }
     }

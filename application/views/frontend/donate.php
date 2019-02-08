@@ -11,18 +11,28 @@
     <meta name="twitter:site" content="@FoundationforConsumers">
     <meta name="twitter:creator" content="@FoundationforConsumers">
     <meta name="twitter:title" content="Foundation for Consumers">
-    <meta name="twitter:description" content="เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้ครองสิทธิอันพึงมีได้ ">
+    <meta name="twitter:description" content="เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้มครองสิทธิอันพึงมีได้ ">
     <meta name="twitter:image" content="<?php echo base_url('assets/img/thank.png')?>">
 
 
     <meta property="og:title" content="Foundation for Consumers" />
     <meta property="og:image" content="<?php echo base_url('assets/img/thank.png')?>" />
-    <meta property="og:description" content="เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้ครองสิทธิอันพึงมีได้ " />
+    <meta property="og:description" content="เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้มครองสิทธิอันพึงมีได้ " />
 
     <link href="<?php echo base_url('assets/css/bootstrap.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/main.css');?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133926625-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-133926625-1');
+    </script>
+
 </head>
 <body class="position-relative">
 <div class="w-100 position-relative" ref="header">
@@ -64,7 +74,7 @@
                     </div>
                     <div class="info-container">
                         <h2 class="text-center mt-1 mb-3">รู้จัก มูลนิธิเพื่อผู้บริโภค (มพบ.)</h2>
-                        <p>เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้ครองสิทธิอันพึงมีได้ การเผยแพร่ข้อมูลเพื่อเลือกสินค้า สนับสนุนและส่งเสริมให้องค์กรต่างๆมีส่วนร่วมในการคุ้มครองผู้บริโภค และเสนอนโยบายมาตราการต่างๆ เพื่อยกระดับการคุ้มครองผู้บริโภค</p>
+                        <p>เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้มครองสิทธิอันพึงมีได้ การเผยแพร่ข้อมูลเพื่อเลือกสินค้า สนับสนุนและส่งเสริมให้องค์กรต่างๆมีส่วนร่วมในการคุ้มครองผู้บริโภค และเสนอนโยบายมาตรการต่างๆ เพื่อยกระดับการคุ้มครองผู้บริโภค</p>
                         <h2 class="text-center quote-text mt-5 mb-5">
                             มูลนิธิเพื่อผู้บริโภค มีจุดยืนที่ชัดเจน<br>
                             สนับสนุนความเข้มแข็งของผู้บริโภค<br>
@@ -72,7 +82,7 @@
                             เงินบริจาคของคุณ จึงมีความสำคัญ<br>
                             ช่วยผู้เดือดร้อน และสังคมได้
                         </h2>
-                        <p class="text-center small">มูลนิธิเพื่อผู้บริโภค เป็นองค์กรสาธารณะประโยชน์ ลำดับที่ 576 ตามประกาศกระทรวงการคลัง<br>ทุกยอดการบริจาคนำไปหลดหย่อยภาษีประจำปีได้</p>
+                        <p class="text-center small">มูลนิธิเพื่อผู้บริโภค เป็นองค์กรสาธารณะประโยชน์ ลำดับที่ 576 ตามประกาศกระทรวงการคลัง<br>ทุกยอดการบริจาคนำไปหลดหย่อนภาษีประจำปีได้</p>
                     </div>
                 </div>
                 <div class="tab-body mb-5 d-none" id="tab-body-2">
@@ -97,7 +107,7 @@
                             </ul>
                             <p>ถึงแม้ว่าการทดสอบแต่ละครั้ง จะต้องใช้งบประมาณที่สูงมาก แต่เราก็ไม่หยุดที่จะ ทดสอบสินค้าและบริการ ให้ผู้บริโภครู้ว่าสินค้า หรือบริการนั้นๆ ยี่ห้อไหนมีคุณภาพ และราคาไม่แพง คุ้มค่ากับเงินที่จ่ายไป รวมไปถึงการทดสอบสินค้าที่ไม่ปลอดภัย ต่อผู้บริโภค และเผยแพร่เพื่อเป็นประโยชน์ต่อสาธารณะ</p>
                         </div>
-                        <p class="text-center small">มูลนิธิเพื่อผู้บริโภค เป็นองค์กรสาธารณะประโยชน์ ลำดับที่ 576 ตามประกาศกระทรวงการคลัง<br>ทุกยอดการบริจาคนำไปหลดหย่อยภาษีประจำปีได้</p>
+                        <p class="text-center small">มูลนิธิเพื่อผู้บริโภค เป็นองค์กรสาธารณะประโยชน์ ลำดับที่ 576 ตามประกาศกระทรวงการคลัง<br>ทุกยอดการบริจาคนำไปหลดหย่อนภาษีประจำปีได้</p>
                     </div>
                 </div>
                 <div class="tab-body mb-5 d-none" id="tab-body-3">

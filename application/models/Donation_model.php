@@ -306,7 +306,7 @@ class Donation_model extends MY_Model
 
     }
     public function topDonor(){
-        $this->db->select('*,SUM(amount) as TotalAmount');
+        $this->db->select('*,SUM(amount) as TotalAmount,donor.aid as donor_id');
         $this->db->join($this->tbl_donation,'donation ON donor.aid = donation.doner_aid','left');
         $this->db->where("donation.payment_status='00' OR donation.payment_status='000'");
         $this->db->group_by('donor.aid');
@@ -320,7 +320,6 @@ class Donation_model extends MY_Model
             }
         }
         return $result;
-
     }
 
 

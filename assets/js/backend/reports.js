@@ -22,6 +22,7 @@ var appreport = new Vue({
     data() {
         return {
             donationInfo: [],
+            donorInfo:[],
             successMsg:"",
             statusWait:false,
             errorStatus:false,
@@ -29,12 +30,12 @@ var appreport = new Vue({
             paymentCode: [],
             userClicked: {},
             title: "Donation Report",
-            columns: ['inv_number', 'campaign_name', 'amount', 'transfer_date', 'status', 'first_name', 'tranRef', 'paymentchanel', 'pan', 'bankName', 'updated_date', 'action', 'action_email'],
+            columns: ['inv_number', 'campaign_name', 'amount', 'transfer_date', 'status', 'first_name', 'transection_no', 'paymentchanel', 'pan', 'bankName', 'updated_date', 'action', 'action_email'],
             options: {
                 headings: {
                     inv_number: 'Invoice No.',
                     campaign_name: 'Campaign',
-                    amount: 'View Record',
+                    amount: 'Amount',
                     transfer_date: 'Transfer Date',
                     note: 'Status',
                     first_name: 'Donor',
@@ -177,6 +178,9 @@ var appreport = new Vue({
             let apiUrls = baseUrl + "/admin/reports/exportxls?startDate=" + start_date + "&endDate=" + end_date
 
             return apiUrls
+        },
+        fillDonorInfo(){
+            return this.donorInfo
         }
 
     },
@@ -318,6 +322,20 @@ var appreport = new Vue({
             }else{
                 return false
             }
+        },
+        donorClicked(item){
+            let baseApi = baseUrl + "/admin/reports/donor-info";
+            let donor_aid = item.doner_aid
+
+            // console.log(donor_aid)
+
+            axios.get(baseApi+"?donor_aid="+donor_aid).then((res)=>{
+                    this.donorInfo = res.data
+
+                // console.log(this.donorInfo)
+            }).catch()
+
+
         }
 
 

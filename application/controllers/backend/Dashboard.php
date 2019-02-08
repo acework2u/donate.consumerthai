@@ -41,11 +41,11 @@ class Dashboard extends MY_Controller{
                         'aid'=>get_array_value($row,'aid',''),
                         'full_name'=>get_array_value($row,'first_name',''),
                         'email'=>get_array_value($row,'email',''),
-                        'total_amount'=>get_array_value($row,'TotalAmount','0')
+                        'total_amount'=>get_array_value($row,'TotalAmount','0'),
+                        'donor_id'=>get_array_value($row,'donor_id','')
                     );
                 }
             }
-
             echo json_encode($rows);
 
 

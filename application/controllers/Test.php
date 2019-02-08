@@ -667,4 +667,19 @@ class Test extends MY_Controller
     }
 
 
+
+    public function testTime(){
+        $time = "010219175015";
+
+
+        $newTime = datetime2display($time);
+
+        echo "Time = ".$time." New Time=".$newTime;
+
+
+
+
+    }
+
+
 } //end of Class

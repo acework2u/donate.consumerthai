@@ -18,6 +18,7 @@ class Mailer
     protected $mailDirectory;
     protected $fileAttach;
     protected $cc_mail;
+    protected $cc_mail2;
 
 
     public function __construct()
@@ -27,7 +28,8 @@ class Mailer
         $this->password = 'Joe2262527';
         $this->emailHost = 'smtp.gmail.com';
         $this->mailFrom = array('noreply@consumerthai.org' => 'www.consumerthai.org');
-        $this->cc_mail = array('joeyfarms2@gmail.com'=>"Have A donor");
+        $this->cc_mail = array('donationffc@gmail.com'=>"Have a new donated");
+        $this->cc_mail2 = array('tawanshinehuang@gmail.com'=>"Have a new donated");
 
         // Define email directory
         $this->mailDirectory = VIEWPATH . '/emails';
@@ -91,13 +93,13 @@ class Mailer
         if (!is_blank($this->fileAttach)) {
             $message = (new Swift_Message($this->subject))
                 ->setFrom($this->mailFrom)
-                ->setTo([$this->to])->setCc($this->cc_mail)
+                ->setTo([$this->to])->setCc($this->cc_mail)->setBcc($this->cc_mail2)
                 ->setBody($template, 'text/html')
                 ->attach($this->fileAttach);
         } else {
             $message = (new Swift_Message($this->subject))
                 ->setFrom($this->mailFrom)
-                ->setTo([$this->to])->setCc($this->cc_mail)
+                ->setTo([$this->to])->setCc($this->cc_mail)->setBcc($this->cc_mail2)
                 ->setBody($template, 'text/html');
         }
 

@@ -180,5 +180,28 @@ class Donor_model extends MY_Model
 
     }
 
+    public function donor_info(){
+        $query = array();
+        $query = $this->db->where('aid',$this->_donorId)->get($this->tbl_donor);
+        $result = array();
+        if($query->num_rows() >0){
+            foreach ($query->result() as $row){
+                $result = array(
+                    'aid'=>$row->aid,
+                    'first_name'=>$row->first_name,
+                    'email'=>$row->email,
+                    'tel'=>$row->tel,
+                    'tax_code'=>$row->tax_code,
+                    'address'=>$row->address,
+                    'active_new'=>$row->active_news
+                );
+            }
+        }
+
+
+        return $result;
+
+    }
+
 
 }// end of class

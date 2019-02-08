@@ -56,9 +56,54 @@ class Reports extends MY_Controller
             if ($this->report->donation()) {
                 $donationList = $this->report->donation();
             }
+
+            $reports_info = array();
+            if (is_array($donationList)) {
+
+                foreach ($donationList as $row) {
+                    $rows = array(
+                        'aid'=> get_array_value($row,'aid',''),
+                        'transection_no'=> get_array_value($row,'transection_no',''),
+                        'inv_number'=> get_array_value($row,'inv_number',''),
+                        'amount'=> get_array_value($row,'amount',''),
+                        'doner_aid'=> get_array_value($row,'doner_aid',''),
+                        'donation_campaign_aid'=> get_array_value($row,'donation_campaign_aid',''),
+                        'payment_channel'=> get_array_value($row,'payment_channel',''),
+                        'payment_status'=> get_array_value($row,'payment_status',''),
+                        'bankName'=> get_array_value($row,'bankName',''),
+                        'pan'=> get_array_value($row,'pan',''),
+                        'note'=> get_array_value($row,'note',''),
+                        'tranRef'=> get_array_value($row,'tranRef',''),
+                        'processBy'=> get_array_value($row,'processBy',''),
+                        'issuerCountry'=> get_array_value($row,'issuerCountry',''),
+                        'transfer_date'=> datetime2display(get_array_value($row, 'transfer_date')),
+                        'created_date'=> get_array_value($row,'created_date',''),
+                        'updated_date'=> get_array_value($row,'updated_date',''),
+                        'invoice_id'=> get_array_value($row,'invoice_id',''),
+                        'email'=> get_array_value($row,'email',''),
+                        'first_name'=> get_array_value($row,'first_name'),
+                        'last_name'=> get_array_value($row,'last_name',''),
+                        'status'=> get_array_value($row,'status',''),
+                        'paymentchanel'=> get_array_value($row,'paymentchanel',''),
+                        'campaign_name'=> get_array_value($row,'campaign_name','')
+
+                    );
+                    $reports_info[] = $rows;
+
+                }
+            }
+
+
+
+
+
+
+
             $data = array();
-            $data['donationlist'] = $donationList;
-            $data['last_query'] = $this->db->last_query();
+//            $data['donationlist'] = $donationList;
+            $data['donationlist'] = $reports_info;
+//            $data['donationlist'] = $reports_info;
+//            $data['last_query'] = $this->db->last_query();
 
 //            echo json_encode($donationList);
             echo json_encode($data);
@@ -151,6 +196,7 @@ class Reports extends MY_Controller
         if (is_array($data)) {
             $sp->getActiveSheet()->fromArray($data, null, 'A5');
             $last_row = count($data) + 1;
+            $last_cal_row = count($data)+4;
             $last_total = $last_row + 4;
 
             /***** Style ***/
@@ -165,7 +211,7 @@ class Reports extends MY_Controller
             $row_total = 5+$i;
 
             $sheet->setCellValue('D'.$last_total, 'รวมทั้งหมด');
-            $sheet->setCellValue('E'.$last_total,'=SUM(E5:E'.$last_row.')');
+            $sheet->setCellValue('E'.$last_total,'=SUM(E5:E'.$last_cal_row.')');
             $sp->getActiveSheet()->getStyle('D'.$last_total.':E'.$last_total)->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('E5:E' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
@@ -174,6 +220,7 @@ class Reports extends MY_Controller
 //            $sheet->setCellValue('E24','E'.$last_total);
 //            $sheet->setCellValue('E25','E'.$i);
 //            $sheet->setCellValue('E26','E'.$row_total);
+//            $sheet->setCellValue('E28','Rows = '.$last_cal_row);
 
 
 
@@ -523,6 +570,31 @@ class Reports extends MY_Controller
         }
 
 
+    }
+
+    public function donorInfo(){
+        if($this->is_login()){
+            $donor_id ="";
+            if(!is_blank($this->input->get_post('donor_aid'))){
+                $donor_id = $this->input->get_post('donor_aid');
+            }
+
+            $this->load->model($this->donor_model,'donor');
+
+            $this->donor->setDonorId($donor_id);
+            $result = array();
+
+            if($this->donor->donor_info()){
+                $result = $this->donor->donor_info();
+            }
+
+
+
+           echo json_encode($result);
+
+
+
+        }
     }
 
 
