@@ -39,7 +39,6 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
 
-
         $this->language = "thai";
 
         if (!$this->session->userdata('site_lang')) {

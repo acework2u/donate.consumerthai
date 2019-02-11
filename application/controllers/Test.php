@@ -681,5 +681,12 @@ class Test extends MY_Controller
 
     }
 
+    public function multilang(){
+
+        $this->data = array();
+
+        $this->load->view('frontend/test_view',$this->data);
+    }
+
 
 } //end of Class

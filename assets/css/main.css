@@ -245,13 +245,21 @@ textarea {
 	font-family: RSU-Regular;
 	font-size: 24pt;
 }
-
 #tab-body-3 p {
 	font-family: Quark-Bold;
 	font-size: 18pt;
 	line-height: 1.25;
 	color: #2E3192;
 	padding-right: 15px;
+}
+.content-list li{
+	font-family: Quark-Bold;
+	font-size: 18pt;
+	line-height: 1.25;
+	color: #2E3192;
+	/*padding-right: 15px;*/
+	padding-left: 10%;
+	padding-right: 10%;
 }
 
 .subject-3 {
