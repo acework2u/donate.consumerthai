@@ -1,8 +1,8 @@
 <?php
 $lang['language_key'] = 'type your message';
-$lang['amount'] = 'Select Amount';
-$lang['detail'] = 'Add details';
-$lang['payment'] = 'Payment';
+$lang['amount'] = ' Amount';
+$lang['detail'] = ' Add Details';
+$lang['payment'] = ' Payment';
 $lang['payment_info'] = 'Please select an amount (baht).';
 $lang['tax_info'] = 'All donation amounts are eligible for tax reduction.';
 $lang['custom_amount_info'] = 'Or specify the amount of donation as needed (baht)';

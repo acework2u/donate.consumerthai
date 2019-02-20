@@ -15,7 +15,6 @@
           content="เราเป็นองค์กรสาธารณะประโยชน์ ที่ทำงานคุ้มครองผู้บริโภคมาเป็นเวลากว่า 30 ปี ด้วยการส่งเสริมให้ผู้บริโภคได้รับการคุ้มครองสิทธิอันพึงมีได้ ">
     <meta name="twitter:image" content="<?php echo base_url('assets/img/thank.png') ?>">
 
-
     <meta property="og:title" content="Foundation for Consumers"/>
     <meta property="og:image" content="<?php echo base_url('assets/img/thank.png') ?>"/>
     <meta property="og:description"
@@ -238,16 +237,17 @@
                     <div class="d-flex position-relative">
                         <div class="position-relative pointer">
                             <img src="<?php echo base_url('assets/img/state-button-1.png') ?>" class="w-75-lg">
-                            <p class="position-absolute state-1 state-active">1 <?php echo $this->lang->line('amount');?></p>
+                            <p class="position-absolute state-1 state-active">1.<?php echo $this->lang->line('amount');?></p>
+
                         </div>
                         <div class="position-relative pointer">
                             <img src="<?php echo base_url('assets/img/state-button-2-gray.png') ?>"
                                  class="mr-3 ml-3 w-75-lg">
-                            <p class="position-absolute state-2">2 <?php echo $this->lang->line('detail');?></p>
+                            <p class="position-absolute state-2">2.<?php echo $this->lang->line('detail');?></p>
                         </div>
                         <div class="position-relative pointer">
                             <img src="<?php echo base_url('assets/img/state-button-3-gray.png') ?>" class="w-70-lg">
-                            <p class="position-absolute state-3">3 <?php echo $this->lang->line('payment');?></p>
+                            <p class="position-absolute state-3">3.<?php echo $this->lang->line('payment');?></p>
                         </div>
                     </div>
                     <div class="d-flex mt-3">
@@ -277,21 +277,24 @@
                 <h1 class="mt-3 mb-3 text-center"><?php echo $this->lang->line('induce_info')?></h1>
                 <hr width="50%">
                 <div class="mt-2">
+
                     <div class="d-flex position-relative pointer">
                         <div class="position-relative" id="payment-2_state-1">
                             <img src="<?php echo base_url('assets/img/state-button-2-gray.png') ?>" class="w-75-lg">
-                            <p class="position-absolute state-1">1 จำนวนเงิน</p>
+                            <p class="position-absolute state-1">1.<?php echo $this->lang->line('amount');?></p>
                         </div>
                         <div class="position-relative pointer">
                             <img src="<?php echo base_url('assets/img/state-button-1.png') ?>"
                                  class="mr-3 ml-3 w-75-lg">
-                            <p class="position-absolute state-2 state-active">2 รายละเอียด</p>
+                            <p class="position-absolute state-2 state-active">2.<?php echo $this->lang->line('detail');?></p>
                         </div>
                         <div class="position-relative pointer">
                             <img src="<?php echo base_url('assets/img/state-button-3.png') ?>" class="w-70-lg">
-                            <p class="position-absolute state-3">3 การชำระเงิน</p>
+                            <p class="position-absolute state-3">3.<?php echo $this->lang->line('payment');?></p>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="ml-5 ml-4-lg mt-3">
                     <div id="donate-choose">
@@ -393,16 +396,16 @@
                     <div class="d-flex position-relative">
                         <div class="position-relative pointer" id="payment-3_state-1">
                             <img src="<?php echo base_url('assets/img/state-button-2-gray.png') ?>" class="w-75-lg">
-                            <p class="position-absolute state-1 w-75-lg">1 จำนวนเงิน</p>
+                            <p class="position-absolute state-1 w-75-lg">1.<?php echo $this->lang->line('amount');?></p>
                         </div>
                         <div class="position-relative pointer">
                             <img src="<?php echo base_url('assets/img/state-button-2-gray.png') ?>"
                                  class="mr-3 ml-3 w-75-lg" id="payment-3_state-2">
-                            <p class="position-absolute state-2 w-75-lg">2 รายละเอียด</p>
+                            <p class="position-absolute state-2 w-75-lg">2.<?php echo $this->lang->line('detail');?></p>
                         </div>
                         <div class="position-relative pointer">
                             <img src="<?php echo base_url('assets/img/state-button-3.png') ?>" class="w-70-lg">
-                            <p class="position-absolute state-3 state-active">3 การชำระเงิน</p>
+                            <p class="position-absolute state-3 state-active">3.<?php echo $this->lang->line('payment');?></p>
                         </div>
                     </div>
                     <div id="payment-choose">
