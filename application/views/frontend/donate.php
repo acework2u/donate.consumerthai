@@ -46,9 +46,8 @@
                                                                 class="header-logo position-absolute"
                                                                 style="z-index: 1"></a>
 
-    <h1 class="header-text position-absolute text-center">ร่วมบริจาคกับเราวันนี้</h1>
-    <h2 class="header-sub-text position-absolute text-cente d-none d-xl-block">คุณได้บุญ เราได้ทำงาน ...คุณได้รอยยิ้ม
-        เราได้กำลังใจ</h2>
+    <h1 class="header-text position-absolute text-center"><?php echo $this->lang->line('header_title_1');?></h1>
+    <h2 class="header-sub-text position-absolute text-cente d-none d-xl-block"><?php echo $this->lang->line('header_title_2');?></h2>
     <h2 class="header-sub-text-2 position-absolute text-center d-xl-none"><?php echo $this->lang->line('induce_info2')?></h2>
     <a href="<?php echo site_url(); ?>"><img src="<?php echo base_url('assets/img/home-button.png') ?>"
                                              class="position-absolute home-button"></a>
@@ -300,23 +299,23 @@
                     <div id="donate-choose">
                         <div class="mt-3">
                             <img src="<?php echo base_url('assets/img/money-icon.png') ?>" class="mr-2 ml-2 h-30">
-                            <span class="state-2-header">เลือกรูปแบบการชำระเงิน</span>
+                            <span class="state-2-header"><?php echo $this->lang->line('pay_method_title');?></span>
                         </div>
                         <div class="payment-choose-container position-relative mt-3">
-                            <label class="radio-label mb-0"> ไม่ประสงค์ออกนาม
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('donate_anonymously');?>
                                 <input type="radio" name="donate-type" id="donate-type-1" value="type-1"
                                        checked="checked">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="payment-choose-container position-relative mt-2">
-                            <label class="radio-label mb-0"> ประสงค์ออกนาม
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('donate_get_receipt');?>
                                 <input type="radio" name="donate-type" value="type-2">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="payment-choose-container position-relative mt-2">
-                            <label class="radio-label mb-0"> ต้องการนำใบเสร็จไปลดหย่อนภาษี
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('donate_get_tax');?>
                                 <input type="radio" name="donate-type" value="type-3">
                                 <span class="checkmark"></span>
                             </label>
@@ -362,15 +361,15 @@
 
                     <div class="mt-4">
                         <img src="<?php echo base_url('assets/img/newspaper.png') ?>" class="mr-2 ml-2 h-30">
-                        <span class="state-2-header h-30">ข้อมูลข่าวสารเพิ่มเติม</span>
+                        <span class="state-2-header h-30"><?php echo $this->lang->line('news_info');?></span>
                         <div class="payment-choose-container position-relative mt-3">
-                            <label class="radio-label mb-0"> รับข้อมูลข่าวสารผ่านทาง Email
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('email_news_info');?>
                                 <input type="radio" name="news-type" id="yes" checked="checked" value="1">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="payment-choose-container position-relative mt-2">
-                            <label class="radio-label mb-0"> ยังไม่สนใจ
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('not_interest');?>
                                 <input type="radio" name="news-type" value="2">
                                 <span class="checkmark"></span>
                             </label>
@@ -378,7 +377,7 @@
                     </div>
                     <div class="row position-relative">
                         <div class="col-8-xl col-9-lg pr-0 pl-5 pl-4-lg mt-2">
-                            <label class="state-2-label mb-1 pl-1">อีเมล</label>
+                            <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('email');?></label>
                             <input type="email" name="new-email" id="new-email" class="form-control" value="">
                         </div>
                     </div>
@@ -411,7 +410,7 @@
                     <div id="payment-choose">
                         <div class="d-flex mt-3">
                             <img src="<?php echo base_url('assets/img/money-icon.png') ?>" class="mr-2 h-30">
-                            <span class="state-1-header">เลือกรูปแบบการชำระเงิน</span>
+                            <span class="state-1-header"><?php echo $this->lang->line('pay_method_title');?></span>
                         </div>
                         <div class="payment-choose-container position-relative mt-3">
                             <label class="radio-label mb-0"> บัตรเดบิต / บัตรเครดิต
@@ -435,7 +434,7 @@
                                  class="ml-3 mt-2 d-none d-lg-inline-block">
                         </div>
                         <div class="payment-choose-container position-relative mt-4">
-                            <label class="radio-label mb-0"> โอนผ่านบัญชีธนาคาร
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('bank_transfer_title');?>
                                 <input type="radio" name="payment-type" value="type-3">
                                 <span class="checkmark"></span>
                             </label>
@@ -558,15 +557,12 @@
                             <div class="col-xl-1"></div>
                             <div class="col-xl-10 col-12-lg mt-4">
                                 <div class="transfer-header text-center">
-                                    <span>วิธีส่งหลักฐานการโอน</span>
+                                    <span><?php echo $this->lang->line('send_transfer_slip');?></span>
                                 </div>
                                 <div class="transfer-body">
-                                    <p class="mb-0">1. อัปโหลดหลักฐานการโอนเงินด้านล่างหน้านนี้ หรือ</p>
-                                    <p class="mb-0">2. ส่งมาที่ อีเมล donationffc@gmail.com หรือ 3. ส่งมาที่ ไลน์แอท
-                                        @chaladsue.online
-                                        พร้อมใส่รายละเอียดชื่อ - ที่อยู่ ที่จะให้ทางมูลนิธิฯ ออกใบเสร็จรับเงิน
-                                        เพื่อใช้ในการลดหย่อนภาษี
-                                        ระบบจะส่งใบเสร็จรับเงินบริจาคทางอีเมลที่ได้แจ้งไว้</p>
+                                    <p class="mb-0"><?php echo $this->lang->line('bank_transfer_info1');?></p>
+                                    <p class="mb-0"><?php echo $this->lang->line('bank_transfer_info2');?> <br><?php echo $this->lang->line('bank_transfer_info3');?>
+                                        <?php echo $this->lang->line('bank_transfer_info4');?></p>
                                 </div>
                             </div>
                             <div class="col-xl-1"></div>
@@ -590,7 +586,7 @@
                     </div>
                     <div id="payment-type-3" class="d-none">
                         <div class="payment-choose-container position-relative mt-4">
-                            <label class="radio-label mb-0"> โอนผ่านบัญชีธนาคาร
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('bank_transfer_title');?>
                                 <input type="radio" name="payment-type-3" value="type-3" checked="checked">
                                 <span class="checkmark"></span>
                                 <img src="<?php echo base_url('assets/img/scb-icon.png') ?>" class="ml-4">
@@ -664,15 +660,12 @@
                             <div class="col-xl-1"></div>
                             <div class="col-xl-10 col-12-lg mt-4">
                                 <div class="transfer-header text-center">
-                                    <span>วิธีส่งหลักฐานการโอน</span>
+                                    <span><?php echo $this->lang->line('send_transfer_slip');?></span>
                                 </div>
                                 <div class="transfer-body">
-                                    <p class="mb-0">1. อัปโหลดหลักฐานการโอนเงินด้านล่างหน้านนี้ หรือ</p>
-                                    <p class="mb-0">2. ส่งมาที่ อีเมล donationffc@gmail.com หรือ 3. ส่งมาที่ ไลน์แอท
-                                        @chaladsue.online
-                                        พร้อมใส่รายละเอียดชื่อ - ที่อยู่ ที่จะให้ทางมูลนิธิฯ ออกใบเสร็จรับเงิน
-                                        เพื่อใช้ในการลดหย่อนภาษี
-                                        ระบบจะส่งใบเสร็จรับเงินบริจาคทางอีเมลที่ได้แจ้งไว้</p>
+                                    <p class="mb-0"><?php echo $this->lang->line('bank_transfer_info1');?></p>
+                                    <p class="mb-0"><?php echo $this->lang->line('bank_transfer_info2');?> <br><?php echo $this->lang->line('bank_transfer_info3');?>
+                                        <?php echo $this->lang->line('bank_transfer_info4');?></p>
                                 </div>
                             </div>
                             <div class="col-xl-1"></div>
