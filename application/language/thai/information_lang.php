@@ -24,5 +24,31 @@ $lang['bank_transfer_info1'] = "1. อัปโหลดหลักฐานก
 $lang['bank_transfer_info2'] = "2. ส่งมาที่ อีเมล donationffc@gmail.com หรือ ";
 $lang['bank_transfer_info3'] = "3. ส่งมาที่ ไลน์แอท @chaladsue.online";
 $lang['bank_transfer_info4'] = "พร้อมใส่รายละเอียดชื่อ - ที่อยู่ ที่จะให้ทางมูลนิธิฯ ออกใบเสร็จรับเงิน เพื่อใช้ในการลดหย่อนภาษี ระบบจะส่งใบเสร็จรับเงินบริจาคทางอีเมลที่ได้แจ้งไว้";
+$lang['debit_credit'] = "บัตรเดบิต / บัตรเครดิต";
+$lang['accept_all_banks'] = "รับได้ทุกธนาคาร";
+$lang['card_number'] = "Card number";
+$lang['card_holder_name'] = "ชื่อบนบัตร (ภาษาอังกฤษเท่านั้น)";
+$lang['card_expired'] = "วันหมดอายุ เดือน/ปี";
+$lang['ccv'] = "หมายเลข CVC/CVV/CID";
+$lang['invoice_info'] = "ข้อมูลใบเสร็จ";
+$lang['donor_name'] = "ชื่อ / บริษัท ผู้บริจาค";
+$lang['tax_id'] = "เลขผู้เสียภาษี หรือ เลขบัตรประชาชน";
+$lang['phone_no'] = "เบอร์โทรศัพท์มือถือ";
+$lang['info_id_card'] = "กรุณากรอกด้วยชื่อ-สกุลจริง ตามบัตรประชาชน เพื่อสิทธิประโยชน์ในการลดหย่อนภาษี";
+$lang['example_phone'] = "กรอกเบอร์มือถือ เช่น 0891234567";
+$lang['tax_addr'] = "ที่อยู่ สำหรับออกใบเสร็จ เพื่อใช้ลดหย่อนภาษี";
+$lang['tax_receive'] = "ช่องทางการส่งใบเสร็จ";
+// Bank lang
+$lang['bangkok_bank'] = "ธนาคารกรุงเทพ";
+$lang['siam_commercial_bank'] = "ธนาคารไทยพาณิชย์";
+$lang['kasikorn_bank'] = "ธนาคารกสิกรไทย";
+$lang['krungthai_bank'] = "ธนาคารกรุงไทย";
+$lang['ayudhya_bank'] = "ธนาคารกรุงศรีอยุธยา";
+$lang['ngam_wong_wan_branch'] = "สาขา งามวงศ์วาน";
+$lang['ngam_wong_wan_subbranch'] = "สาขาย่อย เดอะมอลล์งามวงศ์วาน";
+$lang['click_to_upload'] = "คลิกเพื่ออัปโหลด";
+$lang['upload_transfer_slip'] = "หลักฐานการโอน";
+
+
 
 

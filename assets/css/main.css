@@ -130,7 +130,8 @@ textarea {
 }
 .lang-active{
 	outline: none;
-	background: #1B1464;
+	/*background: #1B1464;*/
+	background: #FCBB45;
 	color: #FFFFFF;
 }
 
@@ -610,6 +611,13 @@ textarea {
 	bottom: 0;*/
 }
 
+.mystep-button{
+background: transparent url("/assets/img/state-button-1.png") no-repeat;
+	width: 100%;
+	height: 55px;
+
+}
+
 @media screen and (min-width: 768px) and (max-width: 1024px) {
 	.pl-0-lg {
 		padding-left: 0rem !important;
@@ -1044,6 +1052,7 @@ textarea {
 		bottom: -140px;
 	}
 }
+
 
 @media screen and (min-width: 1900px) {
 	.lg-bg-header {

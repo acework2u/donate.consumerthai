@@ -23,6 +23,7 @@ class Donation_model extends MY_Model
     private $_issuerCountry;
     private $_donationId;
     private $_invoiceId;
+    private $_fillter;
 
     public function __construct()
     {
@@ -33,6 +34,9 @@ class Donation_model extends MY_Model
         $this->_updatedDate = date('Y-m-d H:i:s');
 
 
+    }
+    public function setFillter($filter_search){
+        $this->_fillter = $filter_search;
     }
 
     public function setDonationId($donationId)
@@ -317,6 +321,32 @@ class Donation_model extends MY_Model
         if ($query->num_rows() > 0) {
             foreach ($query->result_array() as $row) {
                 $result[] = $row;
+            }
+        }
+        return $result;
+    }
+    public function donationByDonor(){
+        $result = array();
+        if(!is_blank($this->_fillter)){
+            $this->db->select('donation.* ,
+	donor.title_name,
+	donor.first_name,
+	donor.last_name,
+	donor.tax_code,
+	donor.address,
+	donor.email,
+	donation_campaign.title AS campaign_name');
+            $this->db->join($this->tbl_donor, 'donation.doner_aid = donor.aid', 'left');
+            $this->db->join($this->tbl_payment_channel, 'donation.payment_channel = payment_channel.`code`', 'left');
+            $this->db->join($this->tbl_donation_campaign, 'donation.donation_campaign_aid = donation_campaign.aid ', 'left');
+            $this->db->or_like('donor.email',$this->_fillter);
+            $this->db->or_like('donor.first_name',$this->_fillter);
+            $query = $this->db->get($this->tbl_donation);
+            $result = array();
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $row) {
+                    $result[] = $row;
+                }
             }
         }
         return $result;

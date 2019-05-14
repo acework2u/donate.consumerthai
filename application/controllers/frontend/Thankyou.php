@@ -24,4 +24,40 @@ class Thankyou extends MY_Controller{
 
     }
 
+    public function confirmPayment(){
+
+        $this->load->view("tpl_payment_confirm",$this->data);
+        // load view
+    }
+
+    public function apiConfirmPayment(){
+
+
+
+        $donor_search = "";
+
+        if(!is_blank($this->input->get_post('donor_search'))){
+            $donor_search =  html_escape(trim($this->input->get_post('donor_search')));
+        }
+
+
+
+      $this->load->model($this->donation_model,"donated");
+
+
+      $result = array();
+
+      $this->donated->setFillter($donor_search );
+
+      $result = $this->donated->donationByDonor();
+
+
+
+      var_dump($result);
+        echo $this->db->last_query();
+
+
+
+    }
+
 } //end of Class

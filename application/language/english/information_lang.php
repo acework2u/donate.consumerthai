@@ -24,3 +24,33 @@ $lang['bank_transfer_info1'] = "1. Upload transfer slip file at the bottom of th
 $lang['bank_transfer_info2'] = "2. Send your transfer slip file to donationffc@gmail.com or ";
 $lang['bank_transfer_info3'] = "3. Send your transfer slip file to @chaladsue.online";
 $lang['bank_transfer_info4'] = "Add your name and address so that we can email you a receipt for tax reduction.";
+$lang['debit_credit'] = "Credit card / Debit card";
+$lang['accept_all_banks'] = "Accept all banks";
+$lang['card_number'] = "Card number";
+$lang['card_holder_name'] = "Name on Card (English only)";
+$lang['card_expired'] = "Expiry Date (MM/YYYY)";
+$lang['cvc'] = "CVC/CVV/CID";
+$lang['invoice_info'] = "Add information for your receipt ";
+$lang['donor_name'] = "Name/Company name";
+$lang['donor_name'] = "Name/Company name";
+$lang['tax_id'] = "ID card no./TAX ID";
+$lang['phone_no'] = "Mobile number";
+$lang['info_id_card'] = "Your name must be the same as in your ID card";
+$lang['example_phone'] = "Please type in your mobile no. (for example, 0891234567)";
+$lang['tax_addr'] = "Address used in receipt (tax reduction)";
+$lang['tax_receive'] = "Address to send receipt";
+// Bank Lang
+$lang['bangkok_bank'] = "Bangkok Bank";
+$lang['siam_commercial_bank'] = "Siam Commercial Bank";
+$lang['kasikorn_bank'] = "Kasikorn Bank";
+$lang['krungthai_bank'] = "Krung Thai Bank";
+$lang['ayudhya_bank'] = "Bank of Ayudhya";
+$lang['ngam_wong_wan_branch'] = "Ngam Wong Wan Branch";
+$lang['ngam_wong_wan_subbranch'] = "Ngam Wong Wan Branch";
+$lang['ngam_wong_wan_subbranch'] = "The Mall Ngam Wong Wan Branch";
+$lang['click_to_upload'] = "Click to upload";
+$lang['upload_transfer_slip'] = "transfer slip ";
+
+
+
+

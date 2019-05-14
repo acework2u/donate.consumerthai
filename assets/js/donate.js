@@ -73,3 +73,21 @@ var appDonate = new Vue({
 
 
 });
+// var payconfirm = new Vue({
+//     el:"#tranferconfirm",
+//     data(){
+//         return{
+//             donorName:""
+//         }
+//     },
+//     methods:{
+//         donorSearch(){
+//             setTimeout(()=>{
+//                 console.log(this.donorName)
+//             },2000)
+//
+//         }
+//     }
+//
+//
+// });

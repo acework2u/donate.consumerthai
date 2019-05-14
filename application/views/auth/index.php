@@ -18,18 +18,13 @@
     <link href="<?php echo base_url('src/css/style.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('src/vendors/pace-progress/css/pace.css')?>" rel="stylesheet">
     <!-- Global site tag (gtag.js) - Google Analytics-->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137501772-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        // Shared ID
-        gtag('config', 'UA-118965717-3');
-        // Bootstrap ID
-        gtag('config', 'UA-118965717-5');
+
+        gtag('config', 'UA-137501772-1');
     </script>
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">

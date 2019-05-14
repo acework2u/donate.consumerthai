@@ -25,17 +25,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133926625-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137501772-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-133926625-1');
+        gtag('config', 'UA-137501772-1');
     </script>
 
 </head>
@@ -325,34 +321,32 @@
                     <div id="bill" class="mt-4">
                         <div>
                             <img src="<?php echo base_url('assets/img/bill-icon.png') ?>" class="mr-2 ml-2 h-30">
-                            <span class="state-2-header h-30">ข้อมูลใบเสร็จ</span>
+                            <span class="state-2-header h-30"><?php echo $this->lang->line('invoice_info');?></span>
                         </div>
                         <div class="row mt-2 position-relative">
-                            <span class="input-sub position-absolute ml-5">กรุณากรอกด้วยชื่อ-สกุลจริง ตามบัตรประชาชน เพื่อสิทธิประโยชน์ในการลดหย่อนภาษี</span>
-                            <span class="input-sub-2 position-absolute ml-5">กรอกเบอร์มือถือ เช่น 0891234567</span>
+                            <span class="input-sub position-absolute ml-5"><?php echo $this->lang->line('info_id_card');?></span>
+                            <span class="input-sub-2 position-absolute ml-5"><?php echo $this->lang->line('example_phone');?></span>
                             <div class="col-6-xl col-12-lg pr-0 pl-5 pl-4-lg mr-2">
-                                <label class="state-2-label mb-1 pl-1 mr-2">ชื่อ / บริษัท
-                                    ผู้บริจาค<span> *</span></label>
+                                <label class="state-2-label mb-1 pl-1 mr-2"><?php echo $this->lang->line('donor_name');?><span> *</span></label>
                                 <input type="text" name="name" class="form-control pr-4 bil-input">
-                                <label class="state-2-label mt-5 mb-1 pl-1 mr-2">เบอร์โทรศัพท์มือถือ<span> *</span></label>
+                                <label class="state-2-label mt-5 mb-1 pl-1 mr-2"><?php echo $this->lang->line('phone_no')?><span> *</span></label>
                                 <input type="text" name="tel" class="form-control pr-4 bil-input">
                             </div>
                             <div class="col-6-xl col-12-lg pl-0 pl-4-lg mt-4-lg">
-                                <label class="state-2-label mb-1 pl-1">เลขผู้เสียภาษี หรือ เลขบัตรประชาชน<span> *</span></label>
+                                <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('tax_id');?><span> *</span></label>
                                 <input type="text" name="tax_id" class="form-control pr-4 bil-input">
                             </div>
                         </div>
                         <div class="mt-5">
                             <img src="<?php echo base_url('assets/img/mail-icon.png') ?>" class="mr-2 ml-2 h-30">
-                            <span class="state-2-header h-30">ช่องทางการส่งใบเสร็จ</span>
+                            <span class="state-2-header h-30"><?php echo $this->lang->line('tax_receive');?></span>
                             <div class="row position-relative">
                                 <div class="col-9 pr-0 pl-5 pl-4-lg mr-2 mt-2">
-                                    <label class="state-2-label mb-1 pl-1">อีเมล<span> *</span></label>
+                                    <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('email');?><span> *</span></label>
                                     <input type="text" name="email" class="form-control">
                                 </div>
                                 <div class="col-9 pr-0 pl-5 pl-4-lg mr-2 mt-2">
-                                    <label class="state-2-label mb-1 pl-1">ที่อยู่ สำหรับออกใบเสร็จ
-                                        เพื่อใช้ลดหย่อนภาษี<span> *</span></label>
+                                    <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('tax_addr');?><span> *</span></label>
                                     <textarea id="donor-address" name="adress1" class="form-control"></textarea>
                                 </div>
                             </div>
@@ -413,18 +407,18 @@
                             <span class="state-1-header"><?php echo $this->lang->line('pay_method_title');?></span>
                         </div>
                         <div class="payment-choose-container position-relative mt-3">
-                            <label class="radio-label mb-0"> บัตรเดบิต / บัตรเครดิต
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('debit_credit')?>
                                 <input type="radio" name="payment-type" value="type-1" checked="checked">
                                 <span class="checkmark"></span>
                             </label>
-                            <span class="ml-4 sub-payment">(ชำระผ่าน VISA, Master Card)</span>
+                            <span class="ml-4 sub-payment">(VISA, Master Card)</span>
                             <div class="payment-logo-contrainer position-absolute d-none d-lg-block">
                                 <img src="<?php echo base_url('assets/img/visa-icon.png') ?>">
                                 <img src="<?php echo base_url('assets/img/mastercard-icon.png') ?>">
                             </div>
                         </div>
                         <div class="payment-choose-container position-relative mt-4">
-                            <label class="radio-label mb-0"> Prompt Pay / QR Code (รับได้ทุกธนาคาร)
+                            <label class="radio-label mb-0"> Prompt Pay / QR Code (<?php echo $this->lang->line('accept_all_banks')?>)
                                 <input type="radio" name="payment-type" value="type-2">
                                 <span class="checkmark"></span>
                             </label>
@@ -457,11 +451,11 @@
                     </div>
                     <div id="payment-type-1" class="d-none">
                         <div class="payment-choose-container position-relative mt-3">
-                            <label class="radio-label mb-0"> บัตรเดบิต / บัตรเครดิต
+                            <label class="radio-label mb-0"> <?php echo $this->lang->line('debit_credit')?>
                                 <input type="radio" name="payment-type-1" value="type-1" checked="checked">
                                 <span class="checkmark"></span>
                             </label>
-                            <span class="ml-4 sub-payment">(ชำระผ่าน VISA, Master Card)</span>
+                            <span class="ml-4 sub-payment">(VISA, Master Card)</span>
                             <div class="payment-logo-contrainer position-absolute d-none d-lg-block">
                                 <img src="<?php echo base_url('assets/img/visa-icon.png') ?>">
                                 <img src="<?php echo base_url('assets/img/mastercard-icon.png') ?>">
@@ -469,18 +463,17 @@
                         </div>
                         <div class="row">
                             <div class="col-7 pr-0 ml-5 mt-4">
-                                <label class="state-2-label mb-1 pl-1">หมายเลขบัตร<span> *</span></label>
+                                <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('card_number');?><span> *</span></label>
                                 <input type="text" name="card-number" data-encrypt="cardnumber" class="form-control"
                                        maxlength="16">
 
                             </div>
                             <div class="col-7 pr-0 ml-5 mt-4">
-                                <label class="state-2-label mb-1 pl-1">ชื่อบนบัตร
-                                    (ภาษาอังกฤษเท่านั้น)*<span> *</span></label>
+                                <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('card_holder_name');?><span> *</span></label>
                                 <input type="text" name="cardholderName" class="form-control">
                             </div>
                             <div class="col-8 pr-0 ml-5 mt-4">
-                                <label class="state-2-label mb-1 pl-1">วันหมดอายุ เดือน/ปี<span> *</span></label>
+                                <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('card_expired')?><span> *</span></label>
                                 <div class="row ml-0">
                                     <div class="col-5 pl-0 mr-3">
                                         <input type="text" name="month" class="form-control" data-encrypt="month"
@@ -495,7 +488,7 @@
                                 </div>
                             </div>
                             <div class="col-4 pr-0 ml-5 mt-4 position-relative">
-                                <label class="state-2-label mb-1 pl-1">หมายเลข CVC/CVV/CID<span> *</span></label>
+                                <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('cvc');?><span> *</span></label>
                                 <input type="password" data-encrypt="cvv" maxlength="4" autocomplete="off"
                                        placeholder="CVV2/CVC2" name="cvc" class="form-control">
 
@@ -568,8 +561,8 @@
                             <div class="col-xl-1"></div>
                             <div class="col-xl-6 col-lg-12 upload-container d-flex ml-5">
                                 <div class="mr-3 ml-5 ml-0-lg">
-                                    <p class="mb-0 mt-3">คลิกเพื่ออัปโหลด</p>
-                                    <p>หลักฐานการโอน</p>
+                                    <p class="mb-0 mt-3"><?php echo $this->lang->line('click_to_upload');?></p>
+                                    <p><?php echo $this->lang->line('upload_transfer_slip');?></p>
                                 </div>
                                 <div class="inputWrapper">
                                     <input class="fileInput" type="file" name="file1"/>
@@ -608,8 +601,8 @@
                                                  class="h-30">
                                         </div>
                                         <div class="col-9 pl-0 pr-0">
-                                            <p class="payment-type-3-text mb-0 ml-4">ธนาคารไทยพาณิชย์</p>
-                                            <p class="payment-type-3-text mb-0 ml-4">สาขา งามวงศ์วาน</p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('siam_commercial_bank');?></p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('ngam_wong_wan_branch');?></p>
                                             <p class="payment-type-3-text mb-0 ml-4">319 - 2 - 62123 - 1</p>
                                         </div>
                                         <div class="col-3 pr-0 mt-3">
@@ -617,8 +610,8 @@
                                                  class="h-30">
                                         </div>
                                         <div class="col-9 pl-0 pr-0 mt-3">
-                                            <p class="payment-type-3-text mb-0 ml-4">ธนาคารกรุงศรีอยุธยา</p>
-                                            <p class="payment-type-3-text mb-0 ml-4">สาขาย่อย เดอะมอลล์งามวงศ์วาน</p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('ayudhya_bank');?></p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('ngam_wong_wan_subbranch');?></p>
                                             <p class="payment-type-3-text mb-0 ml-4">463 - 1 - 10884 - 6</p>
                                         </div>
                                         <div class="col-3 pr-0 mt-3">
@@ -626,8 +619,8 @@
                                                  class="h-30">
                                         </div>
                                         <div class="col-9 pl-0 pr-0 mt-3" class="h-30">
-                                            <p class="payment-type-3-text mb-0 ml-4">ธนาคารกรุงเทพ</p>
-                                            <p class="payment-type-3-text mb-0 ml-4">สาขาย่อย เดอะมอลล์งามวงศ์วาน</p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('bangkok_bank');?></p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('ngam_wong_wan_subbranch');?></p>
                                             <p class="payment-type-3-text mb-0 ml-4">088 - 0 - 38742 - 8</p>
                                         </div>
                                     </div>
@@ -639,8 +632,8 @@
                                                  class="h-30">
                                         </div>
                                         <div class="col-9 pl-0 pr-0">
-                                            <p class="payment-type-3-text mb-0 ml-4">ธนาคารกสิกรไทย</p>
-                                            <p class="payment-type-3-text mb-0 ml-4">สาขา งามวงศ์วาน</p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('kasikorn_bank');?>ธนาคารกสิกรไทย</p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('ngam_wong_wan_branch');?></p>
                                             <p class="payment-type-3-text mb-0 ml-4">058 - 2 - 86735 - 6</p>
                                         </div>
                                         <div class="col-3 pr-0 mt-3">
@@ -648,8 +641,8 @@
                                                  class="h-30">
                                         </div>
                                         <div class="col-9 pl-0 pr-0 mt-3">
-                                            <p class="payment-type-3-text mb-0 ml-4">ธนาคารกรุงไทย</p>
-                                            <p class="payment-type-3-text mb-0 ml-4">สาขา งามวงศ์วาน</p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('krungthai_bank');?></p>
+                                            <p class="payment-type-3-text mb-0 ml-4"><?php echo $this->lang->line('ngam_wong_wan_branch');?></p>
                                             <p class="payment-type-3-text mb-0 ml-4">141 - 1 - 28408 - 9</p>
                                         </div>
                                     </div>
@@ -671,8 +664,8 @@
                             <div class="col-xl-1"></div>
                             <div class="col-xl-6 col-lg-12 upload-container d-flex ml-5 ml-0-lg">
                                 <div class="mr-3 ml-5">
-                                    <p class="mb-0 mt-3">คลิกเพื่ออัปโหลด</p>
-                                    <p>หลักฐานการโอน</p>
+                                    <p class="mb-0 mt-3"><?php echo $this->lang->line('click_to_upload');?></p>
+                                    <p><?php echo $this->lang->line('upload_transfer_slip');?></p>
                                 </div>
                                 <div class="inputWrapper">
                                     <input class="fileInput" type="file" name="file1"/>
@@ -694,7 +687,6 @@
 </div>
 </div>
 
-
 </body>
 <footer class="footer pl-4 pr-4 pt-2 pb-2 mt-4 d-flex" id="footer-xl">
     <div class="d-none d-xl-block">
@@ -709,6 +701,7 @@
                 class="footer-text ml-4 pull-right">สอบถามข้อมูลเพิ่มเติม</span><span
                 class="footer-text ml-2 pull-right">089 761 9150, 089 765 9151</span><img
                 src="<?php echo base_url('assets/img/tel-icon.png') ?>" class="ml-2 pull-right">
+        <a href="https://seal.beyondsecurity.com/vulnerability-scanner-verification/donate.consumerthai.org"><img src="https://seal.beyondsecurity.com/verification-images/donate.consumerthai.org/vulnerability-scanner-2.gif" alt="Website Security Test" border="0"></a>
     </div>
 </footer>
 
