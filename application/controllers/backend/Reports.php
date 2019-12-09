@@ -149,7 +149,9 @@ class Reports extends MY_Controller
                         'invoice_no' => get_array_value($row, 'inv_number', ''),
                         'first_name' => get_array_value($row, 'first_name', ''),
                         'amount' => get_array_value($row, 'amount', 0),
-                        'bankName' => get_array_value($row, 'bankName', '')
+                        'bankName' => get_array_value($row, 'bankName', ''),
+                        'payment_status'=>get_array_value($row, 'status', ''),
+                        'channel_payment'=>get_array_value($row, 'paymentchanel', '')
 
                     );
                     $reports_info[] = $rows;
@@ -183,12 +185,19 @@ class Reports extends MY_Controller
         $sheet->setCellValue('D4', 'ชื่อ-นามสกุล');
         $sheet->setCellValue('E4', 'จำนวนเงินที่ได้รับ(บาท)');
         $sheet->setCellValue('F4', 'ชำระเงิน ธนาคาร');
+        $sheet->setCellValue('G4', 'สถานะ');
+        $sheet->setCellValue('H4', 'ประเภทชำระเงิน');
         /**Content */
 
 
         if (is_blank($data)) {
             $data = $this->donationList();
         }
+
+//        var_dump($data);
+//
+//        echo $this->db->last_query();
+//        exit(0);
 
 //        $data = $this->getfiles();
 
@@ -216,11 +225,6 @@ class Reports extends MY_Controller
             $sp->getActiveSheet()->getStyle('E5:E' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
 
-//            $sheet->setCellValue('E23','E'.$last_row);
-//            $sheet->setCellValue('E24','E'.$last_total);
-//            $sheet->setCellValue('E25','E'.$i);
-//            $sheet->setCellValue('E26','E'.$row_total);
-//            $sheet->setCellValue('E28','Rows = '.$last_cal_row);
 
 
 

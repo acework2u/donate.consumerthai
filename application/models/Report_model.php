@@ -76,7 +76,7 @@ class Report_model extends MY_Model
         $this->db->select('donor.first_name,
 	donor.email,
 	donor.tel,
-	sum(amount) as donateTotal');
+	sum(amount) as donateTotal','status','paymentchanel');
         $this->db->join($this->tbl_donor,'donation.doner_aid = donor.aid','left');
         $this->db->where($where);
         $this->db->group_by('donor.aid');
