@@ -38,7 +38,7 @@ class Report_model extends MY_Model
 	last_name,
 	payment_code.title as status,
 	payment_channel.title as paymentchanel,
-	donation_campaign.title AS campaign_name');
+	donation_campaign.title AS campaign_name,date(donation.updated_date) AS date,time(donation.updated_date) AS time');
         $this->db->join($this->tbl_donor, 'donor.aid = donation.doner_aid', 'inner');
         $this->db->join($this->tbl_donation_campaign, 'donation.donation_campaign_aid = donation_campaign.aid', 'inner');
         $this->db->join($this->tbl_payment_code, 'donation.payment_status = payment_code.code', 'left');
@@ -53,7 +53,9 @@ class Report_model extends MY_Model
         if(!is_blank($this->_limit)){
             $this->db->limit($this->_limit);
         }
-        $this->db->order_by('donation.aid', 'DESC');
+//        $this->db->order_by('donation.aid', 'DESC');
+        $this->db->order_by("date(donation.updated_date) DESC,TIME(donation.updated_date)");
+
         $query = $this->db->get($this->tbl_donation);
 
         $result = array();

@@ -838,6 +838,8 @@ function datetime2display($strDatetime){
         $d=mktime($timeStamp[3],$timeStamp[4],$timeStamp[5],$timeStamp[1],$timeStamp[0],$timeStamp[2]);
 
         $dateTime = date("d-m-Y H:i:s", $d);
+    }else{
+        $dateTime = "";
     }
 
     return $dateTime;

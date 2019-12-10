@@ -145,13 +145,16 @@ class Reports extends MY_Controller
                 foreach ($donationList as $row) {
                     $rows = array(
                         'indexd' => $i,
-                        'transfer_date' => datetime2display(get_array_value($row, 'transfer_date')),
+                        'date' => date('d-m-Y',strtotime(get_array_value($row, 'date', ''))),
+                        'time' => get_array_value($row, 'time', ''),
+                        'transfer_date'=> datetime2display(get_array_value($row, 'transfer_date','')),
                         'invoice_no' => get_array_value($row, 'inv_number', ''),
                         'first_name' => get_array_value($row, 'first_name', ''),
                         'amount' => get_array_value($row, 'amount', 0),
                         'bankName' => get_array_value($row, 'bankName', ''),
                         'payment_status'=>get_array_value($row, 'status', ''),
-                        'channel_payment'=>get_array_value($row, 'paymentchanel', '')
+                        'channel_payment'=>get_array_value($row, 'paymentchanel', ''),
+
 
                     );
                     $reports_info[] = $rows;
@@ -181,12 +184,14 @@ class Reports extends MY_Controller
         /*** Column ***/
         $sheet->setCellValue('A4', 'ลำดับที่');
         $sheet->setCellValue('B4', 'วันที่');
-        $sheet->setCellValue('C4', 'ใบเสร็จรับเงิน');
-        $sheet->setCellValue('D4', 'ชื่อ-นามสกุล');
-        $sheet->setCellValue('E4', 'จำนวนเงินที่ได้รับ(บาท)');
-        $sheet->setCellValue('F4', 'ชำระเงิน ธนาคาร');
-        $sheet->setCellValue('G4', 'สถานะ');
-        $sheet->setCellValue('H4', 'ประเภทชำระเงิน');
+        $sheet->setCellValue('C4', 'เวลา');
+        $sheet->setCellValue('D4', 'Transaction Date');
+        $sheet->setCellValue('E4', 'ใบเสร็จรับเงิน');
+        $sheet->setCellValue('F4', 'ชื่อ-นามสกุล');
+        $sheet->setCellValue('G4', 'จำนวนเงินที่ได้รับ(บาท)');
+        $sheet->setCellValue('H4', 'ชำระเงิน ธนาคาร');
+        $sheet->setCellValue('I4', 'สถานะ');
+        $sheet->setCellValue('J4', 'ประเภทชำระเงิน');
         /**Content */
 
 
@@ -195,7 +200,7 @@ class Reports extends MY_Controller
         }
 
 //        var_dump($data);
-//
+////
 //        echo $this->db->last_query();
 //        exit(0);
 
@@ -210,19 +215,19 @@ class Reports extends MY_Controller
 
             /***** Style ***/
 
-            $sp->getActiveSheet()->getStyle('A4:F4')->getFont()->setBold(true);
+            $sp->getActiveSheet()->getStyle('A4:J4')->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('C1:C2')->getFont()->setBold(true);
             $i =1;
-            foreach (range('A', 'F') as $columnID) {
+            foreach (range('A', 'J') as $columnID) {
                 $sp->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
                 $i++;
             }
             $row_total = 5+$i;
 
-            $sheet->setCellValue('D'.$last_total, 'รวมทั้งหมด');
-            $sheet->setCellValue('E'.$last_total,'=SUM(E5:E'.$last_cal_row.')');
-            $sp->getActiveSheet()->getStyle('D'.$last_total.':E'.$last_total)->getFont()->setBold(true);
-            $sp->getActiveSheet()->getStyle('E5:E' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $sheet->setCellValue('F'.$last_total, 'รวมทั้งหมด');
+            $sheet->setCellValue('G'.$last_total,'=SUM(G5:G'.$last_cal_row.')');
+            $sp->getActiveSheet()->getStyle('F'.$last_total.':G'.$last_total)->getFont()->setBold(true);
+            $sp->getActiveSheet()->getStyle('G5:G' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
 
 
