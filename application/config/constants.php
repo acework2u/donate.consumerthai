@@ -89,10 +89,18 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 /****** 2C2P Payment *****/
 define("C2P_MERCHANT_ID", "764764000001745"); // demo
 //define("C2P_MERCHANT_ID", "764764000001745"); // Pro
-//define("C2P_SECRET_KEY", "A92FC2236FCB7D94772BBED0560ABB4747B104EC355A97385095A4FD3390ADFB"); //demo
-define("C2P_SECRET_KEY", "6B319221FEDC8F4B320D362EE1FB695E579F503F6FD6FA358984A56A2448F1B9"); //pro
+
+
 define("C2P_CURRENCY", "764");
 define("C2P_VERSION", "9.3");
-//define("C2P_PAYMENT_URL", "https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment"); //Demo
-define("C2P_PAYMENT_URL", "https://t.2c2p.com/RedirectV3/payment"); //Production
-define("C2P_RESULT_URL", "http://donate-consumer.local/result");
+
+if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
+    define("C2P_SECRET_KEY", "A92FC2236FCB7D94772BBED0560ABB4747B104EC355A97385095A4FD3390ADFB"); //demo
+    define("C2P_PAYMENT_URL", "https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment"); //Demo
+    define("C2P_RESULT_URL", "http://donate-consumer.local/result");
+}else{
+    define("C2P_SECRET_KEY", "6B319221FEDC8F4B320D362EE1FB695E579F503F6FD6FA358984A56A2448F1B9"); //pro
+    define("C2P_PAYMENT_URL", "https://t.2c2p.com/RedirectV3/payment"); //Production
+    define("C2P_RESULT_URL", "https://donate.consumerthai.org/result");
+
+}

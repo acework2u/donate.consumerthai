@@ -9,12 +9,19 @@ class Res2c2p extends pkcs7
 
     public function __construct()
     {
-        /*** Demo **/
-//        $this->_prk = APPPATH . "/third_party/2c2p/keys/demo2.pem";
-//        $this->_pub = APPPATH . "/third_party/2c2p/keys/demo2.crt";
-        /**** Production **/
-        $this->_prk = APPPATH . "/third_party/2c2p/keys/private.pem";
-        $this->_pub = APPPATH . "/third_party/2c2p/keys/cert.crt";
+        if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
+            /*** Demo **/
+        $this->_prk = APPPATH . "/third_party/2c2p/keys/demo2.pem";
+        $this->_pub = APPPATH . "/third_party/2c2p/keys/demo2.crt";
+        }else{
+            /**** Production **/
+            $this->_prk = APPPATH . "/third_party/2c2p/keys/private.pem";
+            $this->_pub = APPPATH . "/third_party/2c2p/keys/cert.crt";
+        }
+
+
+
+
 
     }
     public function setResponse($response){
@@ -23,9 +30,11 @@ class Res2c2p extends pkcs7
 
     public function getResult(){
         $result = "";
-//        $result = $this->decrypt($this->response, $this->_pub,$this->_prk,"2c2p"); // Demo
-        $result = $this->decrypt($this->response, $this->_pub,$this->_prk,"Joe2262527"); // Pro
-
+        if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
+            $result = $this->decrypt($this->response, $this->_pub,$this->_prk,"2c2p"); // Demo
+        }else{
+            $result = $this->decrypt($this->response, $this->_pub,$this->_prk,"Joe2262527"); // Pro
+        }
         return $result;
     }
 
