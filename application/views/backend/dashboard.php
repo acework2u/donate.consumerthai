@@ -120,7 +120,7 @@
                                 <table class="table no-margin">
                                     <thead>
                                     <tr>
-                                        <th>Transection No.</th>
+                                        <th>Trans No./Order ID</th>
                                         <th>Invoice No.</th>
                                         <th>Donor</th>
                                         <th>Status</th>

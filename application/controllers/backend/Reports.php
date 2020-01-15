@@ -139,6 +139,11 @@ class Reports extends MY_Controller
             }
 
 //            echo json_encode($donationList);
+//
+//            exit(0);
+
+
+
             $reports_info = array();
             if (is_array($donationList)) {
                 $i = 1;
@@ -148,6 +153,7 @@ class Reports extends MY_Controller
                         'date' => date('d-m-Y',strtotime(get_array_value($row, 'date', ''))),
                         'time' => get_array_value($row, 'time', ''),
                         'transfer_date'=> datetime2display(get_array_value($row, 'transfer_date','')),
+                        'transection_no'=> get_array_value($row, 'transection_no', ''),
                         'invoice_no' => get_array_value($row, 'inv_number', ''),
                         'first_name' => get_array_value($row, 'first_name', ''),
                         'amount' => get_array_value($row, 'amount', 0),
@@ -186,12 +192,13 @@ class Reports extends MY_Controller
         $sheet->setCellValue('B4', 'วันที่');
         $sheet->setCellValue('C4', 'เวลา');
         $sheet->setCellValue('D4', 'Transaction Date');
-        $sheet->setCellValue('E4', 'ใบเสร็จรับเงิน');
-        $sheet->setCellValue('F4', 'ชื่อ-นามสกุล');
-        $sheet->setCellValue('G4', 'จำนวนเงินที่ได้รับ(บาท)');
-        $sheet->setCellValue('H4', 'ชำระเงิน ธนาคาร');
-        $sheet->setCellValue('I4', 'สถานะ');
-        $sheet->setCellValue('J4', 'ประเภทชำระเงิน');
+        $sheet->setCellValue('E4', 'Trans NO. / Order ID');
+        $sheet->setCellValue('F4', 'ใบเสร็จรับเงิน');
+        $sheet->setCellValue('G4', 'ชื่อ-นามสกุล');
+        $sheet->setCellValue('H4', 'จำนวนเงินที่ได้รับ(บาท)');
+        $sheet->setCellValue('I4', 'ชำระเงิน ธนาคาร');
+        $sheet->setCellValue('J4', 'สถานะ');
+        $sheet->setCellValue('K4', 'ประเภทชำระเงิน');
         /**Content */
 
 
@@ -200,8 +207,8 @@ class Reports extends MY_Controller
         }
 
 //        var_dump($data);
-////
-//        echo $this->db->last_query();
+//////
+////        echo $this->db->last_query();
 //        exit(0);
 
 //        $data = $this->getfiles();
@@ -215,19 +222,19 @@ class Reports extends MY_Controller
 
             /***** Style ***/
 
-            $sp->getActiveSheet()->getStyle('A4:J4')->getFont()->setBold(true);
+            $sp->getActiveSheet()->getStyle('A4:K4')->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('C1:C2')->getFont()->setBold(true);
             $i =1;
-            foreach (range('A', 'J') as $columnID) {
+            foreach (range('A', 'K') as $columnID) {
                 $sp->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
                 $i++;
             }
             $row_total = 5+$i;
 
             $sheet->setCellValue('F'.$last_total, 'รวมทั้งหมด');
-            $sheet->setCellValue('G'.$last_total,'=SUM(G5:G'.$last_cal_row.')');
-            $sp->getActiveSheet()->getStyle('F'.$last_total.':G'.$last_total)->getFont()->setBold(true);
-            $sp->getActiveSheet()->getStyle('G5:G' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $sheet->setCellValue('H'.$last_total,'=SUM(H5:H'.$last_cal_row.')');
+            $sp->getActiveSheet()->getStyle('F'.$last_total.':H'.$last_total)->getFont()->setBold(true);
+            $sp->getActiveSheet()->getStyle('H5:H' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
 
 

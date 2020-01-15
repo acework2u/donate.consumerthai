@@ -224,7 +224,7 @@
         </div>
     </div>
     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 pl-5 pl-0-lg pr-0-lg" id="container-right">
-        <form id="2c2p-payment-form" method="post" action="<?php echo base_url('donation/2c2p-payment') ?>">
+        <form name="donateform" id="2c2p-payment-form" method="post" action="<?php echo base_url('donation/2c2p-payment') ?>">
             <div class="payment-container" id="payment-1">
                 <h1 class="mt-3 mb-3 text-center"><?php echo $this->lang->line('induce_info')?></h1>
                 <hr width="50%">
@@ -464,24 +464,24 @@
                         <div class="row">
                             <div class="col-7 pr-0 ml-5 mt-4">
                                 <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('card_number');?><span> *</span></label>
-                                <input type="text" name="card-number" data-encrypt="cardnumber" class="form-control"
+                                <input type="text" id="card-number" name="card-number" data-encrypt="cardnumber" class="form-control"
                                        maxlength="16">
 
                             </div>
                             <div class="col-7 pr-0 ml-5 mt-4">
                                 <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('card_holder_name');?><span> *</span></label>
-                                <input type="text" name="cardholderName" class="form-control">
+                                <input type="text" id="cardholderName" name="cardholderName" class="form-control" >
                             </div>
                             <div class="col-8 pr-0 ml-5 mt-4">
                                 <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('card_expired')?><span> *</span></label>
                                 <div class="row ml-0">
                                     <div class="col-5 pl-0 mr-3">
-                                        <input type="text" name="month" class="form-control" data-encrypt="month"
+                                        <input type="text" id="card-month" name="month" class="form-control" data-encrypt="month"
                                                maxlength="2" placeholder="MM">
 
                                     </div>
                                     <div class="col-5 pl-0">
-                                        <input type="text" data-encrypt="year" maxlength="4" placeholder="YYYY"
+                                        <input type="text" id="cardyear" data-encrypt="year" maxlength="4" placeholder="YYYY"
                                                name="year" class="form-control">
 
                                     </div>
@@ -489,7 +489,7 @@
                             </div>
                             <div class="col-4 pr-0 ml-5 mt-4 position-relative">
                                 <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('cvc');?><span> *</span></label>
-                                <input type="password" data-encrypt="cvv" maxlength="4" autocomplete="off"
+                                <input id="cardcvc" type="password" data-encrypt="cvv" maxlength="4" autocomplete="off"
                                        placeholder="CVV2/CVC2" name="cvc" class="form-control">
 
                                 <img src="<?php echo base_url('assets/img/credit-icon.png') ?>"
@@ -501,12 +501,24 @@
                         <p class="ml-5 mb-0">ที่ถูกพิมพ์อยู่ด้านหน้าหรือหลังบัตรของคุณ </p>
                         <p class="ml-5 mb-0">(ไม่ใช่หมายเลขบัตรตัวนูน) </p>
                         <div class="d-flex">
+
+
                             <button type="button" value="Checkout" onclick="Checkout()"
-                                    style="width: 120px;padding-left: 20px;"
-                                    class="confirm-btn next position-relative mb-4 mt-4 done"><span
+                                             style="width: 120px;padding-left: 20px;"
+                                             class="confirm-btn next position-relative mb-4 mt-4"><span
                                         class="position-absolute"><i class="fa fa-angle-double-right"></i></span>
                                 Confirm
                             </button>
+
+                            <button type="button" value="Checkout" onclick="Checkout()"
+                                    style="width: 120px;padding-left: 20px;"
+                                    class="confirm-btn next position-relative mb-4 mt-4"><span
+                                        class="position-absolute"><i class="fa fa-angle-double-right"></i></span>
+                                Confirm-2
+                            </button>
+
+
+
                         </div>
                     </div>
                     <div id="payment-type-2" class="d-none">
@@ -712,20 +724,204 @@
 <script src="<?php echo base_url('assets/js/donate.js') ?>"></script>
 <!--Importing 2c2p JSLibrary-->
 <!--Demo-->
-<!--<script type="text/javascript" src="https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/api/my2c2p.1.6.9.min.js"></script>-->
-<script type="text/javascript" src="https://t.2c2p.com/securepayment/api/my2c2p.1.6.9.min.js"></script>
+
+<?php
+if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){ ?>
+<script type="text/javascript" src="https://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/api/my2c2p.1.6.9.min.js"></script>-->
+
+<?php }else{ ?>
+    <script type="text/javascript" src="https://t.2c2p.com/securepayment/api/my2c2p.1.6.9.min.js"></script>
+<?php } ?>
+
+
 <script type="text/javascript">
     <!--checkout function-->
     function Checkout() {
         //your code here
-        //if there is no error, submit the form.
+        // firstFocus();
+       // var cardNumber document.getElementById('card-number');
+
+        var cardno = /^(?:3[47][0-9]{13})$/;
+        var visano = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+        var masterno = /^(?:5[1-5][0-9]{14})$/;
+
+        var carNumber = document.getElementById('card-number');
+        var chkfilter = false;
+        var cardholderName = document.getElementById('cardholderName');
+        var cardMonth = document.getElementById('card-month');
+        var cardyear = document.getElementById('cardyear');
+        var cardcvc = document.getElementById('cardcvc');
+
+        if(carNumber.value.match(visano) || carNumber.value.match(masterno))
+        {
+            // checkholderName();
+            cardholderName.focus();
+            // return true;
+        }else{
+            alert("Not a valid Visa or Master  credit card number!");
+            carNumber.focus();
+            return false;
+        }
+
+        if(cardholderName.value !==""){
+            cardMonth.focus();
+        }else{
+            cardholderName.focus();
+            return false;
+        }
+
+        if(isNaN(cardMonth.value) || cardMonth.value.length !==2 ){
+            cardMonth.focus();
+            console.info(cardMonth.value + " is not a number and data mouth MM (etc. 01)<br/>");
+            return false;
+        }else{
+            cardyear.focus();
+        }
+
+        if(isNaN(cardyear.value) || cardyear.value.length !==4 ){
+            cardyear.focus();
+            console.info(cardyear.value + " is not a number and data Year MM (etc. 01)<br/>");
+            return false;
+        }else {
+            cardcvc.focus();
+        }
+
+        if(cardcvc.value ==="" || cardcvc.value.length < 3){
+            cardcvc.focus();
+            return false;
+        }
+
+            // console.log("Filter Success");
         My2c2p.submitForm("2c2p-payment-form", function (errCode, errDesc) {
             if (errCode != 0) {
                 alert(errDesc + " (" + errCode + ")");
             }
         });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //if there is no error, submit the form.
+        /*
+        My2c2p.submitForm("2c2p-payment-form", function (errCode, errDesc) {
+            if (errCode != 0) {
+                alert(errDesc + " (" + errCode + ")");
+            }
+        });
+         */
+     }
+
+
+
+     function checkholderName() {
+         var cardholderName = document.getElementById('cardholderName');
+         // var cardmonth = document.getElementById('cardmonth');
+
+         if(cardholderName.value !==""){
+             checkcardMonth();
+             return true;
+         }else{
+             cardholderName.focus();
+             return false;
+         }
+
+     }
+
+     function checkcardMonth() {
+         var card_month = document.getElementById('card-month');
+
+         let chek1 = card_month.value;
+         let chek2 = chek1.length;
+
+         console.info("value = "+card_month.value+" len = "+chek2);
+
+         if(isNaN(chek1) || chek2 !==2 ){
+             card_month.focus()
+             // console.info(chek1 + " is not a number and data mouth MM (etc. 01)<br/>");
+             console.info(chek1 + " is not a number and data mouth MM (etc. 01)<br/>");
+             return false;
+         }else{
+
+             if(chek2 >= 2){
+                 checkcardYear();
+                 return true;
+             }else{
+                 card_month.focus();
+                 return false;
+             }
+             // console.info(chek1 + " is a number <br/>");
+         }
+         return true;
+
+
+     }
+    function checkcardYear() {
+        var cardyear = document.getElementById('cardyear');
+        var cardcvc = document.getElementById('cardcvc');
+
+        let chk = cardyear.value;
+        let chk2 = chk.length;
+        console.info("y lengh ="+chk2+" Val="+chk);
+
+        if(chk2 === 4){
+
+            if(cardcvc.value !=="" && cardcvc.value.length > 2 ){
+                fil
+
+            }else {
+                cardcvc.focus();
+                return false;
+            }
+
+
+        }else{
+            cardyear.focus();
+            return false;
+        }
+
     }
+
+
+    function ChkOut() {
+        // console.log("Success Filter");
+        My2c2p.submitForm("2c2p-payment-form", function (errCode, errDesc) {
+            if (errCode != 0) {
+                alert(errDesc + " (" + errCode + ")");
+            }
+        });
+    }
+
+
+
+
+
+
 </script>
 
 </html>
