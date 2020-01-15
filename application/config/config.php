@@ -27,7 +27,7 @@ date_default_timezone_set('Asia/Bangkok');
 
 if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
     /***Dev*****/
-    $root = "http://" . $_SERVER['HTTP_HOST'];
+    $root = "https://" . $_SERVER['HTTP_HOST'];
 }else{
     /**Production**/
     $root = "https://" . $_SERVER['HTTP_HOST'];
