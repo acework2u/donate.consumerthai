@@ -92,7 +92,8 @@ define("C2P_MERCHANT_ID", "764764000001745"); // demo
 
 
 define("C2P_CURRENCY", "764");
-define("C2P_VERSION", "9.3");
+//define("C2P_VERSION", "9.3");
+define("C2P_VERSION", "9.9");
 
 if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
     define("C2P_SECRET_KEY", "A92FC2236FCB7D94772BBED0560ABB4747B104EC355A97385095A4FD3390ADFB"); //demo

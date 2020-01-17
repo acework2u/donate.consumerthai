@@ -798,46 +798,7 @@ if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){ ?>
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //if there is no error, submit the form.
-        /*
-        My2c2p.submitForm("2c2p-payment-form", function (errCode, errDesc) {
-            if (errCode != 0) {
-                alert(errDesc + " (" + errCode + ")");
-            }
-        });
-         */
      }
-
-
 
      function checkholderName() {
          var cardholderName = document.getElementById('cardholderName');

@@ -4,11 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Donate extends MY_Controller
 {
     public $_myLang;
+
     public function __construct()
     {
         parent::__construct();
         $this->data = array();
-        $this->_myLang =$this->session->userdata('site_lang');
+        $this->_myLang = $this->session->userdata('site_lang');
     }
 
 
@@ -216,12 +217,12 @@ class Donate extends MY_Controller
                 $expYear = $_POST['expYearCardInfo'];
 
                 //Request Information
-                $version = "9.3";
+//                $version = "9.3";
+                $version = "9.9";
 
                 //Construct signature string
-                $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv . $email . $encCardData;
-                $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));    //Compute hash value
-
+//                $stringToHash = $version . $merchantID . $uniqueTransactionCode . $desc . $amt . $currencyCode . $panCountry . $cardholderName . $email . $donorId . $userInv . $email . $encCardData;
+//                $hash = strtoupper(hash_hmac('sha1', $stringToHash, $secretKey, false));    //Compute hash value
 
                 //Construct payment request message
                 $xml = "<PaymentRequest>
@@ -238,9 +239,18 @@ class Donate extends MY_Controller
 		<userDefined2>$userInv</userDefined2>
 		<userDefined3>$email</userDefined3>
 		<encCardData>$encCardData</encCardData>	  	   	         
-		<secureHash>$hash</secureHash>
+	
 		</PaymentRequest>";
-                $payload = base64_encode($xml);    //Convert payload to base64
+
+                //3) Create inner payload
+                $paymentPayload = base64_encode($xml); //Convert payload to base64
+//                $payload = base64_encode($xml);    //Convert payload to base64
+
+                //4) Generate signature based on inner payload
+                $signature = strtoupper(hash_hmac('sha256', $paymentPayload, $secretKey, false));
+                $payloadXML = "<PaymentRequest><version>$version</version><payload>$paymentPayload</payload><signature>$signature</signature></PaymentRequest>";
+                $payload = base64_encode($payloadXML);
+
 
                 $this->data['payload'] = $payload;
 
@@ -274,13 +284,13 @@ class Donate extends MY_Controller
                 $this->load->library('mailer');
 
                 $fullName = "";
-                $amountDonate ="";
+                $amountDonate = "";
 
-                $amountDonate = number_format($amount_to_db, 2 );
+                $amountDonate = number_format($amount_to_db, 2);
 
                 $templateData = array(
                     'name' => $full_name,
-                    'amount'=>$amountDonate
+                    'amount' => $amountDonate
                 );
 
                 if (!is_blank($email)) {
@@ -315,13 +325,13 @@ class Donate extends MY_Controller
                 $this->load->library('mailer');
 
                 $fullName = "";
-                $amountDonate ="";
+                $amountDonate = "";
 
-                $amountDonate = number_format($amount_to_db, 2 );
+                $amountDonate = number_format($amount_to_db, 2);
 
                 $templateData = array(
                     'name' => $full_name,
-                    'amount'=>$amountDonate
+                    'amount' => $amountDonate
                 );
 
                 if (!is_blank($email)) {
@@ -351,12 +361,175 @@ class Donate extends MY_Controller
             $response = $this->input->get_post('paymentResponse');
         }
 
+        /*** API 9.9 **/
+        $reponsePayLoadXML = base64_decode($response);
+        $xmlObject =simplexml_load_string($reponsePayLoadXML) or die("Error: Cannot create object");
+
+        //Decode payload with base64 to get the Reponse
+        $payloadxml = base64_decode($xmlObject->payload);
+
+        //Get the signature from the ResponseXML
+        $signaturexml = $xmlObject->signature;
+
+        $merchantID = C2P_MERCHANT_ID;        //Get MerchantID when opening account with 2C2P
+        $secretKey = C2P_SECRET_KEY;    //Get SecretKey from 2C2P PGW Dashboard
+
+        $base64EncodedPayloadResponse=base64_encode($payloadxml);
+
+        $signatureHash = strtoupper(hash_hmac('sha256', $base64EncodedPayloadResponse ,$secretKey, false));
+
+        //Compare the response signature with payload signature with secretKey
+        if($signaturexml == $signatureHash){
+//            echo "Response :<br/><textarea style='width:100%;height:80px'>". $payloadxml."</textarea>";
+
+            $xml = simplexml_load_string($payloadxml);
+            //convert into json
+            $json = json_encode($xml);
+
+//convert into associative array
+            $xmlArr = json_decode($json, true);
+
+
+//
+//            print_r($xmlArr);
+//            print_r($json);
+//            exit(0);
+
+
+            $resCode = "";
+            $panCard = "";
+            $amt = "";
+            $tranRef = "";
+            $transection_no = "";
+            $dateTime = "";
+            $donorId = "";
+            $invoiceNo = "";
+            $issuerCountry = "";
+            $bankName = "";
+            $processBy = "";
+            $payment_channel = "001";
+            $donateCampaignId = 1;
+            $email = "";
+            $created_date = date('Y-m-d H:i:s');
+            $updated_date = date('Y-m-d H:i:s');
+            $failReason = "";
+
+            if (is_array($xmlArr)) {
+                $resCode = get_array_value($xmlArr, 'respCode', '');
+                $panCard = get_array_value($xmlArr, 'pan', '');
+                $amt = get_array_value($xmlArr, 'amt', '');
+                $tranRef = get_array_value($xmlArr, 'tranRef', '');
+                $TransactionCode = get_array_value($xmlArr, 'uniqueTransactionCode', '');
+                $dateTime = get_array_value($xmlArr, 'dateTime', '');
+                $donorId = get_array_value($xmlArr, 'userDefined1', '');
+                $invoiceNo = get_array_value($xmlArr, 'userDefined2', '');
+                $email = get_array_value($xmlArr, 'userDefined3', '');
+                $issuerCountry = get_array_value($xmlArr, 'issuerCountry', '');
+                $bankName = get_array_value($xmlArr, 'bankName', '');
+                $processBy = get_array_value($xmlArr, 'processBy', '');
+                $failReason = get_array_value($xmlArr, 'failReason', '');
+            }
+
+            /**** Create Donation ****/
+            $this->load->model($this->donation_model, 'donation');
+            $this->donation->setTransectionNo($TransactionCode);
+//        $this->donation->setInvNumber($invoiceNo);
+            $this->donation->setAmount(amountToDb($amt));
+            $this->donation->setDonorId($donorId);
+            $this->donation->setDonationCampId($donateCampaignId);
+            $this->donation->setPaymentStatus($resCode);
+            $this->donation->setPaymentChannel($payment_channel);
+            $this->donation->setBankName($bankName);
+            $this->donation->setTransferDate($dateTime);
+            $this->donation->setPan($panCard);
+            $this->donation->setTransRef($tranRef);
+            $this->donation->setProcessBy($processBy);
+            $this->donation->setIssuerCountry($issuerCountry);
+            $this->donation->setNote($failReason);
+
+            $this->donation->create();
+
+            if ($resCode == "00") {
+                $this->load->model($this->invoice_model, 'invoice');
+
+                $invoiceNo = $this->generateInvoice();
+                $donationId = $this->donation->getDonationId();
+                $invoiceStatus = 1;
+                $remark = "2c2p";
+
+
+                $this->invoice->setInvoiceNo($invoiceNo);
+                $this->invoice->setDonationId($donationId);
+                $this->invoice->setInvoiceStatus($invoiceStatus);
+                $this->invoice->setRemark($remark);
+
+                if ($this->invoice->create()) {
+                    $invID = $this->invoice->getInvoiceId();
+                    $this->donation->setInvoiceId($invID);
+                    $this->donation->setInvNumber($invoiceNo);
+                    $this->donation->update($donationId);
+
+                    /// Send Mail to Donor
+                    $this->load->library('mailer');
+                    $pdfFile = $this->generate_invoice($donationId);
+
+
+                    $fullName = "";
+                    $amountDonate = "";
+
+                    $this->load->model($this->donor_model, 'donor');
+                    $this->donor->setDonorId($donorId);
+
+                    $fullName = $this->donor->getDonorFirstName();
+                    $amountDonate = number_format(amountToDb($amt), 2);
+
+
+                    $templateData = array(
+                        'name' => $fullName,
+                        'amount' => $amountDonate
+                    );
+                    $fileName = "$invoiceNo.pdf";
+                    if (!is_blank($email)) {
+                        $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
+
+                        if (!$result) {
+                            redirect('thankyou');
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+
+
+        } else {
+            //If Signature does not match
+//            echo "Error :<br/><textarea style='width:100%;height:20px'>". "Wrong Signature"."</textarea>";
+//            echo "<br/>";
+
+
+
+
+        }
+
+        redirect('thankyou');
+
+
+
+        exit(0);
+
+        /*** Old Version **/
+/*
         $res->setResponse($response);
         $result = $res->getResult();
 
-
         //convert xml string into an object
         $xml = simplexml_load_string($result);
+*/
+
 
 //convert into json
         $json = json_encode($xml);
@@ -399,7 +572,6 @@ class Donate extends MY_Controller
         /**** Create Donation ****/
         $this->load->model($this->donation_model, 'donation');
         $this->donation->setTransectionNo($tranRef);
-//        $this->donation->setInvNumber($invoiceNo);
         $this->donation->setAmount(amountToDb($amt));
         $this->donation->setDonorId($donorId);
         $this->donation->setDonationCampId($donateCampaignId);
@@ -441,24 +613,24 @@ class Donate extends MY_Controller
 
 
                 $fullName = "";
-                $amountDonate ="";
+                $amountDonate = "";
 
-                $this->load->model($this->donor_model,'donor');
+                $this->load->model($this->donor_model, 'donor');
                 $this->donor->setDonorId($donorId);
 
                 $fullName = $this->donor->getDonorFirstName();
-                $amountDonate = number_format(amountToDb($amt), 2 );
+                $amountDonate = number_format(amountToDb($amt), 2);
 
 
                 $templateData = array(
                     'name' => $fullName,
-                    'amount'=>$amountDonate
+                    'amount' => $amountDonate
                 );
                 $fileName = "$invoiceNo.pdf";
                 if (!is_blank($email)) {
                     $result = $this->mailer->to($email)->subject("Thank you for Donate")->setAttachFile($pdfFile, $fileName)->send("thank_you.php", compact('templateData'));
 
-                    if(!$result){
+                    if (!$result) {
                         redirect('thankyou');
                     }
 
@@ -469,18 +641,6 @@ class Donate extends MY_Controller
 
         }
 
-
-//        $this->load->library('SocialMedia');
-//
-//        $socmed = new SocialMedia();
-//        $social_media_name = $socmed->GetSocialMediaSites_WithShareLinks_OrderedByPopularity();
-//        $myScial = array('url' => 'https://donate.consumerthai.org/', 'title' => 'Consumer Thailand');
-//        $social_media_urls = $socmed->GetSocialMediaSiteLinks_WithShareLinks($myScial);
-//
-//        $this->data['media_name'] = $social_media_name;
-//        $this->data['media_urls'] = $social_media_urls;
-//        /*** Load View **/
-//        $this->load->view('frontend/thankyou', $this->data);
 
 
         redirect('thankyou');
