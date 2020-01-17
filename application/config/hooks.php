@@ -30,4 +30,12 @@ if($_SERVER["SERVER_NAME"] == "donate.consumerthai.org"){
         'filepath' => 'hooks'
     );
 }
+if($_SERVER["SERVER_NAME"] == "donate-consumer.local"){
+    /***Pro*****/
+    $hook['post_controller_constructor'][] = array(
+        'function' => 'force_ssl',
+        'filename' => 'ssl.php',
+        'filepath' => 'hooks'
+    );
+}
 
