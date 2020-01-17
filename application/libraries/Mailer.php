@@ -24,12 +24,23 @@ class Mailer
     public function __construct()
     {
 
-        $this->userName = 'joeyfarms2@gmail.com';
+//        $this->userName = 'joeyfarms2@gmail.com';
+//        $this->password = 'J@e2262527#';
+        $this->userName = 'consumerthailand.official@gmail.com';
         $this->password = 'Joe2262527';
         $this->emailHost = 'smtp.gmail.com';
-        $this->mailFrom = array('noreply@consumerthai.org' => 'www.consumerthai.org');
-        $this->cc_mail = array('donationffc@gmail.com'=>"Have a new donated");
-        $this->cc_mail2 = array('tawanshinehuang@gmail.com'=>"Have a new donated");
+        $this->mailFrom = array('noreply@consumerthai.org' => 'donate.consumerthai.org');
+
+        if ($_SERVER["SERVER_NAME"] == "donate-consumer.local") {
+            /***Dev*****/
+            $this->cc_mail = array('joeyfarms2@gmail.com' => "Have a user new donation to you", 'joeyfarms4@gmail.com' => 'Have a user new donation to you');
+            $this->cc_mail2 = array('acework2u@gmail.com' => "Have a new donated");
+        } else {
+            /**Production**/
+            $this->cc_mail = array('donationffc@gmail.com' => "Have a user new donation to you", "saowaluk_@hotmail.com.com" => "Have a user new donation to you");
+            $this->cc_mail2 = array('tawanshinehuang@gmail.com' => "Have a user new donation to you");
+        }
+
 
         // Define email directory
         $this->mailDirectory = VIEWPATH . '/emails';
@@ -73,7 +84,7 @@ class Mailer
         return $this;
     }
 
-    public function setAttachFile($fileAttach,$fileName="Invoice.pdf")
+    public function setAttachFile($fileAttach, $fileName = "Invoice.pdf")
     {
 
         $attachment = new Swift_Attachment($fileAttach, $fileName, 'application/pdf');
