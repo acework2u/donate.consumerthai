@@ -85,7 +85,6 @@ class Donate extends MY_Controller
     {
         /*****/
         $this->load->model($this->donation_model, 'donation');
-
         $amount_to_db = "0";
         $full_name = "";
         $tel = "";
@@ -211,10 +210,14 @@ class Donate extends MY_Controller
                 //Encrypted card data
                 $encCardData = $_POST['encryptedCardInfo'];
 
-                //Retrieve card information for merchant use if needed
-                $maskedCardNo = $_POST['maskedCardInfo'];
-                $expMonth = $_POST['expMonthCardInfo'];
-                $expYear = $_POST['expYearCardInfo'];
+                /**123 Option Channel**/
+                //Payment Options
+                $paymentChannel = "123";		//Set transaction as Alternative Payment Method
+                $agentCode = "AXS";			//APM agent code
+                $channelCode = "WEBPAY";			//APM channel code
+                $paymentExpiry = (new DateTime('today'))->format("Y-m-d 23:59:59");	//pay slip expiry date (optional). format yyyy-MM-dd HH:mm:ss
+                $mobileNo = "81238888";		//customer mobile number
+                $cardholderEmail = "demo@2c2p.com";	//customer email address
 
                 //Request Information
 //                $version = "9.3";
