@@ -35,7 +35,9 @@ class Donation_model extends MY_Model
 
 
     }
-    public function setFillter($filter_search){
+
+    public function setFillter($filter_search)
+    {
         $this->_fillter = $filter_search;
     }
 
@@ -161,14 +163,58 @@ class Donation_model extends MY_Model
             'updated_date' => $this->_updatedDate
         );
 
-        $this->db->insert($this->tbl_donation, $data);
-        if (!is_blank($this->db->insert_id()) && $this->db->insert_id() > 0) {
-            $this->setDonationId($this->db->insert_id());
-            return true;
-        } else {
-            return false;
+        $action = "new";
+        if (!is_blank($this->_transection_no)) {
+            $this->db->where('transection_no', $this->_transection_no);
+            $this->db->limit(1);
+            $q = $this->db->get($this->tbl_donation);
+            if ($q->num_rows() > 0) {
+                $action = "update";
+            }
         }
+        $this->db->reset_query();
 
+
+        if ($action == "new") {
+
+            $this->db->insert($this->tbl_donation, $data);
+            if (!is_blank($this->db->insert_id()) && $this->db->insert_id() > 0) {
+                $this->setDonationId($this->db->insert_id());
+                return true;
+            } else {
+                return false;
+            }
+
+        }else{
+
+            $data_update = array(
+                'inv_number' => $this->_inv_number,
+                'amount' => $this->_amount,
+                'doner_aid' => $this->_donor_id,
+                'donation_campaign_aid' => $this->_donationCampaign_id,
+                'payment_channel' => $this->_payment_channel,
+                'payment_status' => $this->_status,
+                'bankName' => $this->_bankName,
+                'pan' => $this->_pan,
+                'tranRef' => $this->_tranRef,
+                'processBy' => $this->_processBy,
+                'issuerCountry' => $this->_issuerCountry,
+                'transfer_date' => $this->_transferDate,
+                'note' => $this->_note,
+                'created_date' => $this->_createDate,
+                'updated_date' => $this->_updatedDate
+            );
+            $this->db->where('transection_no', $this->_transection_no);
+            $this->db->update($this->tbl_donation,$data_update);
+
+            $aff_num = $this->db->affected_rows();
+            if ($aff_num > 0) {
+                return true;
+            }else{
+                return false;
+            }
+
+        }
 
     }
 
@@ -309,9 +355,11 @@ class Donation_model extends MY_Model
 
 
     }
-    public function topDonor(){
+
+    public function topDonor()
+    {
         $this->db->select('*,SUM(amount) as TotalAmount,donor.aid as donor_id');
-        $this->db->join($this->tbl_donation,'donation ON donor.aid = donation.doner_aid','left');
+        $this->db->join($this->tbl_donation, 'donation ON donor.aid = donation.doner_aid', 'left');
         $this->db->where("donation.payment_status='00' OR donation.payment_status='000'");
         $this->db->group_by('donor.aid');
         $this->db->order_by('TotalAmount DESC');
@@ -325,9 +373,11 @@ class Donation_model extends MY_Model
         }
         return $result;
     }
-    public function donationByDonor(){
+
+    public function donationByDonor()
+    {
         $result = array();
-        if(!is_blank($this->_fillter)){
+        if (!is_blank($this->_fillter)) {
             $this->db->select('donation.* ,
 	donor.title_name,
 	donor.first_name,
@@ -339,8 +389,8 @@ class Donation_model extends MY_Model
             $this->db->join($this->tbl_donor, 'donation.doner_aid = donor.aid', 'left');
             $this->db->join($this->tbl_payment_channel, 'donation.payment_channel = payment_channel.`code`', 'left');
             $this->db->join($this->tbl_donation_campaign, 'donation.donation_campaign_aid = donation_campaign.aid ', 'left');
-            $this->db->or_like('donor.email',$this->_fillter);
-            $this->db->or_like('donor.first_name',$this->_fillter);
+            $this->db->or_like('donor.email', $this->_fillter);
+            $this->db->or_like('donor.first_name', $this->_fillter);
             $query = $this->db->get($this->tbl_donation);
             $result = array();
             if ($query->num_rows() > 0) {

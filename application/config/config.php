@@ -124,7 +124,8 @@ $config['url_suffix'] = '.html';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'thai';
+#$config['language']	= 'english';
 
 /*
 |--------------------------------------------------------------------------

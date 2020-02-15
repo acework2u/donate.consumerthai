@@ -934,4 +934,21 @@ function Convert($amount_number)
 }
 
 
+function custom_echo($x, $length)
+{
+    $txt = "";
+    if(strlen($x)<=$length)
+    {
+        $txt =  $x;
+    }
+    else
+    {
+        $y=substr($x,0,$length) . '...';
+        $txt =  $y;
+    }
+
+    return $txt;
+}
+
+
 ?>

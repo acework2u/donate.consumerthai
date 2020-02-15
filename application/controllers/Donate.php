@@ -489,7 +489,10 @@ class Donate extends MY_Controller
 
                     $templateData = array(
                         'name' => $fullName,
-                        'amount' => $amountDonate
+                        'amount' => $amountDonate,
+                        'invoice_no'=>$invoiceNo,
+                        'ref_no'=>$TransactionCode,
+                        'date_time'=>datetime2display($dateTime)
                     );
                     $fileName = "$invoiceNo.pdf";
                     if (!is_blank($email)) {

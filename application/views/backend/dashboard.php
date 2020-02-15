@@ -106,7 +106,7 @@
                     <!-- TABLE: LATEST ORDERS -->
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Latest Donates</h3>
+                            <h3 class="box-title"><?php echo $this->lang->line('latest_donates');?></h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -120,12 +120,12 @@
                                 <table class="table no-margin">
                                     <thead>
                                     <tr>
-                                        <th>Trans No./Order ID</th>
-                                        <th>Invoice No.</th>
-                                        <th>Donor</th>
-                                        <th>Status</th>
-                                        <th>Amount</th>
-                                        <th>Time</th>
+                                        <th><?php echo $this->lang->line('trans_no');?></th>
+                                        <th><?php echo $this->lang->line('invoice_no');?></th>
+                                        <th><?php echo $this->lang->line('donor')?></th>
+                                        <th><?php echo $this->lang->line('status')?></th>
+                                        <th><?php echo $this->lang->line('amount');?></th>
+                                        <th><?php echo $this->lang->line('time');?></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -139,7 +139,7 @@
                                             <span v-else class="label label-danger">{{item.status}}</span>
                                         </td>
                                         <td>
-                                            <div class="sparkbar" data-color="#00a65a" data-height="20">{{item.amount | numeral('0,0')}}</div>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">{{item.amount | formatBaht('0,0')}}</div>
                                         </td>
                                         <td>{{item.created_date}}</td>
                                     </tr>
@@ -167,7 +167,7 @@
                     <!-- DONOR LIST -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Top 10 Donated Success</h3>
+                            <h3 class="box-title"><?php echo $this->lang->line('top_10_donate_success')?></h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

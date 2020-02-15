@@ -316,7 +316,7 @@ class Reports extends MY_Controller
             $mpdf->WriteFixedPosHTML($full_name, 40, 54, 150, 90, 'auto');
 //        Address
 
-            $mpdf->WriteFixedPosHTML($address, 35, 60, 150, 90, 'auto');
+            $mpdf->WriteFixedPosHTML($address, 25, 60, 180, 90, 'auto');
             // Campaign
 
             $mpdf->WriteFixedPosHTML($campaign_name, 40, 66, 100, 90, 'auto');
@@ -337,7 +337,7 @@ class Reports extends MY_Controller
                     $cardId = $panCard;
                     $mpdf->WriteFixedPosHTML($cardId, 105, 86, 50, 90, 'auto');
                     /*** Bank Name  */
-                    $bankName = $bank_name;
+                    $bankName = custom_echo($bank_name,20);
                     $mpdf->WriteFixedPosHTML($bankName, 160, 86, 50, 90, 'auto');
                     break;
                 case "006":

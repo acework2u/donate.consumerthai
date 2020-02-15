@@ -347,7 +347,7 @@
                                 </div>
                                 <div class="col-9 pr-0 pl-5 pl-4-lg mr-2 mt-2">
                                     <label class="state-2-label mb-1 pl-1"><?php echo $this->lang->line('tax_addr');?><span> *</span></label>
-                                    <textarea id="donor-address" name="adress1" class="form-control"></textarea>
+                                    <textarea maxlength="180" id="donor-address" name="adress1" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -509,14 +509,14 @@
                                         class="position-absolute"><i class="fa fa-angle-double-right"></i></span>
                                 Confirm
                             </button>
-
+                            <!--
                             <button type="button" value="Checkout" onclick="Checkout()"
                                     style="width: 120px;padding-left: 20px;"
                                     class="confirm-btn next position-relative mb-4 mt-4"><span
                                         class="position-absolute"><i class="fa fa-angle-double-right"></i></span>
                                 Confirm-2
                             </button>
-
+                            -->
 
 
                         </div>

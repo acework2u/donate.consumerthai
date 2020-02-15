@@ -870,10 +870,9 @@
                 <div class="box">
 
                     <div class="box-header">
-                        <h3 class="box-title">Donation List</h3>
+                        <h3 class="box-title"><?php echo $this->lang->line('donation_list');?></h3>
                         <div class="box-tools">
                             <div>
-
                             </div>
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="hidden form-control pull-right"
@@ -925,7 +924,6 @@
                             <li><a href="#">&raquo;</a></li>
                         </ul>
 
-
                     </div>
                 </div>
 
@@ -938,7 +936,7 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Donation Update</h4>
+                                    <h4 class="modal-title"><?php echo $this->lang->line('donation_info');?></h4>
                                     <span v-if="!errorStatus" class="alert-success">{{successMsg}}</span>
                                    <span v-if="errorStatus" class="alert-warning">{{successMsg}}</span>
                                 </div>

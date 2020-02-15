@@ -33,7 +33,7 @@ class Mailer
 
         if ($_SERVER["SERVER_NAME"] == "donate-consumer.local") {
             /***Dev*****/
-            $this->cc_mail = array('joeyfarms2@gmail.com' => "Have a user new donation to you", 'joeyfarms4@gmail.com' => 'Have a user new donation to you');
+            $this->cc_mail = array('consumerthailand.official@gmail.com' => "Have a user new donation to you", 'joeyfarms4@gmail.com' => 'Have a user new donation to you');
             $this->cc_mail2 = array('acework2u@gmail.com' => "Have a new donated");
         } else {
             /**Production**/
