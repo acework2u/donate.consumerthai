@@ -62,41 +62,36 @@ class Reports extends MY_Controller
 
                 foreach ($donationList as $row) {
                     $rows = array(
-                        'aid'=> get_array_value($row,'aid',''),
-                        'transection_no'=> get_array_value($row,'transection_no',''),
-                        'inv_number'=> get_array_value($row,'inv_number',''),
-                        'amount'=> get_array_value($row,'amount',''),
-                        'doner_aid'=> get_array_value($row,'doner_aid',''),
-                        'donation_campaign_aid'=> get_array_value($row,'donation_campaign_aid',''),
-                        'payment_channel'=> get_array_value($row,'payment_channel',''),
-                        'payment_status'=> get_array_value($row,'payment_status',''),
-                        'bankName'=> get_array_value($row,'bankName',''),
-                        'pan'=> get_array_value($row,'pan',''),
-                        'note'=> get_array_value($row,'note',''),
-                        'tranRef'=> get_array_value($row,'tranRef',''),
-                        'processBy'=> get_array_value($row,'processBy',''),
-                        'issuerCountry'=> get_array_value($row,'issuerCountry',''),
-                        'transfer_date'=> datetime2display(get_array_value($row, 'transfer_date')),
-                        'created_date'=> get_array_value($row,'created_date',''),
-                        'updated_date'=> get_array_value($row,'updated_date',''),
-                        'invoice_id'=> get_array_value($row,'invoice_id',''),
-                        'email'=> get_array_value($row,'email',''),
-                        'first_name'=> get_array_value($row,'first_name'),
-                        'last_name'=> get_array_value($row,'last_name',''),
-                        'status'=> get_array_value($row,'status',''),
-                        'paymentchanel'=> get_array_value($row,'paymentchanel',''),
-                        'campaign_name'=> get_array_value($row,'campaign_name','')
+                        'aid' => get_array_value($row, 'aid', ''),
+                        'transection_no' => get_array_value($row, 'transection_no', ''),
+                        'inv_number' => get_array_value($row, 'inv_number', ''),
+                        'amount' => get_array_value($row, 'amount', ''),
+                        'doner_aid' => get_array_value($row, 'doner_aid', ''),
+                        'donation_campaign_aid' => get_array_value($row, 'donation_campaign_aid', ''),
+                        'payment_channel' => get_array_value($row, 'payment_channel', ''),
+                        'payment_status' => get_array_value($row, 'payment_status', ''),
+                        'bankName' => get_array_value($row, 'bankName', ''),
+                        'pan' => get_array_value($row, 'pan', ''),
+                        'note' => get_array_value($row, 'note', ''),
+                        'tranRef' => get_array_value($row, 'tranRef', ''),
+                        'processBy' => get_array_value($row, 'processBy', ''),
+                        'issuerCountry' => get_array_value($row, 'issuerCountry', ''),
+                        'transfer_date' => datetime2display(get_array_value($row, 'transfer_date')),
+                        'created_date' => get_array_value($row, 'created_date', ''),
+                        'updated_date' => get_array_value($row, 'updated_date', ''),
+                        'invoice_id' => get_array_value($row, 'invoice_id', ''),
+                        'email' => get_array_value($row, 'email', ''),
+                        'first_name' => get_array_value($row, 'first_name'),
+                        'last_name' => get_array_value($row, 'last_name', ''),
+                        'status' => get_array_value($row, 'status', ''),
+                        'paymentchanel' => get_array_value($row, 'paymentchanel', ''),
+                        'campaign_name' => get_array_value($row, 'campaign_name', '')
 
                     );
                     $reports_info[] = $rows;
 
                 }
             }
-
-
-
-
-
 
 
             $data = array();
@@ -143,23 +138,22 @@ class Reports extends MY_Controller
 //            exit(0);
 
 
-
             $reports_info = array();
             if (is_array($donationList)) {
                 $i = 1;
                 foreach ($donationList as $row) {
                     $rows = array(
                         'indexd' => $i,
-                        'date' => date('d-m-Y',strtotime(get_array_value($row, 'date', ''))),
+                        'date' => date('d-m-Y', strtotime(get_array_value($row, 'date', ''))),
                         'time' => get_array_value($row, 'time', ''),
-                        'transfer_date'=> datetime2display(get_array_value($row, 'transfer_date','')),
-                        'transection_no'=> get_array_value($row, 'transection_no', ''),
+                        'transfer_date' => datetime2display(get_array_value($row, 'transfer_date', '')),
+                        'transection_no' => get_array_value($row, 'transection_no', ''),
                         'invoice_no' => get_array_value($row, 'inv_number', ''),
                         'first_name' => get_array_value($row, 'first_name', ''),
                         'amount' => get_array_value($row, 'amount', 0),
                         'bankName' => get_array_value($row, 'bankName', ''),
-                        'payment_status'=>get_array_value($row, 'status', ''),
-                        'channel_payment'=>get_array_value($row, 'paymentchanel', ''),
+                        'payment_status' => get_array_value($row, 'status', ''),
+                        'channel_payment' => get_array_value($row, 'paymentchanel', ''),
 
 
                     );
@@ -217,28 +211,24 @@ class Reports extends MY_Controller
         if (is_array($data)) {
             $sp->getActiveSheet()->fromArray($data, null, 'A5');
             $last_row = count($data) + 1;
-            $last_cal_row = count($data)+4;
+            $last_cal_row = count($data) + 4;
             $last_total = $last_row + 4;
 
             /***** Style ***/
 
             $sp->getActiveSheet()->getStyle('A4:K4')->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('C1:C2')->getFont()->setBold(true);
-            $i =1;
+            $i = 1;
             foreach (range('A', 'K') as $columnID) {
                 $sp->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
                 $i++;
             }
-            $row_total = 5+$i;
+            $row_total = 5 + $i;
 
-            $sheet->setCellValue('F'.$last_total, 'รวมทั้งหมด');
-            $sheet->setCellValue('H'.$last_total,'=SUM(H5:H'.$last_cal_row.')');
-            $sp->getActiveSheet()->getStyle('F'.$last_total.':H'.$last_total)->getFont()->setBold(true);
+            $sheet->setCellValue('F' . $last_total, 'รวมทั้งหมด');
+            $sheet->setCellValue('H' . $last_total, '=SUM(H5:H' . $last_cal_row . ')');
+            $sp->getActiveSheet()->getStyle('F' . $last_total . ':H' . $last_total)->getFont()->setBold(true);
             $sp->getActiveSheet()->getStyle('H5:H' . $last_total)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-
-
-
-
 
 
         }
@@ -337,7 +327,7 @@ class Reports extends MY_Controller
                     $cardId = $panCard;
                     $mpdf->WriteFixedPosHTML($cardId, 105, 86, 50, 90, 'auto');
                     /*** Bank Name  */
-                    $bankName = custom_echo($bank_name,20);
+                    $bankName = custom_echo($bank_name, 20);
                     $mpdf->WriteFixedPosHTML($bankName, 160, 86, 50, 90, 'auto');
                     break;
                 case "006":
@@ -545,12 +535,38 @@ class Reports extends MY_Controller
                 $amountDonate = "";
                 $email = "";
                 $invoiceNo = "";
+                $TransactionCode = "";
+                $dateTime = "";
+                $bankName = "";
+                $status = "";
+                $pan = "";
+                $taxId = "";
+                $cusAddr = "";
+                $tel = "";
+                $donateAmount = 0;
+                $channel_payment = "";
+
+
+
+//                print_r($donateInfo);
+//                exit();
+
                 if (is_array($donateInfo)) {
                     foreach ($donateInfo as $row) {
                         $fullName = get_array_value($row, 'first_name', '');
                         $amountDonate = get_array_value($row, 'amount', '');
                         $email = get_array_value($row, 'email', '');
                         $invoiceNo = get_array_value($row, 'inv_number', 'Invoice');
+                        $dateTime = get_array_value($row, 'transfer_date', '');
+                        $TransactionCode = get_array_value($row, 'transection_no', '');
+                        $bankName = get_array_value($row, 'bankName', '');
+                        $status = get_array_value($row, 'note', 'note');
+                        $pan = get_array_value($row, 'pan', '');
+                        $taxId = get_array_value($row, 'tax_code', '');
+                        $cusAddr = get_array_value($row, 'address', '');
+                        $tel = get_array_value($row, 'tel', '');
+                        $payment_channel = get_array_value($row,'payment_channel');
+
                     }
                 }
 
@@ -558,9 +574,34 @@ class Reports extends MY_Controller
                     $donateAmount = number_format($amountDonate, 2);
                 }
 
+                if(!is_blank($payment_channel)){
+                    if($payment_channel == '001' || $payment_channel =='01'){
+                        $channel_payment = "Credit/Debit (2C2P)";
+                    }else{
+                        $channel_payment = "โอนเงิน(Bank Transfer)";
+                    }
+                }
+
+//                $templateData = array(
+//                    'name' => $fullName,
+//                    'amount' => $amountDonate
+//                );
+
                 $templateData = array(
                     'name' => $fullName,
-                    'amount' => $amountDonate
+                    'amount' => $amountDonate,
+                    'invoice_no' => $invoiceNo,
+                    'ref_no' => $TransactionCode,
+                    'bank_name' => $bankName,
+                    'status' => $status,
+                    'pan' => $pan,
+                    'date_time' => datetime2display($dateTime),
+                    'tax_id' => $taxId,
+                    'email' => $email,
+                    'tel' => $tel,
+                    'cus_addr' => $cusAddr,
+                    'payment_channel'=>$channel_payment
+
                 );
 
                 $fileName = "$invoiceNo.pdf";
@@ -588,26 +629,25 @@ class Reports extends MY_Controller
 
     }
 
-    public function donorInfo(){
-        if($this->is_login()){
-            $donor_id ="";
-            if(!is_blank($this->input->get_post('donor_aid'))){
+    public function donorInfo()
+    {
+        if ($this->is_login()) {
+            $donor_id = "";
+            if (!is_blank($this->input->get_post('donor_aid'))) {
                 $donor_id = $this->input->get_post('donor_aid');
             }
 
-            $this->load->model($this->donor_model,'donor');
+            $this->load->model($this->donor_model, 'donor');
 
             $this->donor->setDonorId($donor_id);
             $result = array();
 
-            if($this->donor->donor_info()){
+            if ($this->donor->donor_info()) {
                 $result = $this->donor->donor_info();
             }
 
 
-
-           echo json_encode($result);
-
+            echo json_encode($result);
 
 
         }

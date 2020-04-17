@@ -1097,11 +1097,6 @@
                     <!-- /.box -->
                 </div>
 
-
-
-
-
-
                 <div id="send-invoice" class="modal fade" role="dialog">
                     <div class="modal-dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-content">

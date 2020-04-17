@@ -574,9 +574,18 @@ class Test extends MY_Controller
 
 
         $this->load->model($this->donation_model, 'donation');
-        $donationId = 16;
+        $donationId = 69;
         $this->donation->setDonationId($donationId);
         $donateInfo = $this->donation->donationById();
+
+
+
+
+//        print_r($donateInfo);
+
+        echo json_encode($donateInfo);
+        exit();
+
 
         /// Send Mail to Donor
         $this->load->library('mailer');
@@ -620,6 +629,16 @@ class Test extends MY_Controller
         }
 
         echo json_encode($data);
+
+
+    }
+
+    public function sendmail(){
+        $email = "anon_de@saijo-denki.co.th";
+        $template = array('name'=>'Anon D.');
+
+        $this->load->library('mailer');
+        $this->mailer->to($email)->subject('Enter anon_de@saijo-denki.co.th')->send('Test send ail service');
 
 
     }
@@ -686,6 +705,41 @@ class Test extends MY_Controller
         $this->data = array();
 
         $this->load->view('frontend/test_view',$this->data);
+    }
+
+
+    public function test_dupdonate(){
+
+       $this->load->model($this->donation_model,'donate');
+
+       $tran_no = '935231243898';
+       $transction = $this->donate->check_transction_no($tran_no);
+
+
+        echo $this->db->last_query();
+
+        echo  $transction;
+    }
+
+
+    public function test_dornor(){
+
+        $donorId = 17;
+        $this->load->model($this->donor_model, 'donor');
+        $this->donor->setDonorId($donorId);
+
+
+
+        $donateInfo = $this->donor->donor_info();
+        print_r($donateInfo);
+        $id = get_array_value($donateInfo,'aid','');
+        $full_name = get_array_value($donateInfo,'first_name','');
+        $email = get_array_value($donateInfo,'email','');
+        $tel = get_array_value($donateInfo,'tel','');
+        $tax_code = get_array_value($donateInfo,'tax_code','');
+        $address = get_array_value($donateInfo,'address','');
+
+
     }
 
 

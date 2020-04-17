@@ -25,6 +25,7 @@ class Donation_model extends MY_Model
     private $_invoiceId;
     private $_fillter;
 
+
     public function __construct()
     {
         parent::__construct();
@@ -40,6 +41,7 @@ class Donation_model extends MY_Model
     {
         $this->_fillter = $filter_search;
     }
+
 
     public function setDonationId($donationId)
     {
@@ -142,6 +144,35 @@ class Donation_model extends MY_Model
     }
 
 
+    public function check_transction_no($transection = "")
+    {
+
+        $action = "new";
+        $aid = "";
+        if (!is_blank($transection)) {
+            $this->db->where('transection_no', $transection);
+            $this->db->limit(1);
+            $this->db->order_by('aid', 'desc');
+            $q = $this->db->get($this->tbl_donation);
+
+
+            if ($q->num_rows() > 0) {
+                foreach ($q->result() as $row) {
+                    $aid = $row->aid;
+                }
+
+                $this->setDonationId($aid);
+                $action = "update";
+            }
+        }
+        $this->db->reset_query();
+
+        return $action . $aid;
+
+
+    }
+
+
     public function create()
     {
         $data = array(
@@ -164,19 +195,28 @@ class Donation_model extends MY_Model
         );
 
         $action = "new";
+        $aid = "";
         if (!is_blank($this->_transection_no)) {
             $this->db->where('transection_no', $this->_transection_no);
             $this->db->limit(1);
+            $this->db->order_by('aid', 'desc');
             $q = $this->db->get($this->tbl_donation);
+
+
             if ($q->num_rows() > 0) {
+                foreach ($q->result() as $row) {
+                    $aid = $row->aid;
+                }
+
+                $this->setDonationId($aid);
                 $action = "update";
             }
         }
+
         $this->db->reset_query();
 
 
         if ($action == "new") {
-
             $this->db->insert($this->tbl_donation, $data);
             if (!is_blank($this->db->insert_id()) && $this->db->insert_id() > 0) {
                 $this->setDonationId($this->db->insert_id());
@@ -185,7 +225,7 @@ class Donation_model extends MY_Model
                 return false;
             }
 
-        }else{
+        } else {
 
             $data_update = array(
                 'inv_number' => $this->_inv_number,
@@ -205,12 +245,14 @@ class Donation_model extends MY_Model
                 'updated_date' => $this->_updatedDate
             );
             $this->db->where('transection_no', $this->_transection_no);
-            $this->db->update($this->tbl_donation,$data_update);
-
+            if (!is_blank($this->_donationId)) {
+                $this->db->where('aid', $this->_donationId);
+            }
+            $this->db->update($this->tbl_donation, $data_update);
             $aff_num = $this->db->affected_rows();
             if ($aff_num > 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
 
@@ -244,19 +286,7 @@ class Donation_model extends MY_Model
 
     public function updateDonation($donation_id = "")
     {
-        /*
-        $data = array(
-            'inv_number'=>$this->_inv_number,
-            'amount'=>$this->_amount,
-            'payment_status'=>$this->_status,
-            'bankName'=>$this->_bankName,
-            'transfer_date'=>$this->_transferDate,
-            'invoice_id'=>$this->_invoiceId,
-            'updated_date'=>$this->_updatedDate,
-            'note'=>$this->_note,
-            'tranRef'=>$this->_tranRef
-        );
-        */
+
         $data = array();
         if (!is_blank($this->_inv_number)) {
             $data['inv_number'] = $this->_inv_number;
@@ -339,6 +369,7 @@ class Donation_model extends MY_Model
 	donor.tax_code,
 	donor.address,
 	donor.email,
+	donor.tel,
 	donation_campaign.title AS campaign_name');
         $this->db->join($this->tbl_donor, 'donation.doner_aid = donor.aid', 'left');
         $this->db->join($this->tbl_payment_channel, 'donation.payment_channel = payment_channel.`code`', 'left');

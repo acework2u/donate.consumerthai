@@ -24,10 +24,10 @@ class Mailer
     public function __construct()
     {
 
-//        $this->userName = 'joeyfarms2@gmail.com';
-//        $this->password = 'J@e2262527#';
-        $this->userName = 'consumerthailand.official@gmail.com';
-        $this->password = 'Joe2262527';
+        $this->userName = 'joeyfarms2@gmail.com';
+        $this->password = 'J@e2262527#';
+//        $this->userName = 'consumerthailand.official@gmail.com';
+//        $this->password = 'Joe2262527';
         $this->emailHost = 'smtp.gmail.com';
         $this->mailFrom = array('noreply@consumerthai.org' => 'donate.consumerthai.org');
 
@@ -50,6 +50,7 @@ class Mailer
     protected function init()
     {
         $transport = (new Swift_SmtpTransport($this->emailHost, 465, 'ssl'))
+//        $transport = (new Swift_SmtpTransport($this->emailHost, 587, 'tls'))
             ->setUsername($this->userName)
             ->setPassword($this->password);
 
