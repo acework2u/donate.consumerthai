@@ -420,8 +420,9 @@ class Reports extends MY_Controller
 
 
             if (!is_blank($transfer_datetime)) {
-                $date1 = date('mdyHms', strtotime($transfer_datetime));
-                $transfer_datetime = $date1;
+//                $date1 = date('mdyHms', strtotime($transfer_datetime));
+                $transfer_datetime = date('dmyHms', strtotime($transfer_datetime));
+//                $transfer_datetime = $date1;
             }
 
 

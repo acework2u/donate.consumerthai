@@ -1,7 +1,7 @@
 var baseUrl = window.location.origin;
 
 var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-var firstDay = new Date(y, m, 1);
+var firstDay = new Date(y, 0, 1); //var firstDay = new Date(y, m, 1);
 var lastDay = new Date(y, m + 1, 0);
 
 
@@ -257,13 +257,16 @@ var appreport = new Vue({
             let baseApi = baseUrl + "/admin/reports/update-donation";
             if (this.emptyTime) {
                 this.userClicked.transfer_date = this.date2server(this.emptyTime);
+                this.userClicked.emptyTime = this.date2server(this.emptyTime);
             }
 
             let dataInfo = this.userClicked
             var fromData = this.toFormData(dataInfo)
 
+            console.info(dataInfo)
+
             axios.post(baseApi, fromData).then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
 
                 if(res.data.error){
                     this.errorStatus =true

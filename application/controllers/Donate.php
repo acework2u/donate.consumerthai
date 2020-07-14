@@ -284,69 +284,69 @@ class Donate extends MY_Controller
                 $this->donation->create();
 
 
-                //123 Service
-                $paymentChannel = "001";
-                $merchantID = C2P_MERCHANT_ID;        //Get MerchantID when opening account with 2C2P
-                $secretKey = C2P_SECRET_KEY;    //Get SecretKey from 2C2P PGW Dashboard
-                //Transaction Information
-                $desc = "Donate Consumer Thai";
-                $uniqueTransactionCode = time();
-                $currencyCode = "764";
-                $amt = "000000000010";
-                $amount = trim($this->input->get_post('money-input'));
-                if (!is_blank($amount)) {
-                    $amt = amount2c2p($amount);
-                }
-                $panCountry = "TH";
-
-                $encCardData = $_POST['encryptedCardInfo'];
-                /**123 Option Channel**/
-                //Payment Options
-                $paymentChannel = "123";        //Set transaction as Alternative Payment Method
-                $agentCode = "AXS";            //APM agent code
-                $channelCode = "WEBPAY";            //APM channel code
-                $paymentExpiry = (new DateTime('today'))->format("Y-m-d 23:59:59");    //pay slip expiry date (optional). format yyyy-MM-dd HH:mm:ss
-                $mobileNo = "81238888";        //customer mobile number
-                $cardholderEmail = "demo@2c2p.com";    //customer email address
-
-                //Request Information
-                $version = "9.9";
-                //Construct payment request message
-                $xml = "<PaymentRequest>
-		<version>$version</version> 
-		<merchantID>$merchantID</merchantID>
-		<uniqueTransactionCode>$uniqueTransactionCode</uniqueTransactionCode>
-		<desc>$desc</desc>
-		<amt>$amt</amt>
-		<currencyCode>$currencyCode</currencyCode>  
-		<panCountry>$panCountry</panCountry> 
-		<cardholderName>$cardholderName</cardholderName>
-		<cardholderEmail>$email</cardholderEmail>
-		<userDefined1>$donorId</userDefined1>
-		<userDefined2>$userInv</userDefined2>
-		<userDefined3>$email</userDefined3>
-		<encCardData>$encCardData</encCardData>	  	   	         
-	
-		</PaymentRequest>";
-                //3) Create inner payload
-                $paymentPayload = base64_encode($xml); //Convert payload to base64
-//                $payload = base64_encode($xml);    //Convert payload to base64
-
-                //4) Generate signature based on inner payload
-                $signature = strtoupper(hash_hmac('sha256', $paymentPayload, $secretKey, false));
-                $payloadXML = "<PaymentRequest><version>$version</version><payload>$paymentPayload</payload><signature>$signature</signature></PaymentRequest>";
-                $payload = base64_encode($payloadXML);
-
-
-                $this->data['payload'] = $payload;
-
-                $this->data['payload'] = $payload;
-
-
-                $this->load->view('frontend/payload', $this->data);
-
-
-                break;
+//                //123 Service
+//                $paymentChannel = "001";
+//                $merchantID = C2P_MERCHANT_ID;        //Get MerchantID when opening account with 2C2P
+//                $secretKey = C2P_SECRET_KEY;    //Get SecretKey from 2C2P PGW Dashboard
+//                //Transaction Information
+//                $desc = "Donate Consumer Thai";
+//                $uniqueTransactionCode = time();
+//                $currencyCode = "764";
+//                $amt = "000000000010";
+//                $amount = trim($this->input->get_post('money-input'));
+//                if (!is_blank($amount)) {
+//                    $amt = amount2c2p($amount);
+//                }
+//                $panCountry = "TH";
+//
+//                $encCardData = $_POST['encryptedCardInfo'];
+//                /**123 Option Channel**/
+//                //Payment Options
+//                $paymentChannel = "123";        //Set transaction as Alternative Payment Method
+//                $agentCode = "AXS";            //APM agent code
+//                $channelCode = "WEBPAY";            //APM channel code
+//                $paymentExpiry = (new DateTime('today'))->format("Y-m-d 23:59:59");    //pay slip expiry date (optional). format yyyy-MM-dd HH:mm:ss
+//                $mobileNo = "81238888";        //customer mobile number
+//                $cardholderEmail = "demo@2c2p.com";    //customer email address
+//
+//                //Request Information
+//                $version = "9.9";
+//                //Construct payment request message
+//                $xml = "<PaymentRequest>
+//		<version>$version</version>
+//		<merchantID>$merchantID</merchantID>
+//		<uniqueTransactionCode>$uniqueTransactionCode</uniqueTransactionCode>
+//		<desc>$desc</desc>
+//		<amt>$amt</amt>
+//		<currencyCode>$currencyCode</currencyCode>
+//		<panCountry>$panCountry</panCountry>
+//		<cardholderName>$cardholderName</cardholderName>
+//		<cardholderEmail>$email</cardholderEmail>
+//		<userDefined1>$donorId</userDefined1>
+//		<userDefined2>$userInv</userDefined2>
+//		<userDefined3>$email</userDefined3>
+//		<encCardData>$encCardData</encCardData>
+//
+//		</PaymentRequest>";
+//                //3) Create inner payload
+//                $paymentPayload = base64_encode($xml); //Convert payload to base64
+////                $payload = base64_encode($xml);    //Convert payload to base64
+//
+//                //4) Generate signature based on inner payload
+//                $signature = strtoupper(hash_hmac('sha256', $paymentPayload, $secretKey, false));
+//                $payloadXML = "<PaymentRequest><version>$version</version><payload>$paymentPayload</payload><signature>$signature</signature></PaymentRequest>";
+//                $payload = base64_encode($payloadXML);
+//
+//
+//                $this->data['payload'] = $payload;
+//
+//                $this->data['payload'] = $payload;
+//
+//
+//                $this->load->view('frontend/payload', $this->data);
+//
+//
+//                break;
 
 
                 /// Send Mail to Donor
@@ -400,7 +400,14 @@ class Donate extends MY_Controller
 
                 $templateData = array(
                     'name' => $full_name,
-                    'amount' => $amountDonate
+                    'amount' => $amountDonate,
+                    'email'=>$email,
+                    'ref'=>$uniqueTransactionCode,
+                    'status'=>"รอการโอนเงิน",
+                    'taxId'=>$tax_id,
+                    'address'=>$address,
+                    'tel'=>$tel,
+                    'donate_date'=>$created_date
                 );
 
                 if (!is_blank($email)) {
@@ -588,8 +595,6 @@ class Donate extends MY_Controller
                         'payment_channel'=>$channel_payment
 
                     );
-
-
 
                     $fileName = "$invoiceNo.pdf";
                     if (!is_blank($email)) {
